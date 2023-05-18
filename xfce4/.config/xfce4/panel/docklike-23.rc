@@ -1,0 +1,9 @@
+[user]
+noWindowsListIfSingle=false
+onlyDisplayVisible=false
+onlyDisplayScreen=false
+middleButtonBehavior=1
+inactiveIndicatorStyle=1
+indicatorColorFromTheme=true
+forceIconSize=true
+iconSize=32
