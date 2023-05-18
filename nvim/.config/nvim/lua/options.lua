@@ -1,13 +1,16 @@
-vim.opt.number = true
-vim.opt.relativenumber = true
+local opt = vim.opt
 
-vim.opt.mouse = 'a'
+-- UI
+opt.number = true
+opt.relativenumber = true
 
-vim.opt.ignorecase = true
-vim.opt.smartcase = true
+-- Search
+opt.ignorecase = true
+opt.smartcase = true
 
-vim.opt.breakindent = true
-vim.opt.tabstop = 4
-vim.opt.softtabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.expandtab = true
+-- Editor
+opt.breakindent = true
+opt.tabstop = 4
+opt.softtabstop = 4
+opt.shiftwidth = 4
+opt.expandtab = true
