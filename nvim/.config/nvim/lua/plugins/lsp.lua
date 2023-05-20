@@ -24,7 +24,7 @@ return {
         end)
 
         lsp.ensure_installed({
-            "lua-language-server",
+            "lua_ls",
             "rust_analyzer",
         })
 
