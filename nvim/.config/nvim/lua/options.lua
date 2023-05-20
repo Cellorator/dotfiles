@@ -1,4 +1,9 @@
+local g = vim.g
 local opt = vim.opt
+
+-- Leader Key
+g.mapleader = " "
+g.maplocalleader = " "
 
 -- UI
 opt.number = true
@@ -16,5 +21,5 @@ opt.shiftwidth = 4
 opt.expandtab = true
 
 -- Theme
-opt.termguicolors = true
-vim.cmd.colorscheme("gruvbox-material")
+--opt.termguicolors = true
+--vim.cmd.colorscheme("gruvbox-material")
