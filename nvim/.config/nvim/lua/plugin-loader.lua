@@ -6,22 +6,11 @@ if not vim.loop.fs_stat(lazypath) then
     "clone",
     "--filter=blob:none",
     "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
+    "--branch=stable",
     lazypath,
   })
 end
 vim.opt.rtp:prepend(lazypath)
-
--- Install plugins
---local plugins = {
---    -- Colorschemes
---    { "sainnhe/gruvbox-material" },
---    { "catppuccin/nvim", name = "catppuccin" },
---    "Shatur/neovim-ayu",
---
---    -- UI
---    {"nvim-lualine/lualine.nvim"},
---}
 
 local opts = {}
 
