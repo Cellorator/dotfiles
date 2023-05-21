@@ -4,5 +4,5 @@ return {
     { "sainnhe/gruvbox-material" },
     { "Shatur/neovim-ayu" },
     { "catppuccin/nvim", name = "catppuccin" },
+    { "navarasu/onedark.nvim" },
 }
-
