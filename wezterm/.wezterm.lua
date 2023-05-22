@@ -11,6 +11,7 @@ config.font = wezterm.font("DM Mono")
 
 -- Recursive Mono features
 --config.harfbuzz_features = { "ss01", "ss02", "ss03", "ss04", "ss05",}
+-- B612 Mono features
 config.harfbuzz_features = {"ss02", "ss03", "ss04",}
 -- 1234567890
 
