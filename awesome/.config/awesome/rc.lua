@@ -565,6 +565,6 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 
 
 -- Autostart Applications
-awful.spawn.with_shell("picom")
-awful.spawn.with_shell("nm-applet")
-awful.spawn.with_shell("volctl")
+awful.spawn.with_shell("autostart")
+--awful.spawn.with_shell("nm-applet")
+--awful.spawn.with_shell("volctl")
