@@ -11,11 +11,14 @@ zoxide init fish | source
 set -gx EDITOR nvim
 set -x BAT_THEME ansi
 
+# Useful abbreviations and aliases
 abbr -a vim nvim
 abbr -a car bat
 abbr -a ls exa
 abbr -a la exa -a
 abbr -a cd z
+
+alias bruh=thefuck
 
 # Git abbreviations
 abbr -a gi git init
