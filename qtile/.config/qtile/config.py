@@ -1,10 +1,10 @@
-from libqtile import backend, bar, layout, widget
+from libqtile import backend, bar, layout, widget, qtile, hook
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 
-lazy.spawn("picom")
-lazy.spawn("nm-applet")
-lazy.spawn("volctl")
+@hook.subscribe.startup_once
+def autostart_once():
+    qtile.cmd_spawn("fish -c autostart")
 
 mod = "mod4"
 
