@@ -18,6 +18,7 @@ abbr -a ls exa --icons
 abbr -a la exa -la --icons
 abbr -a tree exa -Ta --icons
 abbr -a cd z
+abbr -a stow stow --dotfiles
 
 alias sudo="sudo "
 alias rm=rmtrash
