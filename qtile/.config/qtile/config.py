@@ -47,6 +47,8 @@ keys = [
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
+
+    Key([mod], "f", lazy.window.toggle_floating()),
 ]
 
 groups = [Group(i) for i in "123456789"]
@@ -91,9 +93,9 @@ layouts = [
 ]
 
 widget_defaults = dict(
-    font="sans",
-    fontsize=12,
-    padding=3,
+    font="DM Mono",
+    fontsize=14,
+    padding=2,
 )
 extension_defaults = widget_defaults.copy()
 
@@ -102,7 +104,7 @@ screens = [
         wallpaper="/usr/share/backgrounds/gruvbox-pacman.png",
         wallpaper_mode="fill",
 
-        bottom=bar.Bar(
+        top=bar.Bar(
             [
                 widget.CurrentLayout(),
                 widget.GroupBox(),
