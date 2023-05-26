@@ -7,7 +7,7 @@ local config = {}
 --config.font = wezterm.font "Cascadia Code"
 --config.font = wezterm.font "Hermit"
 --config.font = wezterm.font("B612 Mono")
-config.font = wezterm.font("DM Mono")
+config.font = wezterm.font("DMMono Nerd Font")
 
 -- Recursive Mono features
 --config.harfbuzz_features = { "ss01", "ss02", "ss03", "ss04", "ss05",}
