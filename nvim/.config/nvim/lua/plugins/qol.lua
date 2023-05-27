@@ -3,8 +3,8 @@ return {
     {
         "echasnovski/mini.nvim",
         config = function ()
---            require("mini.starter").setup()
---            require("mini.sessions").setup()
+            require("mini.starter").setup()
+            require("mini.sessions").setup()
             require("mini.tabline").setup()
 
             require("mini.jump").setup()
@@ -19,22 +19,17 @@ return {
                 padding = false,
 
                 toggler = {
-                    line = "<leader>c"
+                    line = "<leader>/"
                 },
 
                 opleader = {
-                    line = "<leader>c"
+                    line = "<leader>/"
                 },
-
-                mappings = false,
             })
         end
     },
     {
         "lukas-reineke/indent-blankline.nvim",
-        config = function ()
-            require("indent_blankline").setup()
-        end,
-        ft = "*",
+        lazy = true,
     },
 }
