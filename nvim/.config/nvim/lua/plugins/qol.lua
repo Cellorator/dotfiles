@@ -4,7 +4,7 @@ return {
         "echasnovski/mini.nvim",
         config = function ()
 --            require("mini.starter").setup()
-            require("mini.sessions").setup()
+--            require("mini.sessions").setup()
             require("mini.tabline").setup()
 
             require("mini.jump").setup()
@@ -17,7 +17,6 @@ return {
         config = function ()
             require("Comment").setup({
                 padding = false,
-                mappings = false,
 
                 toggler = {
                     line = "<leader>c"
@@ -26,6 +25,8 @@ return {
                 opleader = {
                     line = "<leader>c"
                 },
+
+                mappings = false,
             })
         end
     },
