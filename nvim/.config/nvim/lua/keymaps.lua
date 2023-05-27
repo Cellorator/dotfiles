@@ -2,9 +2,9 @@ local map = vim.keymap.set
 
 map("i", "jj", "<Esc>")
 
--- Telescope
-local builtin = require("telescope/builtin")
-map("n", "<leader>ff", builtin.find_files)
+-- Fzf-Lua
+map("n", "<leader>ff", "<cmd>FzfLua files<CR>")
+map("n", "<leader>fb", "<cmd>FzfLua buffers<CR>")
 
 -- Autocompletions
 local cmp = require("cmp")
