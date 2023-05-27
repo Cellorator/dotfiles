@@ -1,13 +1,11 @@
 -- A bunch of quality-of-life plugins
 return {
     {
-        "lukas-reineke/indent-blankline.nvim",
-        ft = "*",
-    },
-    {
-        "windwp/nvim-autopairs",
+        "echasnovski/mini.nvim",
         config = function ()
-            require("nvim-autopairs").setup {}
+            require("mini.tabline").setup()
+
+            require("mini.pairs").setup()
         end
-    },
+    }
 }
