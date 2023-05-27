@@ -5,6 +5,10 @@ map("i", "jj", "<Esc>")
 map("n", "<leader>h", "<cmd>bprevious<CR>")
 map("n", "<leader>l", "<cmd>bnext<CR>")
 map("n", "<leader>r", "<cmd>b#<CR>")
+map("n", "<leader>x", "<cmd>bdelete<CR>")
+
+-- Commenting
+map("n", "<leader>x", "<cmd>bdelete<CR>")
 
 -- Fzf-Lua
 map("n", "<leader>ff", "<cmd>FzfLua files<CR>")

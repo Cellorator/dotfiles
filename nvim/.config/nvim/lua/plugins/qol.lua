@@ -3,7 +3,7 @@ return {
     {
         "echasnovski/mini.nvim",
         config = function ()
-            require("mini.starter").setup()
+--            require("mini.starter").setup()
             require("mini.sessions").setup()
             require("mini.tabline").setup()
 
@@ -11,6 +11,23 @@ return {
             require("mini.pairs").setup()
             require("mini.trailspace").setup()
         end,
+    },
+    {
+        "numToStr/Comment.nvim",
+        config = function ()
+            require("Comment").setup({
+                padding = false,
+                mappings = false,
+
+                toggler = {
+                    line = "<leader>c"
+                },
+
+                opleader = {
+                    line = "<leader>c"
+                },
+            })
+        end
     },
     {
         "lukas-reineke/indent-blankline.nvim",
