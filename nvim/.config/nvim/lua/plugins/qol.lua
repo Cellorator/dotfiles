@@ -13,20 +13,20 @@ return {
         end,
     },
     {
-        "numToStr/Comment.nvim",
-        config = function ()
-            require("Comment").setup({
-                padding = false,
+       "numToStr/Comment.nvim",
+       config = function ()
+           require("Comment").setup({
+               padding = false,
 
-                toggler = {
-                    line = "<leader>/"
-                },
+               toggler = {
+                   line = "<leader>/"
+               },
 
-                opleader = {
-                    line = "<leader>/"
-                },
-            })
-        end
+               opleader = {
+                   line = "<leader>/"
+               },
+           })
+       end
     },
     {
         "lukas-reineke/indent-blankline.nvim",
