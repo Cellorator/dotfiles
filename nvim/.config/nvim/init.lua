@@ -1,4 +1,4 @@
 require("options")
-require("plugin-loader")
 require("keymaps")
+require("plugin-loader")
 require("theme")

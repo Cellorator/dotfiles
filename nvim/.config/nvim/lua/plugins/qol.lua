@@ -10,23 +10,15 @@ return {
             require("mini.jump").setup()
             require("mini.pairs").setup()
             require("mini.trailspace").setup()
+            require("mini.comment").setup({
+                mappings = {
+                    comment = '<leader>/',
+                    comment_line = '<leader>/',
+                    comment_visual = '<leader>/',
+                    textobject = '',
+                },
+            })
         end,
-    },
-    {
-       "numToStr/Comment.nvim",
-       config = function ()
-           require("Comment").setup({
-               padding = false,
-
-               toggler = {
-                   line = "<leader>/"
-               },
-
-               opleader = {
-                   line = "<leader>/"
-               },
-           })
-       end
     },
     {
         "lukas-reineke/indent-blankline.nvim",
