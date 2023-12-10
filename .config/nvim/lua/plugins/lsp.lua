@@ -40,6 +40,7 @@ return {
             "rust_analyzer",
         })
 
+        -- Specific lsp setups
         require("lspconfig").lua_ls.setup({
             settings = {
                 Lua = {
@@ -47,7 +48,11 @@ return {
                 }
             }
         })
-        require("lspconfig").gdscript.setup({})
+        require("lspconfig").gdscript.setup({
+            on_attach = function(client, bufnr)
+                vim.api.nvim_command('echo serverstart("/tmp/godot.pipe")')
+              end
+        })
 
         lsp.setup()
     end
