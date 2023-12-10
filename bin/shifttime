@@ -1,0 +1,33 @@
+#!/bin/bash
+# This script enables an after-the-fact timeshift equivalent for Arch systems
+# Give it a date (as in 2020-09-20) and it will use the Arch archive repos
+# to revert to the package state that applied on that date.
+#
+# 21 September 2020 - freebird54
+
+echo "Select the date to revert your packages to (YYYY/MM/DD):"
+read REVERTDATE
+echo " "
+echo "Packages will be reverted to the state they were in on $REVERTDATE."
+echo " "
+echo "Ready to copy /etc/pacman.d/mirrorlist to backup"
+sudo mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup_st
+# building the repo entry for the specified date, and temporarily making it the mirrorlist
+echo "Server=https://archive.archlinux.org/repos/$REVERTDATE/\$repo/os/\$arch"  > /tmp/mirrorlistchk
+sudo cp /tmp/mirrorlistchk /etc/pacman.d/mirrorlist
+rm /tmp/mirrorlistchk
+echo " "
+echo "Here is the reversion mirrorlist"
+cat /etc/pacman.d/mirrorlist
+echo "If the date shown is correct please press ENTER"
+read
+echo " "
+# run the 'downdate' command
+sudo pacman -Syyuu
+echo " "
+echo "Restoring the backup mirrorlist..."
+sudo cp /etc/pacman.d/mirrorlist.backup_st /etc/pacman.d/mirrorlist
+echo " "
+echo "Done. Press ENTER to exit."
+read
+# end of ShiftTime script
