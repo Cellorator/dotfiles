@@ -1,9 +1,5 @@
-local g = vim.g
 local opt = vim.opt
-
--- Leader Key
-g.mapleader = " "
-g.maplocalleader = " "
+local cmd = vim.cmd
 
 -- UI
 opt.number = true
@@ -21,7 +17,6 @@ opt.showbreak = "/-/"
 
 opt.scrolloff = 8
 
-
 -- Search
 opt.ignorecase = true
 opt.smartcase = true
@@ -33,3 +28,7 @@ opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
 opt.undofile = true
 
 opt.updatetime = 50
+
+opt.termguicolors = true
+cmd.colorscheme("gruvbox")
+require("ibl").setup()

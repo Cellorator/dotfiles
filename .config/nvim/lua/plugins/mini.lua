@@ -1,4 +1,3 @@
--- A bunch of quality-of-life plugins
 return {
     {
         "echasnovski/mini.nvim",
@@ -19,9 +18,5 @@ return {
                 },
             })
         end,
-    },
-    {
-        "lukas-reineke/indent-blankline.nvim",
-        lazy = true,
     },
 }
