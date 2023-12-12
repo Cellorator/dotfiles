@@ -80,15 +80,18 @@ layouts = [
     layout.Columns(
         border_focus="#83a598",
         border_focus_stack="#689d6a",
-        border_normal="#000000",
-        border_normal_stack="#000000",
-        border_width=1),
+        border_normal="#1d2021",
+        border_normal_stack="#1d2021",
+        border_width=2),
 ]
 
 widget_defaults = dict(
     font="DM Mono Nerd Font",
     fontsize=14,
+    border="#83a598",
+    borderwidth=2,
 )
+
 extension_defaults = widget_defaults.copy()
 
 screens = [
@@ -98,10 +101,13 @@ screens = [
 
         top=bar.Bar(
             [
-                widget.CurrentLayout(),
-                widget.GroupBox(),
+                widget.GroupBox(
+                    this_current_screen_border="#83a598",
+                ),
                 widget.Prompt(),
-                widget.WindowName(),
+                widget.TaskList(
+                    max_title_width=250
+                ),
                 widget.Chord(
                     chords_colors={
                         "launch": ("#ff0000", "#ffffff"),
@@ -115,8 +121,7 @@ screens = [
                 widget.Clock(format="%Y-%m-%d %a %I:%M %p"),
             ],
             24,
-            # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
-            # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
+            background="#1d2021",
         ),
     ),
 ]
