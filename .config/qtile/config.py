@@ -78,17 +78,17 @@ for i in groups:
 
 layouts = [
     layout.Columns(
-        border_focus="#83a598",
-        border_focus_stack="#689d6a",
-        border_normal="#1d2021",
-        border_normal_stack="#1d2021",
+        border_focus="83a598",
+        border_focus_stack="689d6a",
+        border_normal="1d2021",
+        border_normal_stack="1d2021",
         border_width=2),
 ]
 
 widget_defaults = dict(
     font="DM Mono Nerd Font",
     fontsize=14,
-    border="#83a598",
+    border="83a598",
     borderwidth=2,
 )
 
@@ -102,20 +102,20 @@ screens = [
         top=bar.Bar(
             [
                 widget.GroupBox(
-                    this_current_screen_border="#83a598",
+                    highlight_method="line",
+                    highlight_color="1d2021",
+                    this_current_screen_border="83a598",
+                ),
+                widget.TaskList(
+                    max_title_width=250,
                 ),
                 widget.Prompt(),
-                widget.TaskList(
-                    max_title_width=250
-                ),
                 widget.Chord(
                     chords_colors={
-                        "launch": ("#ff0000", "#ffffff"),
+                        "launch": ("ff0000", "ffffff"),
                     },
                     name_transform=lambda name: name.upper(),
                 ),
-                # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
-                # widget.StatusNotifier(),
                 widget.CheckUpdates(distro="Arch_paru"),
                 widget.Systray(),
                 widget.Clock(format="%Y-%m-%d %a %I:%M %p"),
