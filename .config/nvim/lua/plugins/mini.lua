@@ -8,14 +8,7 @@ return {
             require("mini.pairs").setup()
             require("mini.surround").setup()
             require("mini.trailspace").setup()
-            require("mini.comment").setup({
-                mappings = {
-                    comment = '<leader>/',
-                    comment_line = '<leader>/',
-                    comment_isual = '<leader>/',
-                    textobject = '',
-                },
-            })
+            require("mini.comment").setup()
         end,
     },
 }
