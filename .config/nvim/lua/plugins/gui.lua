@@ -7,16 +7,22 @@ return {
     {
         "akinsho/bufferline.nvim",
         config = function ()
+            local bufferline = require("bufferline")
             local options = {
-               diagnostics = "nvim-lsp",
+                diagnostics = "nvim-lsp",
+                style_preset = {
+                    bufferline.style_preset.no_italic,
+                },
             }
-            local highlights = {
-                buffer_selected = { italic = false },
-            }
+            -- local highlights = {
+            --     tab_selected = {
+            --         fg = 4,
+            --     }
+            -- }
 
             require("bufferline").setup({
                 options = options,
-                highlights = highlights,
+                -- highlights = highlights,
             })
         end
     },
