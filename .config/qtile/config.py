@@ -106,10 +106,10 @@ screens = [
                     highlight_color="1d2021",
                     this_current_screen_border="83a598",
                 ),
+                widget.Prompt(),
                 widget.TaskList(
                     max_title_width=250,
                 ),
-                widget.Prompt(),
                 widget.Chord(
                     chords_colors={
                         "launch": ("ff0000", "ffffff"),
