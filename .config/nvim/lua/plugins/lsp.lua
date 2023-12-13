@@ -10,22 +10,10 @@ return {
             end,
         },
         { "williamboman/mason-lspconfig.nvim" },
-        {
-            "hrsh7th/nvim-cmp",
-            config = function()
-            local cmp = require("cmp")
-            cmp.setup({
-                mapping = cmp.mapping.preset.insert({
-                    ["<Tab>"] = cmp.mapping.confirm({ select = true }),
-                }),
-            })
-            end
-        },
+        { "hrsh7th/nvim-cmp", },
         { "hrsh7th/cmp-nvim-lsp" },
         { "hrsh7th/cmp-buffer" },
         { "hrsh7th/cmp-path" },
-        { "L3MON4D3/LuaSnip" },
-        { "saadparwaiz1/cmp_luasnip" },
     },
     config = function()
         -- LSP Setup
@@ -49,11 +37,19 @@ return {
             }
         })
         require("lspconfig").gdscript.setup({
-            on_attach = function(client, bufnr)
+            on_attach = function()
                 vim.api.nvim_command('echo serverstart("/tmp/godot.pipe")')
-              end
+            end
         })
 
         lsp.setup()
+
+        -- CMP Setup
+        local cmp = require("cmp")
+        cmp.setup({
+            mapping = cmp.mapping.preset.insert({
+                ["<Tab>"] = cmp.mapping.confirm({ select = true }),
+            }),
+        })
     end
 }
