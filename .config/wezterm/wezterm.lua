@@ -5,6 +5,6 @@ local config = {}
 config.enable_tab_bar = false
 
 config.font = wezterm.font("DM Mono")
-config.color_scheme = "Gruvbox dark, medium (base16)"
+config.color_scheme = "Gruvbox Material (Gogh)"
 
 return config
