@@ -47,6 +47,10 @@ return {
         -- CMP Setup
         local cmp = require("cmp")
         cmp.setup({
+            sources = {
+                { name = "buffer"},
+                { name = "path"}
+            },
             mapping = cmp.mapping.preset.insert({
                 ["<Tab>"] = cmp.mapping.confirm({ select = true }),
             }),
