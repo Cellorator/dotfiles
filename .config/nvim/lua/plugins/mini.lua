@@ -4,7 +4,6 @@ return {
         config = function ()
             require("mini.starter").setup()
             require("mini.sessions").setup()
-            require("mini.tabline").setup()
 
             require("mini.jump").setup()
             require("mini.pairs").setup()

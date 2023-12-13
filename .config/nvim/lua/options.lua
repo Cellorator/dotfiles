@@ -30,5 +30,3 @@ opt.undofile = true
 opt.updatetime = 50
 
 opt.termguicolors = true
-cmd.colorscheme("gruvbox")
-require("ibl").setup()
