@@ -23,6 +23,12 @@ return {
     {
         "lukas-reineke/indent-blankline.nvim",
         main = "ibl",
-        config = true,
+        config = function ()
+            local options = {
+                indent = { char = "│" },
+                scope = { enabled = false },
+            }
+            require("ibl").setup(options)
+        end,
     },
 }
