@@ -1,5 +1,4 @@
 local opt = vim.opt
-local cmd = vim.cmd
 
 -- UI
 opt.number = true
@@ -14,6 +13,9 @@ opt.smartindent = true
 
 opt.breakindent = true
 opt.showbreak = "/-/"
+
+opt.list = true
+opt.listchars = { tab = "󰌒 " }
 
 opt.scrolloff = 8
 
