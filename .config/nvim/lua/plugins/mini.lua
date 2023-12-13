@@ -1,6 +1,6 @@
 return {
     {
-        "echasnovski/mini.nim",
+        "echasnovski/mini.nvim",
         config = function ()
             require("mini.starter").setup()
             require("mini.sessions").setup()
