@@ -2,8 +2,6 @@ return {
     {
         "echasnovski/mini.nvim",
         config = function ()
-            require("mini.starter").setup()
-            require("mini.sessions").setup()
             require("mini.jump").setup()
             require("mini.pairs").setup()
             require("mini.surround").setup()
