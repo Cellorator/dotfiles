@@ -16,7 +16,12 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-local opts = {}
+local opts = {
+    checker = {
+        enabled = true,
+        frequency = 86400,
+    }
+}
 
 require("lazy").setup("plugins", opts)
 
