@@ -14,15 +14,9 @@ return {
                     bufferline.style_preset.no_italic,
                 },
             }
-            -- local highlights = {
-            --     tab_selected = {
-            --         fg = 4,
-            --     }
-            -- }
 
             require("bufferline").setup({
                 options = options,
-                -- highlights = highlights,
             })
         end
     },
