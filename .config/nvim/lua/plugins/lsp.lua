@@ -12,10 +12,8 @@ return {
 		{ "saadparwaiz1/cmp_luasnip" },
     },
     config = function()
-        -- LSP Setup
         local lsp = require("lspconfig")
 		local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
-		lsp_capabilities.textDocument.completion.completionItem.snippetSupport = false
 
 		-- Mason LSP Setups
 		local default_setup = function(server)
@@ -27,7 +25,7 @@ return {
 		local lua_setup = function()
 			lsp.lua_ls.setup({
 				settings = {
-					Lua = { diagnostics = { global = { "vim" } } }
+					Lua = { diagnostics = { globals = { "vim" } } }
 				}
 			})
 		end
