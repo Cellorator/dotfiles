@@ -1,7 +1,6 @@
 return {
     "VonHeikemen/lsp-zero.nvim",
-    dependencies = {
-        -- LSP
+    dependencies = { -- LSP
         { "neovim/nvim-lspconfig" },
         {
             "williamboman/mason.nvim",
