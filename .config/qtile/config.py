@@ -37,7 +37,7 @@ keys = [
     # Unsplit = 1 window displayed, like Max layout, but still with
     # multiple stack panes
     Key([mod, "shift"], "Return", lazy.layout.toggle_split(), desc="Toggle between split and unsplit sides of stack"),
-    
+
     Key([mod], "f", lazy.window.toggle_floating()),
     Key([mod], "m", lazy.window.toggle_maximize(), desc="Toggle maximize"),
     Key([mod], "w", lazy.window.kill(), desc="Kill focused window"),
@@ -142,8 +142,7 @@ floating_layout = layout.Floating(
     float_rules=[
         # Run the utility of `xprop` to see the wm class and name of an X client.
         *layout.Floating.default_float_rules,
-        Match(wm_class="Godot_Engine"),  # Godot
-        Match(wm_class="bevy_tutorial"),
+        Match(wm_class="Godot"),  # Godot
         Match(wm_class="confirmreset"),  # gitk
         Match(wm_class="makebranch"),  # gitk
         Match(wm_class="maketag"),  # gitk
