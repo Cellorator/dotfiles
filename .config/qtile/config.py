@@ -76,19 +76,25 @@ for i in groups:
         ]
     )
 
+black = "1b1b1b"
+blue = "7daea3"
+aqua = "89b482"
+yellow = "d8a657"
+
 layouts = [
     layout.Columns(
-        border_focus="83a598",
-        border_focus_stack="689d6a",
-        border_normal="1d2021",
-        border_normal_stack="1d2021",
-        border_width=2),
+        border_focus=blue,
+        border_focus_stack=aqua,
+        border_normal=black,
+        border_normal_stack=black,
+        border_width=2
+    ),
 ]
 
 widget_defaults = dict(
     font="DM Mono Nerd Font",
     fontsize=14,
-    border="83a598",
+    border=blue,
     borderwidth=2,
 )
 
@@ -103,8 +109,8 @@ screens = [
             [
                 widget.GroupBox(
                     highlight_method="line",
-                    highlight_color="1d2021",
-                    this_current_screen_border="83a598",
+                    highlight_color=black,
+                    this_current_screen_border=blue,
                 ),
                 widget.Prompt(),
                 widget.TaskList(
@@ -121,7 +127,7 @@ screens = [
                 widget.Clock(format="%Y-%m-%d %a %I:%M %p"),
             ],
             24,
-            background="#1d2021",
+            background=black,
         ),
     ),
 ]
@@ -139,6 +145,8 @@ follow_mouse_focus = True
 bring_front_click = False
 cursor_warp = False
 floating_layout = layout.Floating(
+    border_focus=yellow,
+    border_normal=black,
     float_rules=[
         # Run the utility of `xprop` to see the wm class and name of an X client.
         *layout.Floating.default_float_rules,
@@ -149,8 +157,7 @@ floating_layout = layout.Floating(
         Match(wm_class="ssh-askpass"),  # ssh-askpass
         Match(title="branchdialog"),  # gitk
         Match(title="pinentry"),  # GPG key password entry
-    ]
-)
+    ])
 auto_fullscreen = True
 focus_on_window_activation = "smart"
 reconfigure_screens = True
