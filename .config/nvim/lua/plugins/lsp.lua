@@ -12,6 +12,7 @@ return {
         { "williamboman/mason-lspconfig.nvim" },
         { "hrsh7th/nvim-cmp", },
         { "hrsh7th/cmp-nvim-lsp" },
+        { "hrsh7th/cmp-nvim-lua" },
         { "hrsh7th/cmp-buffer" },
         { "hrsh7th/cmp-path" },
     },
@@ -48,8 +49,10 @@ return {
         local cmp = require("cmp")
         cmp.setup({
             sources = {
+                { name = "nvim_lsp"},
+                { name = "nvim_lua"},
                 { name = "buffer"},
-                { name = "path"}
+                { name = "path"},
             },
             mapping = cmp.mapping.preset.insert({
                 ["<Tab>"] = cmp.mapping.confirm({ select = true }),
