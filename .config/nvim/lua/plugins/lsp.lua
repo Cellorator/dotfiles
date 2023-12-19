@@ -42,7 +42,7 @@ return {
         -- Manual LSP setups
         lsp.gdscript.setup({
             on_attach = function()
-                vim.api.nvim_command('echo serverstart("/tmp/godot.pipe")')
+                vim.api.nvim_command('serverstart("/tmp/godot.pipe")')
             end
         })
 
