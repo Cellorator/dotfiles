@@ -5,7 +5,6 @@ return {
 		opts = {
 			options = {
 				section_separators = { left = "", right = ""},
-				-- component_separators = { left = "", right = "d" },
 				component_separators = { left = "", right = "" },
 			},
 			sections = {
