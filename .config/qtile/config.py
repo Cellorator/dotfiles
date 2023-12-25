@@ -39,8 +39,10 @@ keys = [
     Key([mod, "shift"], "Return", lazy.layout.toggle_split(), desc="Toggle between split and unsplit sides of stack"),
 
     Key([mod], "f", lazy.window.toggle_floating()),
-    Key([mod], "m", lazy.window.toggle_maximize(), desc="Toggle maximize"),
+    Key([mod], "m", lazy.window.toggle_maximize()),
+    Key([mod, "shift"], "m", lazy.window.toggle_fullscreen()),
     Key([mod], "w", lazy.window.kill(), desc="Kill focused window"),
+    Key([mod], "space", lazy.next_layout()),
 
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
@@ -89,6 +91,11 @@ layouts = [
         border_normal_stack=black,
         border_width=2
     ),
+    layout.Floating(
+        border_focus=yellow,
+        border_normal=black,
+        border_width=2
+    )
 ]
 
 widget_defaults = dict(
