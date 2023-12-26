@@ -14,9 +14,9 @@ abbr -a vim nvim
 abbr -a cat bat
 abbr -a cd z
 
-alias ls="eza -l --icons"
+alias ls="eza -1 --icons"
 alias la="eza -la --icons"
-alias tree="eza -ta --icons"
+alias tree="eza -Ta --icons"
 
 # Git abbreviations
 abbr -a gi git init
