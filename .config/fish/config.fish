@@ -16,12 +16,6 @@ abbr -a ls eza --icons
 abbr -a la eza -la --icons
 abbr -a tree eza -Ta --icons
 abbr -a cd z
-abbr -a stow stow --dotfiles
-
-alias sudo="sudo "
-alias rm=rmtrash
-alias rmdir=rmdirtrash
-alias bruh=thefuck
 
 # Git abbreviations
 abbr -a gi git init
