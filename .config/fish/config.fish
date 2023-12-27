@@ -5,7 +5,8 @@ end
 fish_add_path ~/bin
 fish_add_path ~/.cargo/bin
 
-set -x EDITOR nvim
+set -Ux EDITOR nvim
+set -Ux QT_QPA_PLATFORMTHEME qt5ct
 
 starship init fish | source
 zoxide init fish | source
