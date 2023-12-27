@@ -5,6 +5,8 @@ end
 fish_add_path ~/bin
 fish_add_path ~/.cargo/bin
 
+set -x EDITOR nvim
+
 starship init fish | source
 zoxide init fish | source
 set -x BAT_THEME ansi
