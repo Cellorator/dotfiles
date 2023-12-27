@@ -1,0 +1,27 @@
+#!/bin/sh
+
+if ! type paru > /dev/null; then
+	echo "Paru is not installed"
+	echo "Installing paru"
+
+	cd /tmp
+	git clone https://aur.archlinux.org/paru-bin.git
+	cd paru-bin
+	makepkg -si
+	cd
+fi
+
+echo "Installing fish, wezterm and terminal apps"
+paru -S fish wezterm neovim bat eza zoxide starship fzf fd
+
+echo "Installing qtile, picom, dunst"
+paru -S qtile xcb-util-cursor picom dunst
+
+echo "Installing fonts for customization"
+paru -S ttf-dm-mono-git ttf-nerd-fonts-symbols
+
+echo "Installing themes"
+paru -S gruvbox-material-icon-theme-git gruvbox-material-gtk-theme-git xcursor-simp1e-gruvbox-light
+
+echo "Finished"
+echo "Don't forget to install xorg, nvidia, login manager, networking and audio"
