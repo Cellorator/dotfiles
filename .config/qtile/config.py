@@ -99,7 +99,7 @@ layouts = [
 ]
 
 widget_defaults = dict(
-    font="DM Mono Nerd Font",
+    font="DM Mono",
     fontsize=14,
     border=blue,
     borderwidth=2,
