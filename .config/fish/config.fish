@@ -16,6 +16,7 @@ set -x BAT_THEME ansi
 abbr -a vim nvim
 abbr -a cat bat
 abbr -a cd z
+abbr -a cl clear
 
 alias ls="eza -1 --icons"
 alias la="eza -la --icons"
