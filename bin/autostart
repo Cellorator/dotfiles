@@ -1,6 +1,5 @@
 #!/bin/sh
 
-picom -b &
+picom &
 dunst &
-nm-applet &
-volctl &
+udiskie --tray &
