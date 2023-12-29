@@ -2,10 +2,6 @@ from libqtile import backend, bar, layout, widget, qtile, hook
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 
-# @hook.subscribe.startup_once
-# def autostart_once():
-#     qtile.cmd_spawn("~/.config/qtile/autostart")
-
 mod = "mod4"
 
 keys = [

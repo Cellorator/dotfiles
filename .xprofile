@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# picom -b &
+nvidia-settings --load-config-only &
+dunst &
+udiskie --tray &
