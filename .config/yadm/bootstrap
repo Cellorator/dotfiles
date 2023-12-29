@@ -12,10 +12,13 @@ if ! type paru > /dev/null; then
 fi
 
 echo "Installing fish, wezterm and terminal apps"
-paru -S fish wezterm neovim bat eza zoxide starship fzf fd
+paru -S fish wezterm neovim bat eza zoxide starship fzf fd udisks2 udiskie trash-cli
 
-echo "Installing qtile, picom, dunst"
+echo "Installing qtile, picom"
 paru -S qtile xcb-util-cursor picom dunst
+
+echo "Installing gui apps"
+paru -S thunar gvfs file-roller xfce-polkit
 
 echo "Installing fonts for customization"
 paru -S ttf-dm-mono-git ttf-nerd-fonts-symbols
