@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<channel name="accessibility" version="1.0">
-  <property name="MouseKeys" type="empty">
-    <property name="MaxSpeed" type="int" value="990"/>
-    <property name="Curve" type="int" value="-30"/>
-  </property>
-</channel>
