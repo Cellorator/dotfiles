@@ -12,7 +12,7 @@ if ! type paru > /dev/null; then
 fi
 
 echo "Installing fish, wezterm and terminal apps"
-paru -S fish wezterm neovim bat eza zoxide starship fzf fd udisks2 udiskie trash-cli
+paru -S fish wezterm neovim bat eza zoxide starship fzf fd udisks2 udiskie trash-cli downgrade
 
 echo "Installing qtile, picom"
 paru -S qtile xcb-util-cursor picom dunst
