@@ -10,7 +10,6 @@ set -Ux QT_QPA_PLATFORMTHEME qt5ct
 
 starship init fish | source
 zoxide init fish | source
-set -x BAT_THEME ansi
 
 # Useful abbreviations and aliases
 abbr -a vim nvim
