@@ -125,7 +125,6 @@ screens = [
                     },
                     name_transform=lambda name: name.upper(),
                 ),
-                widget.CheckUpdates(distro="Arch_paru"),
                 widget.Systray(),
                 widget.Clock(format="%Y-%m-%d %a %I:%M %p"),
             ],
