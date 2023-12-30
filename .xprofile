@@ -5,3 +5,5 @@ nvidia-settings --load-config-only &
 /usr/lib/xfce-polkit/xfce-polkit &
 dunst &
 udiskie --tray &
+
+xset r rate 300
