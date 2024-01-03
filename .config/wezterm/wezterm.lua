@@ -4,7 +4,7 @@ local config = {}
 
 config.enable_tab_bar = false
 
-config.font = wezterm.font_with_fallback({ "DM Mono", "Symbols Nerd Font" })
+config.font = wezterm.font("DM Mono")
 
 -- Colorscheme
 config.color_scheme = "Gruvbox Material (Gogh)"

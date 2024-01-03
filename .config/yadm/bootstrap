@@ -20,8 +20,8 @@ paru -S qtile xcb-util-cursor picom dunst
 echo "Installing gui apps"
 paru -S thunar gvfs file-roller xfce-polkit
 
-echo "Installing fonts for customization"
-paru -S ttf-dm-mono-git ttf-nerd-fonts-symbols
+echo "Installing fonts"
+paru -S ttf-dm-mono-git noto-fonts-{cjk, emoji}
 
 echo "Installing themes"
 paru -S gruvbox-material-icon-theme-git gruvbox-material-gtk-theme-git xcursor-simp1e-gruvbox-light
