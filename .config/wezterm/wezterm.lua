@@ -1,4 +1,4 @@
-local wezterm = require ("wezterm")
+local wezterm = require("wezterm")
 
 local config = {}
 
@@ -8,8 +8,5 @@ config.font = wezterm.font("DM Mono")
 
 -- Colorscheme
 config.color_scheme = "Gruvbox dark, medium (base16)"
-config.colors = {
-    cursor_fg = "black"
-}
 
 return config
