@@ -4,12 +4,13 @@ return {
         dependencies = { "nvim-tree/nvim-web-devicons" },
 		opts = {
 			options = {
+				theme = "gruvbox_dark",
 				section_separators = { left = "", right = ""},
 				component_separators = { left = "", right = "" },
 			},
 			sections = {
 				lualine_a = {
-					{ 'mode', separator = { left = "", right = "" } },
+					{ 'mode', separator = { right = "" } },
 				},
 				lualine_b = {
 					{ "filename"},
@@ -26,7 +27,7 @@ return {
 				},
 				lualine_z = {
 					{ "progress" },
-					{ "location", separator = { right = "" } }
+					{ "location" }
 				}
 			}
 		}
