@@ -7,7 +7,7 @@ config.enable_tab_bar = false
 config.font = wezterm.font("DM Mono")
 
 -- Colorscheme
-config.color_scheme = "Gruvbox Material (Gogh)"
+config.color_scheme = "Gruvbox dark, medium (base16)"
 config.colors = {
     cursor_fg = "black"
 }

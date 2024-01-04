@@ -74,10 +74,10 @@ for i in groups:
         ]
     )
 
-black = "1b1b1b"
-blue = "7daea3"
-aqua = "89b482"
-yellow = "d8a657"
+black = "1d2021"
+blue = "83a598"
+aqua = "8ec07c"
+yellow = "fabd2f"
 
 layouts = [
     layout.Columns(
