@@ -6,4 +6,6 @@ nvidia-settings --load-config-only &
 dunst &
 udiskie --tray &
 
+gwe --hide-window &
+
 xset r rate 300
