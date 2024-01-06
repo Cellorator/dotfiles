@@ -4,8 +4,8 @@
 	<icon>utilities-terminal</icon>
 	<name>Open Terminal Here</name>
 	<submenu></submenu>
-	<unique-id>1703867646832237-1</unique-id>
-	<command>wezterm -e --cwd %f</command>
+	<unique-id>1704521093617572-1</unique-id>
+	<command>exo-open --working-directory %f --launch TerminalEmulator</command>
 	<description>Example for a custom action</description>
 	<range></range>
 	<patterns>*</patterns>
