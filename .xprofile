@@ -5,6 +5,7 @@ nvidia-settings --load-config-only &
 /usr/lib/xfce-polkit/xfce-polkit &
 dunst &
 udiskie --tray &
+blueman-applet &
 
 gwe --hide-window &
 
