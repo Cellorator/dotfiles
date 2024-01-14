@@ -105,7 +105,7 @@ extension_defaults = widget_defaults.copy()
 
 screens = [
     Screen(
-        wallpaper="~/.config/qtile/pacman-ghosts.jpg",
+        wallpaper="/usr/share/backgrounds/pacman-ghosts.jpg",
         wallpaper_mode="fill",
 
         top=bar.Bar(
