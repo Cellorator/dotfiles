@@ -1,7 +1,8 @@
 #!/bin/sh
 
-# picom -b &
 nvidia-settings --load-config-only &
+picom -b &
+
 /usr/lib/xfce-polkit/xfce-polkit &
 dunst &
 udiskie --tray &
