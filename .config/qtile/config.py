@@ -20,6 +20,8 @@ keys = [
     Key([mod, "shift"], "l", lazy.layout.shuffle_right(), desc="Move window to the right"),
     Key([mod, "shift"], "j", lazy.layout.shuffle_down(), desc="Move window down"),
     Key([mod, "shift"], "k", lazy.layout.shuffle_up(), desc="Move window up"),
+    Key([mod, "shift", "control"], "h", lazy.layout.swap_column_left()),
+    Key([mod, "shift", "control"], "l", lazy.layout.swap_column_right()),
     # Grow windows. If current window is on the edge of screen and direction
     # will be to screen edge - window would shrink.
     Key([mod, "control"], "h", lazy.layout.grow_left(), desc="Grow window to the left"),
@@ -37,13 +39,13 @@ keys = [
     Key([mod], "f", lazy.window.toggle_floating()),
     Key([mod], "m", lazy.window.toggle_maximize()),
     Key([mod, "shift"], "m", lazy.window.toggle_fullscreen()),
-    Key([mod], "w", lazy.window.kill(), desc="Kill focused window"),
+    Key([mod, "shift"], "w", lazy.window.kill(), desc="Kill focused window"),
     Key([mod], "space", lazy.next_layout()),
 
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
 
-    Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
+    Key([mod], "r", lazy.spawn("rofi -show drun"), desc="Spawn a command using a prompt widget"),
     Key([mod], "Return", lazy.spawn("wezterm"), desc="Launch terminal"),
     Key([mod], "b", lazy.spawn("firefox"), desc="Spawn browser"),
 ]
