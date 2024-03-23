@@ -2,6 +2,12 @@ from libqtile import backend, bar, layout, widget, qtile, hook
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 
+# Add IS_FLOATING windows property for floating windows
+# Currently only used for picom adding shadows to floating windows only
+@hook.subscribe.client_focus
+def set_hint(window):
+    window.window.set_property("IS_FLOATING", str(window.floating), type="STRING", format=8)
+
 mod = "mod4"
 
 keys = [
