@@ -51,7 +51,8 @@ keys = [
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
 
-    Key([mod], "r", lazy.spawn("rofi -show drun"), desc="Spawn a command using a prompt widget"),
+    Key([mod], "r", lazy.spawn("rofi -show drun"), desc="Launch rofi"),
+    Key(["mod1"], "Tab", lazy.spawn("rofi -show window"), desc="Show windows with rofi"),
     Key([mod], "Return", lazy.spawn("wezterm"), desc="Launch terminal"),
     Key([mod], "b", lazy.spawn("firefox"), desc="Spawn browser"),
 ]
