@@ -1,8 +1,8 @@
 from libqtile import backend, bar, layout, widget, qtile, hook
+from libqtile.lazy import lazy
 from libqtile.config import Group, Match, Screen
 from libqtile.config import EzKey as Key
 from libqtile.config import EzDrag as Drag
-from libqtile.lazy import lazy
 from libqtile.utils import send_notification
 
 @hook.subscribe.client_focus
@@ -61,7 +61,7 @@ keys = [
     Key("M-m", lazy.window.toggle_maximize()),
     Key("M-S-m", lazy.window.toggle_fullscreen()),
     Key("M-S-w", lazy.window.kill(), desc="Kill focused window"),
-    Key("M-<Return>", lazy.next_layout()),
+    Key("M-<Space>", lazy.next_layout()),
 
     Key("M-C-r", lazy.reload_config(), desc="Reload the config"),
     Key("M-C-q", lazy.shutdown(), desc="Shutdown Qtile"),
