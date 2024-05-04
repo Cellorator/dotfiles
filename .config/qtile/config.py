@@ -1,15 +1,27 @@
 from libqtile import backend, bar, layout, widget, qtile, hook
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
+from libqtile.utils import send_notification
 
-# Add IS_FLOATING windows property for floating windows
-# Currently only used for picom adding shadows to floating windows only
 @hook.subscribe.client_focus
-def set_hint(window):
+def changed_focus(window):
+    # Add IS_FLOATING windows property for floating windows
+    # Currently only used for picom adding shadows to floating windows only
     window.window.set_property("IS_FLOATING", str(window.floating), type="STRING", format=8)
 
-mod = "mod4"
+    # Make focus window appear on top
+    qtile.current_window.bring_to_front()
 
+auto_fullscreen = True
+auto_minimize = False
+reconfigure_screens = True
+
+focus_on_window_activation = "focus"
+follow_mouse_focus = False
+bring_front_click = True
+cursor_warp = False
+
+mod = "mod4"
 keys = [
     Key([mod], "Tab", lazy.screen.toggle_group(), desc="Move window focus to other window"),
     # A list of available commands that can be bound to keys can be found
@@ -19,6 +31,8 @@ keys = [
     Key([mod], "l", lazy.layout.right(), desc="Move focus to right"),
     Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
     Key([mod], "k", lazy.layout.up(), desc="Move focus up"),
+    Key(["mod1"], "Tab", lazy.spawn("notify-send test"), desc="Show windows with rofi"),
+    Key(["mod1"], "Tab", lazy.group.next_window(), desc="Show windows with rofi"),
 
     # Move windows between left/right columns or move up/down in current stack.
     # Moving out of range in Columns layout will create new column.
@@ -52,9 +66,15 @@ keys = [
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
 
     Key([mod], "r", lazy.spawn("rofi -show drun"), desc="Launch rofi"),
-    Key(["mod1"], "Tab", lazy.spawn("rofi -show window"), desc="Show windows with rofi"),
     Key([mod], "Return", lazy.spawn("wezterm"), desc="Launch terminal"),
     Key([mod], "b", lazy.spawn("firefox"), desc="Spawn browser"),
+]
+
+# Drag floating layouts.
+mouse = [
+    Drag([mod], "Button1", lazy.window.set_position_floating(), start=lazy.window.get_position()),
+    Drag([mod], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()),
+    Click([mod], "Button2", lazy.window.bring_to_front()),
 ]
 
 groups = [Group(i) for i in "123456789"]
@@ -99,8 +119,9 @@ layouts = [
     layout.Floating(
         border_focus=orange,
         border_normal=black,
-        border_width=2
-    )
+        border_width=0,
+    ),
+    layout.Max(),
 ]
 
 widget_defaults = dict(
@@ -119,12 +140,14 @@ screens = [
 
         top=bar.Bar(
             [
+                widget.CurrentLayoutIcon(
+                    padding=5,
+                ),
                 widget.GroupBox(
                     highlight_method="line",
                     highlight_color=black,
                     this_current_screen_border=blue,
                 ),
-                widget.Prompt(),
                 widget.TaskList(
                     max_title_width=250,
                 ),
@@ -143,18 +166,8 @@ screens = [
     ),
 ]
 
-# Drag floating layouts.
-mouse = [
-    Drag([mod], "Button1", lazy.window.set_position_floating(), start=lazy.window.get_position()),
-    Drag([mod], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()),
-    Click([mod], "Button2", lazy.window.bring_to_front()),
-]
-
 dgroups_key_binder = None
 dgroups_app_rules = []  # type: list
-follow_mouse_focus = True
-bring_front_click = False
-cursor_warp = False
 floating_layout = layout.Floating(
     border_focus=orange,
     border_normal=black,
@@ -169,13 +182,6 @@ floating_layout = layout.Floating(
         Match(title="branchdialog"),  # gitk
         Match(title="pinentry"),  # GPG key password entry
     ])
-auto_fullscreen = True
-focus_on_window_activation = "smart"
-reconfigure_screens = True
-
-# If things like steam games want to auto-minimize themselves when losing
-# focus, should we respect this or not?
-auto_minimize = False
 
 # When using the Wayland backend, this can be used to configure input devices.
 wl_input_rules = None
