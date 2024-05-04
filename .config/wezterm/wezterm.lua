@@ -10,6 +10,14 @@ config.window_padding = {
 	bottom = 0
 }
 
+config.keys = {
+	{
+		action = wezterm.action.DisableDefaultAssignment,
+		key = 'w',
+		mods = 'SUPER',
+	},
+}
+
 config.font = wezterm.font("DM Mono")
 
 -- Colorscheme
