@@ -1,5 +1,7 @@
 from libqtile import backend, bar, layout, widget, qtile, hook
-from libqtile.config import Click, Drag, Group, Key, Match, Screen
+from libqtile.config import Group, Match, Screen
+from libqtile.config import EzKey as Key
+from libqtile.config import EzDrag as Drag
 from libqtile.lazy import lazy
 from libqtile.utils import send_notification
 
@@ -23,58 +25,56 @@ cursor_warp = False
 
 mod = "mod4"
 keys = [
-    Key([mod], "Tab", lazy.screen.toggle_group(), desc="Move window focus to other window"),
+    Key("M-<Tab>", lazy.screen.toggle_group(), desc="Move window focus to other window"),
     # A list of available commands that can be bound to keys can be found
     # at https://docs.qtile.org/en/latest/manual/config/lazy.html
     # Switch between windows
-    Key([mod], "h", lazy.layout.left(), desc="Move focus to left"),
-    Key([mod], "l", lazy.layout.right(), desc="Move focus to right"),
-    Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
-    Key([mod], "k", lazy.layout.up(), desc="Move focus up"),
-    Key(["mod1"], "Tab", lazy.spawn("notify-send test"), desc="Show windows with rofi"),
-    Key(["mod1"], "Tab", lazy.group.next_window(), desc="Show windows with rofi"),
+    Key("M-h", lazy.layout.left(), desc="Move focus to left"),
+    Key("M-l", lazy.layout.right(), desc="Move focus to right"),
+    Key("M-j", lazy.layout.down(), desc="Move focus down"),
+    Key("M-k", lazy.layout.up(), desc="Move focus up"),
+    Key("A-<Tab>", lazy.group.next_window(), desc="Show windows with rofi"),
 
     # Move windows between left/right columns or move up/down in current stack.
     # Moving out of range in Columns layout will create new column.
-    Key([mod, "shift"], "h", lazy.layout.shuffle_left(), desc="Move window to the left"),
-    Key([mod, "shift"], "l", lazy.layout.shuffle_right(), desc="Move window to the right"),
-    Key([mod, "shift"], "j", lazy.layout.shuffle_down(), desc="Move window down"),
-    Key([mod, "shift"], "k", lazy.layout.shuffle_up(), desc="Move window up"),
-    Key([mod, "shift", "control"], "h", lazy.layout.swap_column_left()),
-    Key([mod, "shift", "control"], "l", lazy.layout.swap_column_right()),
+    Key("M-S-h", lazy.layout.shuffle_left(), desc="Move window to the left"),
+    Key("M-S-l", lazy.layout.shuffle_right(), desc="Move window to the right"),
+    Key("M-S-j", lazy.layout.shuffle_down(), desc="Move window down"),
+    Key("M-S-k", lazy.layout.shuffle_up(), desc="Move window up"),
+    Key("M-S-C-h", lazy.layout.swap_column_left()),
+    Key("M-S-C-l", lazy.layout.swap_column_right()),
     # Grow windows. If current window is on the edge of screen and direction
     # will be to screen edge - window would shrink.
-    Key([mod, "control"], "h", lazy.layout.grow_left(), desc="Grow window to the left"),
-    Key([mod, "control"], "l", lazy.layout.grow_right(), desc="Grow window to the right"),
-    Key([mod, "control"], "j", lazy.layout.grow_down(), desc="Grow window down"),
-    Key([mod, "control"], "k", lazy.layout.grow_up(), desc="Grow window up"),
-    Key([mod, "control"], "i", lazy.layout.grow()),
-    Key([mod], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
+    Key("M-C-h", lazy.layout.grow_left(), desc="Grow window to the left"),
+    Key("M-C-l", lazy.layout.grow_right(), desc="Grow window to the right"),
+    Key("M-C-j", lazy.layout.grow_down(), desc="Grow window down"),
+    Key("M-C-k", lazy.layout.grow_up(), desc="Grow window up"),
+    Key("M-C-i", lazy.layout.grow()),
+    Key("M-n", lazy.layout.normalize(), desc="Reset all window sizes"),
     # Toggle between split and unsplit sides of stack.
     # Split = all windows displayed
     # Unsplit = 1 window displayed, like Max layout, but still with
     # multiple stack panes
-    Key([mod, "shift"], "Return", lazy.layout.toggle_split(), desc="Toggle between split and unsplit sides of stack"),
+    Key("M-S-<Return>", lazy.layout.toggle_split(), desc="Toggle between split and unsplit sides of stack"),
+    
+    Key("M-f", lazy.window.toggle_floating()),
+    Key("M-m", lazy.window.toggle_maximize()),
+    Key("M-S-m", lazy.window.toggle_fullscreen()),
+    Key("M-S-w", lazy.window.kill(), desc="Kill focused window"),
+    Key("M-<Return>", lazy.next_layout()),
 
-    Key([mod], "f", lazy.window.toggle_floating()),
-    Key([mod], "m", lazy.window.toggle_maximize()),
-    Key([mod, "shift"], "m", lazy.window.toggle_fullscreen()),
-    Key([mod, "shift"], "w", lazy.window.kill(), desc="Kill focused window"),
-    Key([mod], "space", lazy.next_layout()),
+    Key("M-C-r", lazy.reload_config(), desc="Reload the config"),
+    Key("M-C-q", lazy.shutdown(), desc="Shutdown Qtile"),
 
-    Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
-    Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
-
-    Key([mod], "r", lazy.spawn("rofi -show drun"), desc="Launch rofi"),
-    Key([mod], "Return", lazy.spawn("wezterm"), desc="Launch terminal"),
-    Key([mod], "b", lazy.spawn("firefox"), desc="Spawn browser"),
+    Key("M-r", lazy.spawn("rofi -show drun"), desc="Launch rofi"),
+    Key("M-<Return>", lazy.spawn("wezterm"), desc="Launch terminal"),
+    Key("M-b", lazy.spawn("firefox"), desc="Spawn browser"),
 ]
 
 # Drag floating layouts.
 mouse = [
-    Drag([mod], "Button1", lazy.window.set_position_floating(), start=lazy.window.get_position()),
-    Drag([mod], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()),
-    Click([mod], "Button2", lazy.window.bring_to_front()),
+    Drag("M-<Button1>", lazy.window.set_position_floating(), start=lazy.window.get_position()),
+    Drag("M-<Button3>", lazy.window.set_size_floating(), start=lazy.window.get_size()),
 ]
 
 groups = [Group(i) for i in "123456789"]
@@ -84,15 +84,13 @@ for i in groups:
         [
             # mod1 + letter of group = switch to group
             Key(
-                [mod],
-                i.name,
+                f"M-{i.name}",
                 lazy.group[i.name].toscreen(),
                 desc="Switch to group {}".format(i.name),
             ),
             # mod1 + shift + letter of group = switch to & move focused window to group
             Key(
-                [mod, "shift"],
-                i.name,
+                f"M-S-{i.name}",
                 lazy.window.togroup(i.name, switch_group=True),
                 desc="Switch to & move focused window to group {}".format(i.name),
             ),
