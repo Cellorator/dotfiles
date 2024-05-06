@@ -33,7 +33,7 @@ keys = [
     Key("M-l", lazy.layout.right(), desc="Move focus to right"),
     Key("M-j", lazy.layout.down(), desc="Move focus down"),
     Key("M-k", lazy.layout.up(), desc="Move focus up"),
-    Key("A-<Tab>", lazy.group.next_window(), desc="Show windows with rofi"),
+    Key("A-<Tab>", lazy.group.focus_back(), desc="Show windows with rofi"),
 
     # Move windows between left/right columns or move up/down in current stack.
     # Moving out of range in Columns layout will create new column.
@@ -56,7 +56,7 @@ keys = [
     # Unsplit = 1 window displayed, like Max layout, but still with
     # multiple stack panes
     Key("M-S-<Return>", lazy.layout.toggle_split(), desc="Toggle between split and unsplit sides of stack"),
-    
+
     Key("M-f", lazy.window.toggle_floating()),
     Key("M-m", lazy.window.toggle_maximize()),
     Key("M-S-m", lazy.window.toggle_fullscreen()),
