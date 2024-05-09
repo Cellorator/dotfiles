@@ -4,7 +4,7 @@ return {
     opts = {
         highlight = { enable = true },
         indent = { enable = true },
-        ensure_installed = { "lua", "vim", "vimdoc", "rust", "python"},
+        ensure_installed = { "lua", "vim", "vimdoc" },
     },
     config = function(_, opts)
         require("nvim-treesitter.configs").setup(opts)

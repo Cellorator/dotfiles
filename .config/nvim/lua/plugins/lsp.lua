@@ -41,9 +41,9 @@ return {
 
         -- Manual LSP setups
         lsp.gdscript.setup({
-            on_attach = function()
-                vim.api.nvim_command('serverstart("/tmp/godot.pipe")')
-            end
+			on_attach = function()
+				vim.api.nvim_command('echo serverstart("/tmp/godot.pipe")')  -- For opening files from godot into neovim
+			end
         })
 
         local cmp = require("cmp")
