@@ -12,14 +12,15 @@ starship init fish | source
 zoxide init fish | source
 
 # Useful abbreviations and aliases
-abbr -a vim nvim
-abbr -a cat bat
-abbr -a cd z
 abbr -a cl clear
 
 alias ls="eza -1 --icons"
 alias la="eza -la --icons"
 alias tree="eza -Ta --icons"
+alias cat="bat"
+alias cd="z"
+alias cat="bat"
+alias vim="nvim"
 
 # Git abbreviations
 abbr -a gi git init
@@ -37,8 +38,5 @@ abbr -a --set-cursor yc yadm commit -m \"%\"
 abbr -a ys yadm status
 abbr -a yd yadm diff
 abbr -a yp yadm push
-
-alias backup-prism="rsync -azvP --delete /home/admin/.local/share/PrismLauncher/instances/ /run/media/admin/main-32gb/MinecraftMods/InstanceBackups/"
-alias restore-prism="rsync -avzP --delete '/run/media/admin/main-32gb/MinecraftMods/InstanceBackups/' /home/admin/.local/share/PrismLauncher/instances/"
 
 set fish_greeting
