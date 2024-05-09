@@ -21,6 +21,7 @@ config.keys = {
 config.font = wezterm.font("DM Mono")
 
 -- Colorscheme
-config.color_scheme = "Gruvbox dark, medium (base16)"
+-- config.color_scheme = "Gruvbox dark, medium (base16)"
+config.color_scheme = "Gruvbox Material (Gogh)"
 
 return config
