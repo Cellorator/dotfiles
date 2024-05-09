@@ -1,9 +1,11 @@
 from libqtile import backend, bar, layout, widget, qtile, hook
 from libqtile.lazy import lazy
-from libqtile.config import Group, Match, Screen
+from libqtile.config import Group, Match, Screen, ScratchPad, DropDown
 from libqtile.config import EzKey as Key
 from libqtile.config import EzDrag as Drag
+from libqtile.config import EzKeyChord as KeyChord
 from libqtile.utils import send_notification
+
 
 @hook.subscribe.client_focus
 def changed_focus(window):
@@ -12,16 +14,20 @@ def changed_focus(window):
     window.window.set_property("IS_FLOATING", str(window.floating), type="STRING", format=8)
 
     # Make focus window appear on top
-    qtile.current_window.bring_to_front()
+    current_window = qtile.current_window
+    if current_window.floating:
+        window.bring_to_front()
+
 
 auto_fullscreen = True
 auto_minimize = False
 reconfigure_screens = True
 
-focus_on_window_activation = "focus"
+focus_on_window_activation = "smart"
 follow_mouse_focus = False
 bring_front_click = True
 cursor_warp = False
+float_kept_above = True
 
 mod = "mod4"
 keys = [
@@ -69,6 +75,10 @@ keys = [
     Key("M-r", lazy.spawn("rofi -show drun"), desc="Launch rofi"),
     Key("M-<Return>", lazy.spawn("wezterm"), desc="Launch terminal"),
     Key("M-b", lazy.spawn("firefox"), desc="Spawn browser"),
+
+    KeyChord("M-s", [
+        Key("r", lazy.group["0"].dropdown_toggle("terminal")),
+    ])
 ]
 
 # Drag floating layouts.
@@ -78,6 +88,11 @@ mouse = [
 ]
 
 groups = [Group(i) for i in "123456789"]
+groups.extend([
+    ScratchPad("0", [
+        DropDown("terminal", "wezterm", opacity=1),
+    ]),
+])
 
 for i in groups:
     keys.extend(
@@ -149,12 +164,7 @@ screens = [
                 widget.TaskList(
                     max_title_width=250,
                 ),
-                widget.Chord(
-                    chords_colors={
-                        "launch": ("ff0000", "ffffff"),
-                    },
-                    name_transform=lambda name: name.upper(),
-                ),
+                widget.Chord(),
                 widget.Systray(),
                 widget.Clock(format="%Y-%m-%d %a %I:%M %p"),
             ],
