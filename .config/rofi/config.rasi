@@ -1,4 +1,6 @@
 @theme "/usr/share/rofi/themes/gruvbox-dark.rasi"
 configuration {
+	modes: "drun,window";
+	font: "DM Mono 12";
 	show-icons: true;
 }
