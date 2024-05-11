@@ -1,33 +1,23 @@
 local opt = vim.opt
 
--- UI
-opt.number = true
-opt.relativenumber = true
+-- Visuals
+opt.number = true  -- Show line numbers
+opt.relativenumber = true  -- Show relative line numbers
+opt.signcolumn = "number"  -- Put gutter symbols in line number column
 
--- Editor
-opt.tabstop = 4
-opt.softtabstop = 4
-opt.shiftwidth = 4
-opt.smartindent = true
-
-opt.breakindent = true
-opt.showbreak = "/-/"
-
--- opt.list = true
--- opt.listchars = { tab = "󰌒 " }
-
-opt.scrolloff = 8
+-- Behaviour
+-- opt.expandtab = true
+opt.tabstop = 4  -- Length of a tab
+opt.softtabstop = 4  -- Amount of spaces for tab
+opt.shiftwidth = 4  -- Size of indentation with > and < commands
+opt.scrolloff = 8  -- Amount of lines before top and bottom while scrolling
 
 -- Search
-opt.ignorecase = true
-opt.smartcase = true
-opt.hlsearch = false
-opt.incsearch = true
+opt.ignorecase = true  -- Ignore case when searchin
+opt.smartcase = true  -- Don't ignore case when search has upper case letters
+opt.hlsearch = false  -- Stop highlighting when search is done
 
 -- Random Stuff
-opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
 opt.undofile = true
-
-opt.updatetime = 50
-
 opt.termguicolors = true
+
