@@ -76,9 +76,10 @@ keys = [
     Key("M-<Return>", lazy.spawn("wezterm"), desc="Launch terminal"),
     Key("M-b", lazy.spawn("firefox"), desc="Spawn browser"),
 
-    KeyChord("M-s", [
-        Key("r", lazy.group["0"].dropdown_toggle("terminal")),
-    ])
+    KeyChord("M-k", [
+       Key("<Return>", lazy.group["0"].dropdown_toggle("terminal"))],
+       mode="Scratchpads"
+    )
 ]
 
 # Drag floating layouts.
@@ -90,7 +91,7 @@ mouse = [
 groups = [Group(i) for i in "123456789"]
 groups.extend([
     ScratchPad("0", [
-        DropDown("terminal", "wezterm", opacity=1),
+        DropDown("terminal", "wezterm", opacity=1, width=0.5, height=0.5, x=0.25, y=0.2),
     ]),
 ])
 
