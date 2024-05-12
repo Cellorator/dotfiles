@@ -6,10 +6,8 @@ return {
         { "hrsh7th/nvim-cmp" },
         { "hrsh7th/cmp-nvim-lsp" },
         { "hrsh7th/cmp-nvim-lua" },
-        { "hrsh7th/cmp-buffer" },
         { "hrsh7th/cmp-path" },
-		{ "L3MON4D3/LuaSnip" },
-		{ "saadparwaiz1/cmp_luasnip" },
+        { "hrsh7th/cmp-buffer" },
     },
     config = function()
         local lsp = require("lspconfig")
@@ -30,8 +28,8 @@ return {
 			})
 		end
 
-		require('mason').setup({})
-		require('mason-lspconfig').setup({
+		require("mason").setup()
+		require("mason-lspconfig").setup({
 			ensure_installed = { "lua_ls" },
 			handlers = {
 				default_setup,
@@ -46,29 +44,19 @@ return {
 			end
         })
 
+		-- Autocompletion
         local cmp = require("cmp")
         cmp.setup({
             sources = {
                 { name = "nvim_lsp" },
                 { name = "nvim_lua" },
-				{ name = "luasnip" },
                 { name = "path" },
                 { name = "buffer" },
             },
             mapping = cmp.mapping.preset.insert({
                 ["<Tab>"] = cmp.mapping.confirm({ select = true }),
-				['<C-Space>'] = cmp.mapping.complete(),
+				["<C-Space>"] = cmp.mapping.complete(),
             }),
-			snippet = {
-				expand = function(args)
-					require("luasnip").lsp_expand(args.body)
-				end
-			}
         })
-
-		-- LuaSnip Setup
-		local luasnip = require("luasnip")
-		vim.keymap.set({"i", "s"}, "<C-L>", function() luasnip.jump(1) end, {silent = true})
-		vim.keymap.set({"i", "s"}, "<C-H>", function() luasnip.jump(-1) end, {silent = true})
     end
 }
