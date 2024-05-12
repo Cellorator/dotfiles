@@ -13,13 +13,14 @@ set -Ux QT_QPA_PLATFORMTHEME qt5ct
 # Useful abbreviations and aliases
 abbr -a cl clear
 abbr -a cd z
+abbr vim nvim
+abbr vi nvim
 
 alias ls="eza -1 --icons"
 alias la="eza -la --icons"
 alias tree="eza -Ta --icons"
 alias cat="bat"
 alias cat="bat"
-alias vim="nvim"
 
 # Git abbreviations
 abbr -a gi git init
