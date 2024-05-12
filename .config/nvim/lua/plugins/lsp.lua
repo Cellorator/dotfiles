@@ -1,13 +1,13 @@
 return {
 	{
 		"williamboman/mason.nvim",
-		build = ":MasonUpdate"
+		build = ":MasonUpdate",
+		config = true;
 	},
 	{
 		"neovim/nvim-lspconfig",
 		dependencies = {
-			{ "williamboman/mason-lspconfig.nvim" },
-			-- { "hrsh7th/cmp-nvim-lsp" }
+			"williamboman/mason-lspconfig.nvim",
 		},
 		config = function()
 			local lsp = require("lspconfig")
@@ -28,7 +28,6 @@ return {
 				})
 			end
 
-			require("mason").setup()
 			require("mason-lspconfig").setup({
 				ensure_installed = { "lua_ls" },
 				handlers = {
@@ -48,12 +47,12 @@ return {
 	{
 		"hrsh7th/nvim-cmp",
 		dependencies = {
-			{ "hrsh7th/cmp-nvim-lsp" },
-			{ "hrsh7th/cmp-nvim-lua" },
-			{ "hrsh7th/cmp-path" },
-			{ "hrsh7th/cmp-buffer" },
-			{ "L3MON4D3/LuaSnip" },
-			{ "saadparwaiz1/cmp_luasnip" },
+			"hrsh7th/cmp-nvim-lsp",
+			"hrsh7th/cmp-nvim-lua",
+			"hrsh7th/cmp-path",
+			"hrsh7th/cmp-buffer",
+			"L3MON4D3/LuaSnip",
+			"saadparwaiz1/cmp_luasnip",
 		},
 		config = function()
 			local cmp = require("cmp")
