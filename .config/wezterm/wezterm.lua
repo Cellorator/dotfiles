@@ -12,13 +12,16 @@ config.window_padding = {
 
 config.keys = {
 	{
+		-- Disable close keybind
 		action = wezterm.action.DisableDefaultAssignment,
 		key = 'w',
 		mods = 'SUPER',
 	},
 }
 
-config.font = wezterm.font("DM Mono")
+-- config.font = wezterm.font("DM Mono");
+config.font = wezterm.font("SpaceMono Nerd Font");
+config.font_size = 10.5
 
 -- Colorscheme
 -- config.color_scheme = "Gruvbox dark, medium (base16)"
