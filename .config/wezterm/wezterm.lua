@@ -2,6 +2,13 @@ local wezterm = require("wezterm")
 
 local config = {}
 
+config.font = wezterm.font("Cartograph CF");
+config.font_size = 10.5
+
+-- Colorscheme
+-- config.color_scheme = "Gruvbox dark, medium (base16)"
+config.color_scheme = "Gruvbox Material (Gogh)"
+
 config.enable_tab_bar = false
 config.window_padding = {
 	left = 0,
@@ -18,13 +25,5 @@ config.keys = {
 		mods = 'SUPER',
 	},
 }
-
--- config.font = wezterm.font("DM Mono");
-config.font = wezterm.font("SpaceMono Nerd Font");
-config.font_size = 10.5
-
--- Colorscheme
--- config.color_scheme = "Gruvbox dark, medium (base16)"
-config.color_scheme = "Gruvbox Material (Gogh)"
 
 return config
