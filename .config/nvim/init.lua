@@ -17,6 +17,9 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local opts = {
+	install = {
+		colorscheme = { "gruvbox-material" }
+	},
     checker = {
         enabled = true,
         frequency = 86400,
