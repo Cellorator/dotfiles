@@ -2,7 +2,10 @@ local wezterm = require("wezterm")
 
 local config = {}
 
-config.font = wezterm.font("Cartograph CF");
+config.font = wezterm.font_with_fallback({
+	"Cartograph CF",
+	"Symbols Nerd Font"  -- Icon glyphs are small without this
+})
 config.font_size = 10.5
 
 -- Colorscheme
