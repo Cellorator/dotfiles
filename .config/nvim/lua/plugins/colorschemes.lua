@@ -15,7 +15,13 @@ return {
     {
         "sainnhe/gruvbox-material",
         config = function ()
-            vim.cmd.colorscheme("gruvbox-material")
+            -- vim.cmd.colorscheme("gruvbox-material")
         end
-    }
+    },
+	{
+        "rebelot/kanagawa.nvim",
+        config = function ()
+            vim.cmd.colorscheme("kanagawa-dragon")
+        end
+    },
 }

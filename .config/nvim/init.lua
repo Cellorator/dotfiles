@@ -18,7 +18,7 @@ vim.opt.rtp:prepend(lazypath)
 
 local opts = {
 	install = {
-		colorscheme = { "gruvbox-material" }
+		colorscheme = { "kanagawa-dragon" }
 	},
     checker = {
         enabled = true,
