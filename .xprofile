@@ -5,7 +5,7 @@ picom -b &
 
 /usr/lib/xfce-polkit/xfce-polkit &
 dunst &
-udiskie --no-automount --tray &
+udiskie --tray &
 blueman-applet &
 nm-applet --no-agent &
 
