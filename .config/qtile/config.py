@@ -75,6 +75,8 @@ keys = [
     Key("M-r", lazy.spawn("rofi -show drun"), desc="Launch rofi"),
     Key("M-<Return>", lazy.spawn("wezterm"), desc="Launch terminal"),
     Key("M-b", lazy.spawn("firefox"), desc="Spawn browser"),
+
+    Key("M-s", lazy.spawn("gnome-screenshot -i"), desc="Take screenshot"),
 ]
 
 # Drag floating layouts.
