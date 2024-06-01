@@ -24,19 +24,22 @@ alias cat="bat"
 
 # Git abbreviations
 abbr -a gi git init
-abbr -a gc git clone
+abbr -a gcl git clone
 abbr -a ga git add
+abbr -a ga. git add .
 abbr -a --set-cursor gc git commit -m \"%\"
 abbr -a gs git status
 abbr -a gd git diff
-abbr -a gl git log
+abbr -a gl git log --online
 abbr -a gp git push
 
 # Yadm abbreviations
 abbr -a ya yadm add
+abbr -a ya. yadm add .
 abbr -a --set-cursor yc yadm commit -m \"%\"
 abbr -a ys yadm status
 abbr -a yd yadm diff
+abbr -a yl yadm log --online
 abbr -a yp yadm push
 
 
