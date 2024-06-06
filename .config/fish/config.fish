@@ -7,8 +7,8 @@ set fish_greeting
 fish_add_path ~/bin
 fish_add_path ~/.cargo/bin
 
-set -Ux EDITOR nvim
-set -Ux QT_QPA_PLATFORMTHEME qt5ct
+set -gx EDITOR nvim
+set -gx QT_QPA_PLATFORMTHEME qt5ct
 
 # Useful abbreviations and aliases
 abbr -a cl clear
@@ -42,6 +42,12 @@ abbr -a yd yadm diff
 abbr -a yl yadm log --oneline
 abbr -a yp yadm push
 
+# Autostart zellij
+if set -q ZELLIJ
+else
+  zellij
+end
+set -gx ZELLIJ_AUTO_ATTACH true
 
 starship init fish | source
 zoxide init fish | source
