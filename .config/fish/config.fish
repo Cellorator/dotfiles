@@ -1,8 +1,8 @@
 if status is-interactive
     # Commands to run in interactive sessions can go here
+	set -gx ZELLIJ_AUTO_ATTACH true
+	eval (zellij setup --generate-auto-start fish | string collect)
 end
-
-set fish_greeting
 
 fish_add_path ~/bin
 fish_add_path ~/.cargo/bin
@@ -21,6 +21,11 @@ alias la="eza -la --icons"
 alias tree="eza -Ta --icons"
 alias cat="bat"
 alias cat="bat"
+
+# Zellij abbreviations
+abbr -a zl zellij
+abbr -a zla zellij attach
+abbr -a zll zellij list-sessions
 
 # Git abbreviations
 abbr -a gi git init
@@ -41,13 +46,6 @@ abbr -a ys yadm status
 abbr -a yd yadm diff
 abbr -a yl yadm log --oneline
 abbr -a yp yadm push
-
-# Autostart zellij
-if set -q ZELLIJ
-else
-  zellij
-end
-set -gx ZELLIJ_AUTO_ATTACH true
 
 starship init fish | source
 zoxide init fish | source
