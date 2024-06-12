@@ -1,6 +1,5 @@
 #!/bin/sh
 
-nvidia-settings --load-config-only &
 picom -b &
 
 /usr/lib/xfce-polkit/xfce-polkit &
