@@ -19,6 +19,11 @@ def changed_focus(window):
         window.bring_to_front()
 
 
+@lazy.function
+def notify(qtile, title, msg):
+    send_notification(title, msg)
+
+
 auto_fullscreen = True
 auto_minimize = False
 reconfigure_screens = True
@@ -39,7 +44,7 @@ keys = [
     Key("M-l", lazy.layout.right(), desc="Move focus to right"),
     Key("M-j", lazy.layout.down(), desc="Move focus down"),
     Key("M-k", lazy.layout.up(), desc="Move focus up"),
-    Key("A-<Tab>", lazy.group.focus_back(), desc="Show windows with rofi"),
+    Key("A-<Tab>", lazy.group.focus_back(), desc="Switch between windows"),
 
     # Move windows between left/right columns or move up/down in current stack.
     # Moving out of range in Columns layout will create new column.
@@ -61,7 +66,7 @@ keys = [
     # Split = all windows displayed
     # Unsplit = 1 window displayed, like Max layout, but still with
     # multiple stack panes
-    Key("M-S-<Return>", lazy.layout.toggle_split(), desc="Toggle between split and unsplit sides of stack"),
+    Key("M-S-<Tab>", lazy.layout.toggle_split(), desc="Toggle between split and unsplit sides of stack"),
 
     Key("M-f", lazy.window.toggle_floating()),
     Key("M-m", lazy.window.toggle_maximize()),
@@ -75,8 +80,10 @@ keys = [
     Key("M-r", lazy.spawn("rofi -show drun"), desc="Launch rofi"),
     Key("M-<Return>", lazy.spawn("wezterm"), desc="Launch terminal"),
     Key("M-b", lazy.spawn("firefox"), desc="Spawn browser"),
-
     Key("M-s", lazy.spawn("gnome-screenshot -i"), desc="Take screenshot"),
+
+    Key("M-S-<Return>", lazy.group["scratchpad"].dropdown_toggle("terminal"), desc="Launch terminal as scratchpad"),
+    Key("C-S-<escape>", lazy.group["scratchpad"].dropdown_toggle("monitor"), desc="Launch htop"),
 ]
 
 # Drag floating layouts.
@@ -108,6 +115,13 @@ for i in groups:
             #     desc="move focused window to group {}".format(i.name)),
         ]
     )
+
+groups.append(
+        ScratchPad("scratchpad", [
+            DropDown("terminal", "wezterm -e", height=0.7, width=0.5, x=0.25, y=0.15, opacity=1),
+            DropDown("monitor", "wezterm -e htop", height=0.7, width=0.5, x=0.25, y=0.15, opacity=1),
+        ])
+)
 
 black = "1d2021"
 blue = "83a598"
