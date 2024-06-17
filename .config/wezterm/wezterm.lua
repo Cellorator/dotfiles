@@ -7,7 +7,7 @@ config.font_size = 10.5
 
 -- Colorscheme
 -- config.color_scheme = "Gruvbox dark, medium (base16)"
-config.color_scheme = "Kanagawa Dragon (Gogh)"
+config.color_scheme = "kanagawa-paper"
 
 config.enable_tab_bar = false
 config.window_padding = {

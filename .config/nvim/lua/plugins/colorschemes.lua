@@ -21,7 +21,13 @@ return {
 	{
         "rebelot/kanagawa.nvim",
         config = function ()
-            vim.cmd.colorscheme("kanagawa-dragon")
+            -- vim.cmd.colorscheme("kanagawa-dragon")
         end
+    },
+    {
+          "sho-87/kanagawa-paper.nvim",
+          lazy = false,
+          priority = 1000,
+          opts = {},
     },
 }
