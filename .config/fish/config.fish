@@ -47,3 +47,5 @@ abbr -a yp yadm push
 starship init fish | source
 zoxide init fish | source
 fzf --fish | source
+
+set -q GHCUP_INSTALL_BASE_PREFIX[1]; or set GHCUP_INSTALL_BASE_PREFIX $HOME ; set -gx PATH $HOME/.cabal/bin /home/admin/.ghcup/bin $PATH # ghcup-env
