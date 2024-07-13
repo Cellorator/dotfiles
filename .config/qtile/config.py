@@ -1,3 +1,5 @@
+import os
+import subprocess
 from libqtile import backend, bar, layout, widget, qtile, hook
 from libqtile.lazy import lazy
 from libqtile.config import Group, Match, Screen, ScratchPad, DropDown
@@ -6,6 +8,9 @@ from libqtile.config import EzDrag as Drag
 from libqtile.config import EzKeyChord as KeyChord
 from libqtile.utils import send_notification
 
+@hook.subscribe.startup_once
+def startup_once():
+    subprocess.run(os.path.expanduser("~/bin/autostart"))
 
 @hook.subscribe.client_focus
 def changed_focus(window):
@@ -24,15 +29,9 @@ def notify(qtile, title, msg):
     send_notification(title, msg)
 
 
-auto_fullscreen = True
 auto_minimize = False
-reconfigure_screens = True
-
-focus_on_window_activation = "smart"
 follow_mouse_focus = False
 bring_front_click = True
-cursor_warp = False
-float_kept_above = True
 
 mod = "mod4"
 keys = [
@@ -65,8 +64,7 @@ keys = [
     # Toggle between split and unsplit sides of stack.
     # Split = all windows displayed
     # Unsplit = 1 window displayed, like Max layout, but still with
-    # multiple stack panes
-    Key("M-S-<Tab>", lazy.layout.toggle_split(), desc="Toggle between split and unsplit sides of stack"),
+    # multiple stack panes Key("M-S-<Tab>", lazy.layout.toggle_split(), desc="Toggle between split and unsplit sides of stack"),
 
     Key("M-f", lazy.window.toggle_floating()),
     Key("M-m", lazy.window.toggle_maximize()),
