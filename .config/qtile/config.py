@@ -153,7 +153,7 @@ extension_defaults = widget_defaults.copy()
 
 screens = [
     Screen(
-        wallpaper="/usr/share/backgrounds/pacman-ghosts.jpg",
+        wallpaper="pacman-ghosts.jpg",
         wallpaper_mode="fill",
 
         top=bar.Bar(
