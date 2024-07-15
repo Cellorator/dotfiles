@@ -1,0 +1,14 @@
+#!/bin/sh
+
+picom -b &
+
+/usr/lib/xfce-polkit/xfce-polkit &
+dunst &
+udiskie --tray &
+blueman-applet &
+nm-applet --no-agent &
+
+gwe --hide-window &
+easyeffects --gapplication-service &
+
+xset r rate 300
