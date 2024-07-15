@@ -22,4 +22,4 @@ opt.hlsearch = false  -- Stop highlighting when search is done
 opt.undofile = true
 opt.termguicolors = true
 
-vim.cmd.colorscheme("kanagawa-paper")
+vim.cmd.colorscheme("kanagawa-dragon")

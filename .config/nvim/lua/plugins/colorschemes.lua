@@ -9,25 +9,12 @@ return {
 					["@constructor"] = { fg = "#ebdbb2" },
 				}
 			})
-			-- vim.cmd.colorscheme("gruvbox")
 		end
     },
     {
         "sainnhe/gruvbox-material",
-        config = function ()
-            -- vim.cmd.colorscheme("gruvbox-material")
-        end
     },
 	{
         "rebelot/kanagawa.nvim",
-        config = function ()
-            -- vim.cmd.colorscheme("kanagawa-dragon")
-        end
-    },
-    {
-          "sho-87/kanagawa-paper.nvim",
-          lazy = false,
-          priority = 1000,
-          opts = {},
     },
 }

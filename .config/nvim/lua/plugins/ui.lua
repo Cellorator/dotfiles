@@ -50,4 +50,10 @@ return {
             require("ibl").setup(options)
         end,
     },
+    {
+        "NvChad/nvim-colorizer.lua",
+        config = function ()
+            require("colorizer").setup()
+        end,
+    }
 }
