@@ -1,4 +1,4 @@
-@theme "/usr/share/rofi/themes/gruvbox-dark.rasi"
+@theme "~/.config/rofi/themes/kanagawa-dragon.rasi"
 configuration {
 	modes: "drun,window";
 	font: "DM Mono 12";
