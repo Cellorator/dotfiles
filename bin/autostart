@@ -11,4 +11,5 @@ nm-applet --no-agent &
 gwe --hide-window &
 easyeffects --gapplication-service &
 
-xset r rate 300
+disable-mouse-acceleration
+set-key-repeat-rate
