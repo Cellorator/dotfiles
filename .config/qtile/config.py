@@ -8,30 +8,32 @@ from libqtile.config import EzDrag as Drag
 from libqtile.config import EzKeyChord as KeyChord
 from libqtile.utils import send_notification
 
+import colors
+
+home = os.path.expanduser("~")
+
 @hook.subscribe.startup_once
 def startup_once():
-    subprocess.run(os.path.expanduser("~/bin/autostart"))
+    subprocess.run(home + "/bin/autostart")
 
-@hook.subscribe.client_focus
-def changed_focus(window):
-    # Add IS_FLOATING windows property for floating windows
-    # Currently only used for picom adding shadows to floating windows only
-    window.window.set_property("IS_FLOATING", str(window.floating), type="STRING", format=8)
-
-    # Make focus window appear on top
-    current_window = qtile.current_window
-    if current_window.floating:
-        window.bring_to_front()
+# @hook.subscribe.client_focus
+# def changed_focus(window):
+#     # Add IS_FLOATING windows property for floating windows
+#     # Currently only used for picom adding shadows to floating windows only
+#     window.window.set_property("IS_FLOATING", str(window.floating), type="STRING", format=8)
+#
+#     # Make focus window appear on top
+#     current_window = qtile.current_window
+#     if current_window.floating:
+#         window.bring_to_front()
 
 
 @lazy.function
 def notify(qtile, title, msg):
     send_notification(title, msg)
 
-
 auto_minimize = False
-follow_mouse_focus = False
-bring_front_click = True
+cursor_warp = True
 
 mod = "mod4"
 keys = [
@@ -121,21 +123,28 @@ groups.append(
         ])
 )
 
-black = "1d2021"
-blue = "83a598"
-aqua = "8ec07c"
-orange = "fe8019"
+colors = colors.kanagawa_dragon
+
+black = colors[0]
+red = colors[1]
+green = colors[2]
+yellow = colors[3]
+blue = colors[4]
+purple = colors[5]
+cyan = colors[6]
+white = colors[7]
+fg = colors[8]
 
 layouts = [
     layout.Columns(
         border_focus=blue,
-        border_focus_stack=aqua,
+        border_focus_stack=green,
         border_normal=black,
         border_normal_stack=black,
         border_width=2
     ),
     layout.Floating(
-        border_focus=orange,
+        border_focus=green,
         border_normal=black,
         border_width=0,
     ),
@@ -143,8 +152,9 @@ layouts = [
 ]
 
 widget_defaults = dict(
-    font="DM Mono",
+    font="Hurmit Nerd Font Mono",
     fontsize=14,
+    foreground=fg,
     border=blue,
     borderwidth=2,
 )
@@ -153,7 +163,7 @@ extension_defaults = widget_defaults.copy()
 
 screens = [
     Screen(
-        wallpaper="pacman-ghosts.jpg",
+        wallpaper=home + "/Pictures/backgrounds/pacman-ghosts-kanagawa-dragon.jpg",
         wallpaper_mode="fill",
 
         top=bar.Bar(
@@ -182,7 +192,7 @@ screens = [
 dgroups_key_binder = None
 dgroups_app_rules = []  # type: list
 floating_layout = layout.Floating(
-    border_focus=orange,
+    border_focus=green,
     border_normal=black,
     float_rules=[
         # Run the utility of `xprop` to see the wm class and name of an X client.
