@@ -1,15 +1,23 @@
 #!/bin/sh
 
-picom -b &
+# Runs programs only once
+run() {
+    if ! pgrep -f "$1" ;
+    then
+        "$@"&
+    fi
+}
 
-/usr/lib/xfce-polkit/xfce-polkit &
-dunst &
-udiskie --tray &
-blueman-applet &
-nm-applet --no-agent &
+run(picom -b)
 
-gwe --hide-window &
-easyeffects --gapplication-service &
+run(/usr/lib/xfce-polkit/xfce-polkit)
+run(dunst)
+run(udiskie --tray)
+run(blueman-applet)
+run(nm-applet --no-agent)
+
+run(gwe --hide-window)
+run(easyeffects --gapplication-service)
 
 disable-mouse-acceleration
 set-key-repeat-rate
