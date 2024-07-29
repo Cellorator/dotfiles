@@ -28,7 +28,7 @@ if awesome.startup_errors then
 end
 
 -- Autostart Applications
-awful.spawn.with_shell("autostart")
+-- awful.spawn.with_shell("autostart")
 
 -- Handle runtime errors after startup
 do
@@ -200,7 +200,7 @@ awful.screen.connect_for_each_screen(function(s)
     }
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s })
+    s.mywibox = awful.wibar({ position = "top", height = 24, screen = s })
 
     -- Add widgets to the wibox
     s.mywibox:setup {

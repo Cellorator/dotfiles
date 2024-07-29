@@ -11,7 +11,7 @@ local themes_path = gfs.get_themes_dir()
 
 local theme = {}
 
-theme.font          = "Hurmit Nerd Font Mono"
+theme.font          = "Hurmit Nerd Font Mono 10"
 
 theme.bg_normal     = "#0d0c0c"
 theme.bg_focus      = "#8ba4b0"
@@ -97,7 +97,7 @@ theme.titlebar_maximized_button_focus_inactive  = themes_path.."default/titlebar
 theme.titlebar_maximized_button_normal_active = themes_path.."default/titlebar/maximized_normal_active.png"
 theme.titlebar_maximized_button_focus_active  = themes_path.."default/titlebar/maximized_focus_active.png"
 
-theme.wallpaper = "/home/USER/Pictures/backgrounds/pacman-ghosts-kanagawa-dragon.jpg"
+theme.wallpaper = "~/Pictures/backgrounds/pacman-ghosts-kanagawa-dragon.jpg"
 
 -- You can use your own layout icons like this:
 theme.layout_fairh = themes_path.."default/layouts/fairhw.png"
@@ -124,7 +124,7 @@ theme.awesome_icon = theme_assets.awesome_icon(
 
 -- Define the icon theme for application icons. If not set then the icons
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
-theme.icon_theme = nil
+theme.icon_theme = "KanagawaDragon"
 
 return theme
 
