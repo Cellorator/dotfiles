@@ -28,7 +28,7 @@ if awesome.startup_errors then
 end
 
 -- Autostart Applications
--- awful.spawn.with_shell("autostart")
+awful.spawn.with_shell("autostart")
 
 -- Handle runtime errors after startup
 do
