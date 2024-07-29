@@ -8,16 +8,16 @@ run() {
     fi
 }
 
-run(picom -b)
+run "picom -b"
 
-run(/usr/lib/xfce-polkit/xfce-polkit)
-run(dunst)
-run(udiskie --tray)
-run(blueman-applet)
-run(nm-applet --no-agent)
+run "/usr/lib/xfce-polkit/xfce-polkit"
+run "dunst"
+run "udiskie --tray"
+run "blueman-applet"
+run "nm-applet --no-agent"
 
-run(gwe --hide-window)
-run(easyeffects --gapplication-service)
+run "gwe --hide-window"
+run "easyeffects --gapplication-service"
 
 disable-mouse-acceleration
 set-key-repeat-rate
