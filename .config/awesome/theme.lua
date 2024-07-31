@@ -24,11 +24,13 @@ theme.fg_focus      = "#C5C9C5"
 theme.fg_urgent     = "#C5C9C5"
 theme.fg_minimize   = "#C5C9C5"
 
-theme.useless_gap   = 0
-theme.border_width  = 2
+theme.useless_gap   = 3
+theme.gap_single_client = false
+theme.border_width  = 1
 theme.border_normal = "#0d0c0c"
 theme.border_focus  = "#8ba4b0"
 theme.border_marked = "#8a9a7b"
+theme.maximized_hide_border = true
 
 -- There are other variable sets
 -- overriding the default one when
