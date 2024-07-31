@@ -84,24 +84,8 @@ awful.layout.layouts = {
 }
 -- }}}
 
--- {{{ Menu
--- Create a launcher widget and a main menu
-myawesomemenu = {
-   { "hotkeys", function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
-   { "manual", terminal .. " -e man awesome" },
-   { "edit config", editor_cmd .. " " .. awesome.conffile },
-   { "restart", awesome.restart },
-   { "quit", function() awesome.quit() end },
-}
-
-mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
-                                    { "open terminal", terminal }
-                                  }
-                        })
-
--- Menubar configuration
-menubar.utils.terminal = terminal -- Set the terminal for applications that require it
--- }}}
+-- Prevent low-res icons in bar
+awesome.set_preferred_icon_size(32)
 
 -- {{{ Wibar
 -- Create a textclock widget
@@ -190,11 +174,20 @@ awful.screen.connect_for_each_screen(function(s)
     s.mytasklist = awful.widget.tasklist {
         screen  = s,
         filter  = awful.widget.tasklist.filter.currenttags,
-        buttons = tasklist_buttons
+        buttons = tasklist_buttons,
+        layout = {
+            layout = wibox.layout.flex.horizontal
+        }
     }
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", height = 24, screen = s })
+    s.mywibox = awful.wibar({
+        position = "top",
+        bg = "#00000000",
+        height = 24,
+        shape = gears.shape.rounded_bar,
+        screen = s
+    })
 
     -- Add widgets to the wibox
     s.mywibox:setup {
@@ -204,8 +197,9 @@ awful.screen.connect_for_each_screen(function(s)
             s.mylayoutbox,
             s.mytaglist,
             s.mypromptbox,
+            s.mytasklist,
         },
-        s.mytasklist, -- Middle widget
+        awful.widget.separator,
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             wibox.widget.systray(),
@@ -312,10 +306,7 @@ globalkeys = gears.table.join(
                     history_path = awful.util.get_cache_dir() .. "/history_eval"
                   }
               end,
-              {description = "lua execute prompt", group = "awesome"}),
-    -- Menubar
-    awful.key({ modkey }, "p", function() menubar.show() end,
-              {description = "show the menubar", group = "launcher"})
+              {description = "lua execute prompt", group = "awesome"})
 )
 
 clientkeys = gears.table.join(
