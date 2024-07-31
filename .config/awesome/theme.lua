@@ -11,26 +11,40 @@ local themes_path = gfs.get_themes_dir()
 
 local theme = {}
 
-theme.font          = "Hurmit Nerd Font Mono 10"
+theme.colors = {
+    white = "#C5C9C5",
+    black = "#0d0c0c",
+    red = "#c4746e",
+    blue = "#8ba4b0",
+    dark_blue = "#252535",
+    green = "#8a9a7b",
+    gray = "#7a8382",
+}
 
-theme.bg_normal     = "#0d0c0c"
-theme.bg_focus      = "#8ba4b0"
-theme.bg_urgent     = "#c4746e"
-theme.bg_minimize   = "#444444"
-theme.bg_systray    = theme.bg_normal
+theme.font = "Hurmit Nerd Font Mono 10"
 
-theme.fg_normal     = "#C5C9C5"
-theme.fg_focus      = "#C5C9C5"
-theme.fg_urgent     = "#C5C9C5"
-theme.fg_minimize   = "#C5C9C5"
+theme.bg_normal = theme.colors.dark_blue
+theme.bg_focus  = theme.colors.blue
+theme.bg_urgent = theme.colors.red
+theme.bg_minimize = theme.colors.gray
+theme.bg_systray = theme.colors.dark_blue
+
+theme.fg_normal = theme.colors.blue
+theme.fg_focus = theme.colors.black
+theme.fg_urgent = theme.colors.white
+theme.fg_minimize = theme.colors.black
 
 theme.useless_gap   = 3
 theme.gap_single_client = false
 theme.border_width  = 1
-theme.border_normal = "#0d0c0c"
-theme.border_focus  = "#8ba4b0"
-theme.border_marked = "#8a9a7b"
-theme.maximized_hide_border = true
+theme.border_normal = theme.colors.black
+theme.border_focus = theme.colors.blue
+theme.border_marked = theme.colors.green
+
+theme.taglist_fg_empty = theme.fg_normal
+theme.taglist_bg_empty = theme.bg_normal
+theme.taglist_fg_occupied = theme.fg_normal
+theme.taglist_bg_occupied = theme.bg_normal
 
 -- There are other variable sets
 -- overriding the default one when
