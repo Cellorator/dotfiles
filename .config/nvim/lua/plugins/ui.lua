@@ -9,24 +9,25 @@ return {
 			},
 			sections = {
 				lualine_a = {
-					{ 'mode', separator = { right = "" } },
+					"mode",
+                    "searchcount",
 				},
 				lualine_b = {
-					{ "filename"},
-					{ "diagnostics" },
-					{ "branch" },
-					{ "diff", separator = { left = "", right = ""} },
+					"filename",
+					"diagnostics",
+					"branch",
+					"diff",
 				},
 				lualine_c = {},
-				lualine_x = {
-				},
+				lualine_x = {},
 				lualine_y = {
+                    "fileformat",
 					"encoding",
-					{ "filetype", separator = { right = ""} },
+					"filetype",
 				},
 				lualine_z = {
-					{ "progress" },
-					{ "location" }
+					"progress",
+					"location"
 				}
 			}
 		}
