@@ -4,6 +4,7 @@ local config = {}
 
 config.font = wezterm.font("Hurmit Nerd Font")
 config.font_size = 10.5
+config.custom_block_glyphs = false
 
 -- Colorscheme
 -- config.color_scheme = "Gruvbox dark, medium (base16)"
