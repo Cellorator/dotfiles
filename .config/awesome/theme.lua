@@ -6,6 +6,7 @@ local theme_assets = require("beautiful.theme_assets")
 local xresources = require("beautiful.xresources")
 local dpi = xresources.apply_dpi
 
+local gears = require("gears")
 local gfs = require("gears.filesystem")
 local themes_path = gfs.get_themes_dir()
 
@@ -14,7 +15,7 @@ local theme = {}
 theme.colors = {
     white = "#C5C9C5",
     black = "#0d0c0c",
-    light_black = "#181616",
+    light_black = "#282727",
     red = "#c4746e",
     blue = "#8ba4b0",
     dark_blue = "#252535",
@@ -22,7 +23,7 @@ theme.colors = {
     gray = "#7a8382",
 }
 
-theme.font = "Hurmit Nerd Font Mono 10.5"
+theme.font = "Hurmit Nerd Font 10.5"
 
 theme.bg_normal = theme.colors.dark_blue
 theme.bg_focus  = theme.colors.blue
@@ -35,8 +36,7 @@ theme.fg_focus = theme.colors.black
 theme.fg_urgent = theme.colors.white
 theme.fg_minimize = theme.colors.black
 
-theme.useless_gap   = 2
-theme.wibar_margins = 10
+theme.useless_gap = 2
 theme.gap_single_client = false
 theme.border_width  = 1
 theme.border_normal = theme.colors.black
@@ -124,13 +124,13 @@ theme.wallpaper = "~/Pictures/backgrounds/blue-black-hole_3840x2160.png"
 -- You can use your own layout icons like this:
 theme.layout_fairh = themes_path.."default/layouts/fairhw.png"
 theme.layout_fairv = themes_path.."default/layouts/fairvw.png"
-theme.layout_floating  = themes_path.."default/layouts/floatingw.png"
+theme.layout_floating  = gears.color.recolor_image(themes_path.."default/layouts/floatingw.png", theme.bg_normal)
 theme.layout_magnifier = themes_path.."default/layouts/magnifierw.png"
 theme.layout_max = themes_path.."default/layouts/maxw.png"
 theme.layout_fullscreen = themes_path.."default/layouts/fullscreenw.png"
 theme.layout_tilebottom = themes_path.."default/layouts/tilebottomw.png"
 theme.layout_tileleft   = themes_path.."default/layouts/tileleftw.png"
-theme.layout_tile = themes_path.."default/layouts/tilew.png"
+theme.layout_tile = gears.color.recolor_image(themes_path.."default/layouts/tilew.png", theme.bg_normal)
 theme.layout_tiletop = themes_path.."default/layouts/tiletopw.png"
 theme.layout_spiral  = themes_path.."default/layouts/spiralw.png"
 theme.layout_dwindle = themes_path.."default/layouts/dwindlew.png"
