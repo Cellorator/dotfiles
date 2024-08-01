@@ -14,6 +14,7 @@ local theme = {}
 theme.colors = {
     white = "#C5C9C5",
     black = "#0d0c0c",
+    light_black = "#181616",
     red = "#c4746e",
     blue = "#8ba4b0",
     dark_blue = "#252535",
@@ -34,7 +35,8 @@ theme.fg_focus = theme.colors.black
 theme.fg_urgent = theme.colors.white
 theme.fg_minimize = theme.colors.black
 
-theme.useless_gap   = 3
+theme.useless_gap   = 2
+theme.wibar_margins = 10
 theme.gap_single_client = false
 theme.border_width  = 1
 theme.border_normal = theme.colors.black
@@ -46,7 +48,7 @@ theme.taglist_bg_empty = theme.bg_normal
 theme.taglist_fg_occupied = theme.fg_normal
 theme.taglist_bg_occupied = theme.bg_normal
 
-theme.wibar_bg = "#00000000"
+theme.wibar_bg = theme.colors.light_black
 
 -- There are other variable sets
 -- overriding the default one when
@@ -117,7 +119,7 @@ theme.titlebar_maximized_button_focus_inactive  = themes_path.."default/titlebar
 theme.titlebar_maximized_button_normal_active = themes_path.."default/titlebar/maximized_normal_active.png"
 theme.titlebar_maximized_button_focus_active  = themes_path.."default/titlebar/maximized_focus_active.png"
 
-theme.wallpaper = "~/Pictures/backgrounds/pacman-ghosts-kanagawa-dragon.jpg"
+theme.wallpaper = "~/Pictures/backgrounds/blue-black-hole_3840x2160.png"
 
 -- You can use your own layout icons like this:
 theme.layout_fairh = themes_path.."default/layouts/fairhw.png"
