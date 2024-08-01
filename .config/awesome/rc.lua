@@ -144,6 +144,31 @@ end
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal("property::geometry", set_wallpaper)
 
+-- Separators between widgets
+right_soft_separator =  wibox.widget({
+    widget = wibox.widget.textbox,
+    markup = "<span font='14'></span>"
+})
+
+right_circle_soft_separator = wibox.widget({
+    widget = wibox.widget.textbox,
+    markup = "<big></big>"
+})
+
+right_hard_separator = wibox.widget({
+    widget = wibox.widget.textbox,
+    markup = "<span font='14'></span>"
+})
+
+left_soft_separator = wibox.widget({
+    widget = wibox.widget.textbox,
+    markup = "<span font='14'></span>"
+})
+
+left_hard_separator = wibox.widget({
+    widget = wibox.widget.textbox,
+    markup = "<span font='14'></span>",
+})
 
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
@@ -151,51 +176,14 @@ awful.screen.connect_for_each_screen(function(s)
 
     -- Each screen has its own tag table.
     awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
-
-    -- Separators between widgets
-    right_soft_separator =  wibox.widget({
-        {
-            widget = wibox.widget.textbox,
-            markup = "<span font='14'></span>"
-        },
-        widget = wibox.container.background,
-    })
-
-    right_hard_separator = wibox.widget({
-        {
-            widget = wibox.widget.textbox,
-            markup = "<span font='14'></span>"
-        },
-        widget = wibox.container.background,
-    })
-
-    left_soft_separator = wibox.widget({
-        {
-            widget = wibox.widget.textbox,
-            markup = "<span font='14'></span>"
-        },
-        widget = wibox.container.background,
-    })
-
-    left_hard_separator = wibox.widget({
-        {
-            widget = wibox.widget.textbox,
-            markup = "<span font='14'></span>",
-        },
-        widget = wibox.container.background,
-    })
-
     -- Create an imagebox widget which will contain an icon indicating which layout we're using.
     -- We need one layoutbox per screen.
     -- s.mylayoutbox = awful.widget.layoutbox(s)
     s.layoutbox = wibox.widget({
-        {
-            awful.widget.layoutbox(s),
-            widget = wibox.container.margin,
-            left = 8,
-        },
-        widget = wibox.container.background,
-        bg = beautiful.bg_focus,
+        awful.widget.layoutbox(s),
+        widget = wibox.container.margin,
+        left = 8,
+        right = 8
     })
     s.layoutbox:buttons(gears.table.join(
                            awful.button({ }, 1, function () awful.layout.inc( 1) end),
@@ -203,16 +191,82 @@ awful.screen.connect_for_each_screen(function(s)
                            awful.button({ }, 4, function () awful.layout.inc( 1) end),
                            awful.button({ }, 5, function () awful.layout.inc(-1) end)))
 
+    taglist_template = {
+        {
+            -- For some reason the widget order is flipped
+            layout = wibox.layout.fixed.horizontal,
+            {
+                right_soft_separator,
+                id = "right_separator_role",
+                widget = wibox.container.background
+            },
+            {
+                {
+                    {
+                        id = "index_role",
+                        widget = wibox.widget.textbox
+                    },
+                    widget = wibox.container.margin,
+                    left = 4,
+                    right = 4,
+                },
+                id = "background_role",
+                widget = wibox.container.background,
+            },
+            {
+                id = "left_separator_role",
+                widget = wibox.container.background
+            },
+        },
+        widget = wibox.container.background,
+        create_callback = function (self, t, index, tags)
+            -- Set index numbers
+            self:get_children_by_id("index_role")[1].text = index
+
+            -- Set pointers to separators
+            self.right_separator = self:get_children_by_id("left_separator_role")[1]
+            self.left_separator = self:get_children_by_id("right_separator_role")[1]
+
+            -- Set the separator on far left of widget
+            if index == 1 then self.left_separator.widget = right_hard_separator end
+        end,
+        update_callback = function (self, t, index, tags)
+            -- Change colors on switching tags
+            local selected_tags = awful.screen.focused().selected_tags
+            for _, tag in ipairs(selected_tags) do
+                if tag == t then
+                    self.fg = beautiful.fg_focus
+                    if index == 1 then
+                        self.left_separator.widget = right_circle_soft_separator
+                        self.left_separator.fg = beautiful.fg_focus
+                        self.left_separator.bg = beautiful.bg_focus
+                    end
+                else -- Undo changes on non-selected
+                    self.fg = beautiful.fg_normal
+                    if index == 1 then
+                        self.left_separator.widget = right_hard_separator
+                        self.left_separator.fg = beautiful.fg_normal
+                        self.left_separator.bg = beautiful.bg_normal
+                    end
+                end
+            end
+        end
+    }
     -- Create a taglist widget
-    s.taglist = awful.widget.taglist({
-        screen  = s,
-        filter  = awful.widget.taglist.filter.all,
-        buttons = taglist_buttons,
-        layout = {
-            spacing = 12,
-            spacing_widget = right_soft_separator,
-            layout = wibox.layout.flex.horizontal,
-        }
+    s.taglist = wibox.widget({
+        awful.widget.taglist({
+            screen  = s,
+            filter  = awful.widget.taglist.filter.all,
+            buttons = taglist_buttons,
+            -- layout = {
+            --     spacing = 12,
+            --     spacing_widget = right_soft_separator,
+            --     layout = wibox.layout.flex.horizontal,
+            -- },
+            widget_template = taglist_template
+        }),
+        widget = wibox.container.margin,
+        right = 8,
     })
 
     -- Create a tasklist widget
@@ -283,14 +337,15 @@ awful.screen.connect_for_each_screen(function(s)
         layout = wibox.layout.align.horizontal,
         { -- Left
             layout = wibox.layout.fixed.horizontal,
-            s.layoutbox,
             {
-                {
-                    layout = wibox.layout.fixed.horizontal,
-                    right_hard_separator,
-                    s.taglist,
-                },
+                s.layoutbox,
                 widget = wibox.container.background,
+                bg = beautiful.bg_focus
+            },
+            {
+                s.taglist,
+                widget = wibox.container.background,
+                -- fg = wibox.fg_normal,
                 fg = beautiful.fg_normal,
                 bg = beautiful.bg_normal,
             },
