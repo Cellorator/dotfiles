@@ -145,27 +145,27 @@ end
 screen.connect_signal("property::geometry", set_wallpaper)
 
 -- Separators between widgets
-right_soft_separator =  wibox.widget({
+local right_soft_separator =  wibox.widget({
     widget = wibox.widget.textbox,
     markup = "<span font='14'></span>"
 })
 
-right_circle_soft_separator = wibox.widget({
+local right_circle_soft_separator = wibox.widget({
     widget = wibox.widget.textbox,
     markup = "<big></big>"
 })
 
-right_hard_separator = wibox.widget({
+local right_hard_separator = wibox.widget({
     widget = wibox.widget.textbox,
     markup = "<span font='14'></span>"
 })
 
-left_soft_separator = wibox.widget({
+local left_soft_separator = wibox.widget({
     widget = wibox.widget.textbox,
     markup = "<span font='14'></span>"
 })
 
-left_hard_separator = wibox.widget({
+local left_hard_separator = wibox.widget({
     widget = wibox.widget.textbox,
     markup = "<span font='14'></span>",
 })
@@ -191,12 +191,11 @@ awful.screen.connect_for_each_screen(function(s)
                            awful.button({ }, 4, function () awful.layout.inc( 1) end),
                            awful.button({ }, 5, function () awful.layout.inc(-1) end)))
 
-    taglist_template = {
+    local taglist_template = {
         {
             -- For some reason the widget order is flipped
             layout = wibox.layout.fixed.horizontal,
             {
-                right_soft_separator,
                 id = "right_separator_role",
                 widget = wibox.container.background
             },
@@ -227,28 +226,55 @@ awful.screen.connect_for_each_screen(function(s)
             self.right_separator = self:get_children_by_id("left_separator_role")[1]
             self.left_separator = self:get_children_by_id("right_separator_role")[1]
 
-            -- Set the separator on far left of widget
-            if index == 1 then self.left_separator.widget = right_hard_separator end
+            -- Make reset functions for each tag widget then run them
+            self.reset = function ()
+                self.fg = beautiful.fg_normal
+                self.right_separator.widget = right_soft_separator
+
+                if index == 1 then
+                    self.left_separator.widget = right_hard_separator
+                    self.left_separator.fg = beautiful.fg_normal
+                    self.left_separator.bg = beautiful.bg_normal
+                end
+            end
+            self.reset()
+
+            -- Make first tag appear selected on create
+            self.update = function ()
+                self.fg = beautiful.fg_focus
+                if index == 1 then
+                    self.left_separator.widget = right_circle_soft_separator
+                    self.left_separator.fg = beautiful.fg_focus
+                    self.left_separator.bg = beautiful.bg_focus
+
+                    self.right_separator.widget = right_hard_separator
+                    self.right_separator.fg = beautiful.bg_focus
+                    self.left_separator.fg = beautiful.fg_focus
+                end
+            end
+            self.update()
         end,
         update_callback = function (self, t, index, tags)
             -- Change colors on switching tags
             local selected_tags = awful.screen.focused().selected_tags
+
+            -- Change visuals for selected tags
             for _, tag in ipairs(selected_tags) do
-                if tag == t then
-                    self.fg = beautiful.fg_focus
-                    if index == 1 then
-                        self.left_separator.widget = right_circle_soft_separator
-                        self.left_separator.fg = beautiful.fg_focus
-                        self.left_separator.bg = beautiful.bg_focus
-                    end
-                else -- Undo changes on non-selected
-                    self.fg = beautiful.fg_normal
-                    if index == 1 then
-                        self.left_separator.widget = right_hard_separator
-                        self.left_separator.fg = beautiful.fg_normal
-                        self.left_separator.bg = beautiful.bg_normal
-                    end
+                -- Not selected tags
+                if tag ~= t then
+                    self.reset()
+
+                    -- Update separators if selected tag is next to this one
+                    -- if tag == tags[index - 1] then
+                    --     self.left_separator.widget = right_hard_separator
+                    -- end
+                    goto continue
                 end
+
+                -- Selected tags
+                self.update()
+                naughty.notify({title = #selected_tags})
+                ::continue::
             end
         end
     }
