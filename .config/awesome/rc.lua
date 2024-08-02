@@ -6,10 +6,13 @@ pcall(require, "luarocks.loader")
 local gears = require("gears")
 local awful = require("awful")
 require("awful.autofocus")
+
 -- Widget and layout library
 local wibox = require("wibox")
+
 -- Theme handling library
 local beautiful = require("beautiful")
+
 -- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
@@ -17,6 +20,7 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
+
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -89,24 +93,6 @@ awesome.set_preferred_icon_size(32)
 
 -- {{{ Wibar
 
--- Create a wibox for each screen and add it
-local taglist_buttons = gears.table.join(
-    awful.button({ }, 1, function(t) t:view_only() end),
-    awful.button({ modkey }, 1, function(t)
-        if client.focus then
-            client.focus:move_to_tag(t)
-        end
-    end),
-    awful.button({ }, 3, awful.tag.viewtoggle),
-    awful.button({ modkey }, 3, function(t)
-        if client.focus then
-            client.focus:toggle_tag(t)
-        end
-    end),
-    awful.button({ }, 4, function(t) awful.tag.viewnext(t.screen) end),
-    awful.button({ }, 5, function(t) awful.tag.viewprev(t.screen) end)
-)
-
 local tasklist_buttons = gears.table.join(
      awful.button({ }, 1, function (c)
          if c == client.focus then
@@ -152,7 +138,7 @@ local right_soft_separator =  wibox.widget({
 
 local right_circle_soft_separator = wibox.widget({
     widget = wibox.widget.textbox,
-    markup = "<big></big>"
+    markup = "<span font='14'></span>"
 })
 
 local right_hard_separator = wibox.widget({
@@ -180,134 +166,28 @@ awful.screen.connect_for_each_screen(function(s)
     -- We need one layoutbox per screen.
     -- s.mylayoutbox = awful.widget.layoutbox(s)
     s.layoutbox = wibox.widget({
-        awful.widget.layoutbox(s),
-        widget = wibox.container.margin,
-        left = 8,
-        right = 8
-    })
-    s.layoutbox:buttons(gears.table.join(
-                           awful.button({ }, 1, function () awful.layout.inc( 1) end),
-                           awful.button({ }, 3, function () awful.layout.inc(-1) end),
-                           awful.button({ }, 4, function () awful.layout.inc( 1) end),
-                           awful.button({ }, 5, function () awful.layout.inc(-1) end)))
-
-    local taglist_template = {
         {
-            -- For some reason the widget order is flipped
-            layout = wibox.layout.fixed.horizontal,
-            {
-                id = "right_separator_role",
-                widget = wibox.container.background
-            },
-            {
-                {
-                    {
-                        id = "index_role",
-                        widget = wibox.widget.textbox
-                    },
-                    widget = wibox.container.margin,
-                    left = 4,
-                    right = 4,
-                },
-                id = "background_role",
-                widget = wibox.container.background,
-            },
-            {
-                id = "left_separator_role",
-                widget = wibox.container.background
-            },
+            awful.widget.layoutbox(s),
+            widget = wibox.container.margin,
+            left = 8,
+            right = 8
         },
         widget = wibox.container.background,
-        create_callback = function (self, t, index, tags)
-            -- Set index numbers
-            self:get_children_by_id("index_role")[1].text = index
-
-            -- Set pointers to separators
-            self.right_separator = self:get_children_by_id("left_separator_role")[1]
-            self.left_separator = self:get_children_by_id("right_separator_role")[1]
-
-            -- Make reset functions for each tag widget then run them
-            self.reset = function ()
-                self.fg = beautiful.fg_normal
-                self.bg = beautiful.bg_normal
-                self.right_separator.widget = right_soft_separator
-
-                if index == 1 then
-                    self.left_separator.widget = right_hard_separator
-                    self.left_separator.fg = beautiful.fg_normal
-                    self.left_separator.bg = beautiful.bg_normal
-                elseif index == 9 then
-                    self.right_separator.widget = nil
-                end
-            end
-            self.reset()
-
-            -- Change appearance of selected tags, called in update_callback
-            local select_first = function ()
-                if index == 1 then
-                    self.fg = beautiful.fg_focus
-                    self.left_separator.widget = right_circle_soft_separator
-                    self.left_separator.fg = beautiful.fg_focus
-                    self.left_separator.bg = beautiful.bg_focus
-
-                    self.right_separator.widget = right_hard_separator
-                    self.right_separator.fg = beautiful.bg_focus
-                    self.left_separator.fg = beautiful.fg_focus
-                end
-            end
-            self.select = function ()
-                self.fg = beautiful.fg_focus
-                -- First tag
-                select_first()
-
-                -- Rest of tags
-                if index ~= 1 then
-                    self.right_separator.widget = right_hard_separator
-                    self.right_separator.fg = beautiful.bg_focus
-                    if index == 9 then
-                        self.right_separator.widget = nil
-                    end
-                end
-            end
-
-            -- Make first tag look selected
-            select_first()
-        end,
-        update_callback = function (self, t, index, tags)
-            -- Change visuals for selected tags
-            local selected_tags = awful.screen.focused().selected_tags
-            for _, tag in ipairs(selected_tags) do
-                -- Not selected tags
-                if tag ~= t then
-                    self.reset()
-                    -- Set right_separator of tags to left of selected
-                    if tag == tags[index + 1] then
-                        self.right_separator.widget = left_hard_separator
-                    end
-                    goto continue
-                end
-                -- Selected tags
-                self.select()
-                ::continue::
-            end
-        end
-    }
-    -- Create a taglist widget
-    s.taglist = awful.widget.taglist({
-            screen  = s,
-            filter  = awful.widget.taglist.filter.all,
-            buttons = taglist_buttons,
-            widget_template = taglist_template
+        bg = beautiful.bg_focus
     })
+    s.layoutbox:buttons(gears.table.join(
+        awful.button({ }, 1, function () awful.layout.inc( 1) end),
+        awful.button({ }, 3, function () awful.layout.inc(-1) end),
+        awful.button({ }, 4, function () awful.layout.inc( 1) end),
+        awful.button({ }, 5, function () awful.layout.inc(-1) end)))
+
+    s.taglist = require("widgets.taglist").create(s)
 
     -- Create a tasklist widget
     s.mytasklist = awful.widget.tasklist({
         screen  = s,
         filter  = awful.widget.tasklist.filter.currenttags,
         buttons = tasklist_buttons,
-        layout = {
-            layout = wibox.layout.fixed.horizontal
-        }
     })
 
     systray = wibox.widget({
@@ -368,11 +248,7 @@ awful.screen.connect_for_each_screen(function(s)
         layout = wibox.layout.align.horizontal,
         { -- Left
             layout = wibox.layout.fixed.horizontal,
-            {
-                s.layoutbox,
-                widget = wibox.container.background,
-                bg = beautiful.bg_focus
-            },
+            s.layoutbox,
             s.taglist,
             s.mytasklist,
         },
