@@ -229,20 +229,23 @@ awful.screen.connect_for_each_screen(function(s)
             -- Make reset functions for each tag widget then run them
             self.reset = function ()
                 self.fg = beautiful.fg_normal
+                self.bg = beautiful.bg_normal
                 self.right_separator.widget = right_soft_separator
 
                 if index == 1 then
                     self.left_separator.widget = right_hard_separator
                     self.left_separator.fg = beautiful.fg_normal
                     self.left_separator.bg = beautiful.bg_normal
+                elseif index == 9 then
+                    self.right_separator.widget = nil
                 end
             end
             self.reset()
 
-            -- Make first tag appear selected on create
-            self.update = function ()
-                self.fg = beautiful.fg_focus
+            -- Change appearance of selected tags, called in update_callback
+            local select_first = function ()
                 if index == 1 then
+                    self.fg = beautiful.fg_focus
                     self.left_separator.widget = right_circle_soft_separator
                     self.left_separator.fg = beautiful.fg_focus
                     self.left_separator.bg = beautiful.bg_focus
@@ -252,47 +255,49 @@ awful.screen.connect_for_each_screen(function(s)
                     self.left_separator.fg = beautiful.fg_focus
                 end
             end
-            self.update()
+            self.select = function ()
+                self.fg = beautiful.fg_focus
+                -- First tag
+                select_first()
+
+                -- Rest of tags
+                if index ~= 1 then
+                    self.right_separator.widget = right_hard_separator
+                    self.right_separator.fg = beautiful.bg_focus
+                    if index == 9 then
+                        self.right_separator.widget = nil
+                    end
+                end
+            end
+
+            -- Make first tag look selected
+            select_first()
         end,
         update_callback = function (self, t, index, tags)
-            -- Change colors on switching tags
-            local selected_tags = awful.screen.focused().selected_tags
-
             -- Change visuals for selected tags
+            local selected_tags = awful.screen.focused().selected_tags
             for _, tag in ipairs(selected_tags) do
                 -- Not selected tags
                 if tag ~= t then
                     self.reset()
-
-                    -- Update separators if selected tag is next to this one
-                    -- if tag == tags[index - 1] then
-                    --     self.left_separator.widget = right_hard_separator
-                    -- end
+                    -- Set right_separator of tags to left of selected
+                    if tag == tags[index + 1] then
+                        self.right_separator.widget = left_hard_separator
+                    end
                     goto continue
                 end
-
                 -- Selected tags
-                self.update()
-                naughty.notify({title = #selected_tags})
+                self.select()
                 ::continue::
             end
         end
     }
     -- Create a taglist widget
-    s.taglist = wibox.widget({
-        awful.widget.taglist({
+    s.taglist = awful.widget.taglist({
             screen  = s,
             filter  = awful.widget.taglist.filter.all,
             buttons = taglist_buttons,
-            -- layout = {
-            --     spacing = 12,
-            --     spacing_widget = right_soft_separator,
-            --     layout = wibox.layout.flex.horizontal,
-            -- },
             widget_template = taglist_template
-        }),
-        widget = wibox.container.margin,
-        right = 8,
     })
 
     -- Create a tasklist widget
@@ -368,13 +373,7 @@ awful.screen.connect_for_each_screen(function(s)
                 widget = wibox.container.background,
                 bg = beautiful.bg_focus
             },
-            {
-                s.taglist,
-                widget = wibox.container.background,
-                -- fg = wibox.fg_normal,
-                fg = beautiful.fg_normal,
-                bg = beautiful.bg_normal,
-            },
+            s.taglist,
             s.mytasklist,
         },
         awful.widget.separator,
