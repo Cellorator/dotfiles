@@ -156,57 +156,16 @@ awful.screen.connect_for_each_screen(function(s)
         buttons = tasklist_buttons,
     })
 
-    systray = wibox.widget({
-        {
-            {
-                {
-                    wibox.widget.systray(),
-                    widget = wibox.container.background,
-                    fg = beautiful.bg_systray,
-                    bg = beautiful.wibar_bg,
-                },
-                widget = wibox.container.margin,
-                right = 8,
-            },
-            left_hard_separator,
-            layout = wibox.layout.fixed.horizontal,
-        },
-        widget = wibox.container.background,
-        fg = beautiful.fg_normal,
-        bg = beautiful.bg_systray,
-    })
+    systray = require("widgets.systray").create()
 
-    day = wibox.widget({
-        {
-            widget = wibox.widget.textclock,
-            format = "%A"
-        },
-        widget = wibox.container.background,
-    })
-
-    date = wibox.widget({
-        {
-            widget = wibox.widget.textclock,
-            format = "%e %b %Y"
-        },
-        widget = wibox.container.background,
-    })
-
-    clock = wibox.widget({
-        {
-            widget = wibox.widget.textclock,
-            format = "%R"
-        },
-        widget = wibox.container.background,
-    })
+    time_and_date = require("widgets.time_and_date").create()
 
     -- Create the wibox
     s.mywibox = awful.wibar({
-        x = -1000,
         position = "top",
         height = 22,
         ontop = true,
-        screen = s
+        screen = s,
     })
 
     -- Add widgets to the wibox
@@ -221,32 +180,9 @@ awful.screen.connect_for_each_screen(function(s)
         awful.widget.separator,
         { -- Right
             layout = wibox.layout.fixed.horizontal,
-            {
-                left_hard_separator,
-                widget = wibox.container.background,
-                fg = beautiful.bg_systray,
-                bg = beautiful.wibar_bg
-            },
-            {
-                {
-                    layout = wibox.layout.fixed.horizontal,
-                    spacing = 8,
-                    systray,
-                    day,
-                    left_soft_separator,
-                    date,
-                    left_soft_separator,
-                    {
-                        clock,
-                        widget = wibox.container.margin,
-                        right = 8,
-                    },
-                },
-                widget = wibox.container.background,
-                fg = beautiful.fg_focus,
-                bg = beautiful.bg_focus
-            }
-        },
+            systray,
+            time_and_date,
+        }
     })
 end)
 -- }}}

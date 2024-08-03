@@ -21,8 +21,8 @@ local taglist_template = {
                     widget = wibox.widget.textbox
                 },
                 widget = wibox.container.margin,
-                left = 4,
-                right = 4,
+                left = 8,
+                right = 8,
             },
             id = "background_role",
             widget = wibox.container.background,
@@ -52,7 +52,9 @@ local taglist_template = {
                 self.left_separator.fg = beautiful.fg_normal
                 self.left_separator.bg = beautiful.bg_normal
             elseif index == 9 then
-                self.right_separator.widget = nil
+                self.right_separator.widget = separators.hard_circle_right
+                self.right_separator.fg = beautiful.bg_normal
+                self.right_separator.bg = beautiful.wibar_bg
             end
         end
         self.reset()
@@ -81,7 +83,7 @@ local taglist_template = {
                 self.right_separator.widget = separators.hard_circle_right
                 self.right_separator.fg = beautiful.bg_focus
                 if index == 9 then
-                    self.right_separator.widget = nil
+                    self.right_separator.widget = separators.hard_circle_right
                 end
             end
         end

@@ -48,7 +48,7 @@ theme.taglist_bg_empty = theme.bg_normal
 theme.taglist_fg_occupied = theme.fg_normal
 theme.taglist_bg_occupied = theme.bg_normal
 
-theme.wibar_bg = theme.colors.black
+theme.wibar_bg = theme.colors.black.."BB"
 
 -- There are other variable sets
 -- overriding the default one when
