@@ -12,9 +12,9 @@ import colors
 
 home = os.path.expanduser("~")
 
-@hook.subscribe.startup_once
-def startup_once():
-    subprocess.run(home + "/bin/autostart")
+@hook.subscribe.startup
+def autostart():
+    subprocess.run(f"{home}/bin/autostart.sh")
 
 # @hook.subscribe.client_focus
 # def changed_focus(window):
@@ -45,7 +45,6 @@ keys = [
     Key("M-l", lazy.layout.right(), desc="Move focus to right"),
     Key("M-j", lazy.layout.down(), desc="Move focus down"),
     Key("M-k", lazy.layout.up(), desc="Move focus up"),
-    Key("A-<Tab>", lazy.group.focus_back(), desc="Switch between windows"),
 
     # Move windows between left/right columns or move up/down in current stack.
     # Moving out of range in Columns layout will create new column.
