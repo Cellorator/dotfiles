@@ -2,6 +2,7 @@ local wibox = require("wibox")
 local beautiful = require("beautiful")
 local separators = require("widgets.separators")
 
+
 return {
     create = function ()
         return wibox.widget({
@@ -21,7 +22,8 @@ return {
                         bg = beautiful.wibar_bg,
                     },
                     widget = wibox.container.margin,
-                    right = 8,
+                    left = beautiful.systray_icon_spacing,
+                    right = beautiful.systray_icon_spacing,
                 },
                 separators.hard_circle_left,
             },

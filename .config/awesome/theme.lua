@@ -48,7 +48,9 @@ theme.taglist_bg_empty = theme.bg_normal
 theme.taglist_fg_occupied = theme.fg_normal
 theme.taglist_bg_occupied = theme.bg_normal
 
-theme.wibar_bg = theme.colors.black.."BB"
+theme.wibar_bg = theme.colors.black
+
+theme.systray_icon_spacing = 8
 
 -- There are other variable sets
 -- overriding the default one when
@@ -90,7 +92,6 @@ theme.menu_width  = dpi(100)
 -- beautiful.variable in your rc.lua
 --theme.bg_widget = "#cc0000"
 
-theme.systray_icon_spacing = 8
 
 -- Define the image to load
 theme.titlebar_close_button_normal = themes_path.."default/titlebar/close_normal.png"

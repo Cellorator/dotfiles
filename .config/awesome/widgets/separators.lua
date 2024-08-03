@@ -4,7 +4,8 @@ local wibox = require("wibox")
 local textbox_from = function (str)
     return wibox.widget({
         widget = wibox.widget.textbox,
-        markup = "<span font='14'>"..str.."</span>"
+        markup = "<span font='11'>"..str.."</span>"
+        -- markup = str
     })
 end
 
