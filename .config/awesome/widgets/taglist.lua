@@ -2,6 +2,7 @@ local gears = require("gears")
 local awful = require("awful")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
+local naughty = require("naughty")
 
 local separators = require("widgets.separators")
 
@@ -71,6 +72,7 @@ local taglist_template = {
         end
         self.select = function ()
             self.fg = beautiful.fg_focus
+            -- naughty.notify({title = index})
             -- First tag
             select_first()
 

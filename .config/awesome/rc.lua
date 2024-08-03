@@ -21,7 +21,6 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
-
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -32,7 +31,7 @@ if awesome.startup_errors then
 end
 
 -- Autostart Applications
-awful.spawn.with_shell("autostart")
+awful.spawn.with_shell("sh ~/bin/autostart.sh")
 
 -- Handle runtime errors after startup
 do
@@ -130,22 +129,6 @@ end
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal("property::geometry", set_wallpaper)
 
--- Separators between widgets
-local right_soft_separator =  wibox.widget({
-    widget = wibox.widget.textbox,
-    markup = "<span font='14'></span>"
-})
-
-local right_circle_soft_separator = wibox.widget({
-    widget = wibox.widget.textbox,
-    markup = "<span font='14'></span>"
-})
-
-local right_hard_separator = wibox.widget({
-    widget = wibox.widget.textbox,
-    markup = "<span font='14'></span>"
-})
-
 local left_soft_separator = wibox.widget({
     widget = wibox.widget.textbox,
     markup = "<span font='14'></span>"
@@ -233,8 +216,8 @@ awful.screen.connect_for_each_screen(function(s)
             layout = wibox.layout.fixed.horizontal,
             s.layoutbox,
             s.taglist,
-            s.mytasklist,
         },
+        -- s.mytasklist,
         awful.widget.separator,
         { -- Right
             layout = wibox.layout.fixed.horizontal,
@@ -287,6 +270,13 @@ globalkeys = gears.table.join(
     awful.key({ modkey }, "Escape", awful.tag.history.restore,
               {description = "go back", group = "tag"}),
 
+    -- Launch programs
+    awful.key({ modkey }, "r", function() awful.util.spawn("rofi -show drun") end),
+    awful.key({ modkey }, "Return", function () awful.spawn(terminal) end,
+              {description = "open a terminal", group = "launcher"}),
+    awful.key({ modkey }, "b", function () awful.spawn("firefox") end,
+               {description = "open browser", group = "launcher"}),
+
     awful.key({ modkey }, "j", function () awful.client.focus.byidx(1) end,
         {description = "focus next by index", group = "client"}
     ),
@@ -308,19 +298,10 @@ globalkeys = gears.table.join(
               {description = "jump to urgent client", group = "client"}),
     awful.key({ modkey }, "Tab",
         function ()
-            awful.client.focus.history.previous()
-            if client.focus then
-                client.focus:raise()
-            end
+            awful.tag.history.restore()
         end,
         {description = "go back", group = "client"}),
 
-    -- Standard program
-    awful.key({ modkey }, "r", function() awful.util.spawn("rofi -show drun") end),
-    awful.key({ modkey }, "Return", function () awful.spawn(terminal) end,
-              {description = "open a terminal", group = "launcher"}),
-    awful.key({ modkey }, "b", function () awful.spawn("firefox") end,
-               {description = "open browser", group = "launcher"}),
 
     awful.key({ modkey, "Control" }, "r", awesome.restart,
               {description = "reload awesome", group = "awesome"}),
@@ -603,4 +584,3 @@ end)
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
-
