@@ -7,6 +7,11 @@ fish_add_path ~/.cargo/bin
 set -gx EDITOR nvim
 set -gx QT_QPA_PLATFORMTHEME qt5ct
 
+# Startup
+echo
+set -gx PF_INFO "ascii title os kernel pkgs memory uptime "
+pfetch
+
 # Useful abbreviations and aliases
 abbr -a cl clear
 abbr -a cd z
