@@ -18,11 +18,12 @@
 		in {
 			homeConfigurations = {
 				admin = home-manager.lib.homeManagerConfiguration {
-				inherit pkgs;
-				modules = [ ./home.nix ];
+					inherit pkgs;
+					modules = [ ./home.nix ];
+				};
 			};
 		};
-	};
+	
 }
 
 				
