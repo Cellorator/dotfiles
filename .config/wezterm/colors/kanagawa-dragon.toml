@@ -1,0 +1,39 @@
+# Kanagawa Dragon Wezterm Colors
+# Just a toml version of the theme from Gogh-Co/Gogh on GitHub
+
+[colors]
+ansi = [
+    "#0D0C0C",    # Black (Host)
+    "#C4746E",    # Red (Syntax string)
+    "#8A9A7B",   # Green (Command)
+    "#C4B28A",   # Yellow (Command second)
+    "#8BA4B0",   # Blue (Path)
+    "#A292A3",   # Magenta (Syntax var)
+    "#8EA4A2",   # Cyan (Prompt)
+    "#C8C093",   # White
+]
+brights = [
+    "#A6A69C",   # Bright Black
+    "#E46876",   # Bright Red (Command error)
+    "#87A987",   # Bright Green (Exec)
+    "#E6C384",   # Bright Yellow
+    "#7FB4CA",   # Bright Blue (Folder)
+    "#938AA9",   # Bright Magenta
+    "#7AA89F",   # Bright Cyan
+    "#C5C9C5",   # Bright White
+]
+
+background = "#181616"  # Background
+foreground = "#C5C9C5"  # Foreground (Text)
+cursor_bg = "#C8C093"       # Cursor
+cursor_fg = "#181616"       # Cursor
+cursor_border = "#C8C093"
+scrollbar_thumb = "#000000"
+split = "#000000"
+
+[colors.indexed]
+16 = '#FFA066'
+17 = '#ff5d62'
+
+[metadata]
+name = "kanagawa-dragon"

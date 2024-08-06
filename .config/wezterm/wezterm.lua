@@ -7,8 +7,7 @@ config.font_size = 10.5
 config.custom_block_glyphs = false
 
 -- Colorscheme
--- config.color_scheme = "Gruvbox dark, medium (base16)"
-config.color_scheme = "Kanagawa Dragon (Gogh)"
+config.color_scheme = "kanagawa-dragon"
 
 config.enable_tab_bar = false
 config.window_padding = {
@@ -28,7 +27,5 @@ config.keys = {
 }
 
 config.window_close_confirmation = "NeverPrompt"
-
-config.mux_enable_ssh_agent = false
 
 return config
