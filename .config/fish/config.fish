@@ -6,6 +6,7 @@ fish_add_path ~/.cargo/bin
 
 set -gx EDITOR nvim
 set -gx QT_QPA_PLATFORMTHEME qt5ct
+set -gx BAT_THEME "base16-256"
 
 # Startup
 echo
