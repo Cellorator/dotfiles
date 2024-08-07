@@ -6,8 +6,8 @@
 	};
 in {
 	home = {
-		username = "admin";
-		homeDirectory = "/home/admin";
+        inherit username;
+		homeDirectory = "/home/${username}";
 
 		# If reading in the future, don't change this
 		stateVersion = "24.05";
