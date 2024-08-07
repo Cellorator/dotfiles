@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 echo "abcdefghijklmnopqrstuv ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 echo "oO08 iIlL1 g9qCGQ ~-+=>"

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # This script enables an after-the-fact timeshift equivalent for Arch systems
 # Give it a date (as in 2020-09-20) and it will use the Arch archive repos
 # to revert to the package state that applied on that date.
