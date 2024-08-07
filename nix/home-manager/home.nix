@@ -1,9 +1,12 @@
-{ lib, pkgs, config, ... }: let
+{ lib, pkgs, config, ... }:
+
+let
 	username = "admin";
-	configLink = configFolder: {
-		source = config.lib.file.mkOutOfStoreSymlink "/home/${username}/dotfiles/${configFolder}";
-		recursive = true;
-	};
+    symlinks = import ./symlinks.nix;
+	# configLink = configFolder: {
+	# 	source = config.lib.file.mkOutOfStoreSymlink "/home/${username}/dotfiles/${configFolder}";
+	# 	recursive = true;
+	# };
 in {
 	home = {
         inherit username;
@@ -35,15 +38,7 @@ in {
 
 		preferXdgDirectories = true;
 
-		file = {
-			"bin" = configLink "bin";
-			".config/nvim" = configLink ".config/nvim";
-			".config/fish" = configLink ".config/fish";
-			".config/wezterm" = configLink ".config/wezterm";
-			".config/awesome" = configLink ".config/awesome";
-			".config/picom" = configLink ".config/picom";
-			".config/bat" = configLink ".config/bat";
-		};
+        file = symlinks { inherit config; inherit username; };
 	};
 
 	programs = {
