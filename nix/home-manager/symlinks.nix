@@ -18,14 +18,34 @@ let
         source = config.lib.file.mkOutOfStoreSymlink "/home/${username}/dotfiles/${folder}";
     };
 
-in {
-    "bin" = link "bin";
-    ".config/nvim" = link ".config/nvim";
-    ".config/fish" = link ".config/fish";
-    ".config/wezterm" = link ".config/wezterm";
-    ".config/awesome" = link ".config/awesome";
-    ".config/picom" = link ".config/picom";
-    ".config/bat" = link ".config/bat";
-}
+    toNameValuePair = folder: {
+        name = folder;
+        value = link folder;
+    };
+
+    linkHomeFolders = folders: builtins.listToAttrs (map toNameValuePair folders);
+
+    prependStr = str: set: map (x: str + x) set;
+
+    # linkXDGConfigFolders = folders: builtins.listToAttrs (map toNameValuePair (prependStr ".config/" folders));
+    # linkXDGLocalShareFolders= folders: builtins.listToAttrs (map toNameValuePair (prependStr ".local/share/" folders));
+in linkHomeFolders [
+        "bin"
+    ] //
+    linkHomeFolders (prependStr ".config/" [
+        "nvim"
+        "fish"
+        "wezterm"
+        "picom"
+        "awesome"
+        "rofi"
+    ])
+    # "bin" = link "bin";
+    # ".config/nvim" = link ".config/nvim";
+    # ".config/fish" = link ".config/fish";
+    # ".config/wezterm" = link ".config/wezterm";
+    # ".config/awesome" = link ".config/awesome";
+    # ".config/picom" = link ".config/picom";
+
 
 

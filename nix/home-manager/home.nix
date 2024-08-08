@@ -3,10 +3,6 @@
 let
 	username = "admin";
     symlinks = import ./symlinks.nix;
-	# configLink = configFolder: {
-	# 	source = config.lib.file.mkOutOfStoreSymlink "/home/${username}/dotfiles/${configFolder}";
-	# 	recursive = true;
-	# };
 in {
 	home = {
         inherit username;
@@ -34,6 +30,12 @@ in {
             (nerdfonts.override { fonts = [ "Hermit" ]; })
 
             clang
+
+            wine-staging
+            reaper
+            yabridge
+            yabridgectl
+            bottles
 		];
 
 		preferXdgDirectories = true;
@@ -46,4 +48,6 @@ in {
 	};
 
     fonts.fontconfig.enable = true;
+
+    nixpkgs.config.allowUnfree = true;
 }
