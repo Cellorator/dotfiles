@@ -4,6 +4,10 @@ let
 	username = "admin";
     symlinks = import ./symlinks.nix;
 in {
+    imports = [
+        ./gtk-theme.nix
+    ];
+
 	home = {
         inherit username;
 		homeDirectory = "/home/${username}";
@@ -38,7 +42,6 @@ in {
             yabridgectl
             bottles
 
-            lxappearance
 		];
 
 		preferXdgDirectories = true;
@@ -53,11 +56,4 @@ in {
 	};
 
     fonts.fontconfig.enable = true;
-
-    gtk = {
-        font = "Hurmit Nerd Font";
-        theme = "KanagawaDragon";
-        iconTheme = "KanagawaDragon";
-    };
-
 }
