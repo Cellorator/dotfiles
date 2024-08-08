@@ -23,9 +23,4 @@ in linkHomeFolders [
         "picom"
         "awesome"
         "rofi"
-    ]) //
-    linkHomeFolders (prependStr ".local/share/" [
-        "themes"
-        "icons"
     ])
-

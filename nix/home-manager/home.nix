@@ -2,10 +2,11 @@
 
 let
 	username = "admin";
-    symlinks = import ./symlinks.nix;
+    symlinks = import ./symlinks.nix { inherit config; inherit username; };
+    utils = import ./utils.nix { inherit config; inherit username; };
 in {
     imports = [
-        ./gtk-theme.nix
+        (import ./gtk-theme.nix { inherit utils; })
     ];
 
 	home = {
@@ -46,7 +47,7 @@ in {
 
 		preferXdgDirectories = true;
 
-        file = symlinks { inherit config; inherit username; };
+        file = symlinks;
 	};
 
 	programs = {
