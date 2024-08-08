@@ -25,17 +25,20 @@ in {
 
             xclip
             rofi
+            alttab
             picom
 
             (nerdfonts.override { fonts = [ "Hermit" ]; })
 
             clang
 
-            wine-staging
+            wineWowPackages.staging
             reaper
             yabridge
             yabridgectl
             bottles
+
+            lxappearance
 		];
 
 		preferXdgDirectories = true;
@@ -43,11 +46,18 @@ in {
         file = symlinks { inherit config; inherit username; };
 	};
 
+    nixpkgs.config.allowUnfree = true;
+
 	programs = {
 		home-manager.enable = true;
 	};
 
     fonts.fontconfig.enable = true;
 
-    nixpkgs.config.allowUnfree = true;
+    gtk = {
+        font = "Hurmit Nerd Font";
+        theme = "KanagawaDragon";
+        iconTheme = "KanagawaDragon";
+    };
+
 }
