@@ -49,8 +49,6 @@ in {
         file = symlinks { inherit config; inherit username; };
 	};
 
-    nixpkgs.config.allowUnfree = true;
-
 	programs = {
 		home-manager.enable = true;
 	};
