@@ -18,12 +18,19 @@
                 inherit system;
                 config.allowUnfree = true;
             };
+            hostname = "nixos";
+            username = "admin";
         in {
-            homeConfigurations = {
-                admin = home-manager.lib.homeManagerConfiguration {
-                    inherit pkgs;
-                    modules = [ ./home-manager/home.nix ];
-                };
+            nixosConfigurations.${hostname} = nixpkgs.lib.nixosSystem {
+                inherit system;
+                specialArgs = { inherit hostname username; };
+                modules = [ ./nixos/configuration.nix ];
+            };
+
+            homeConfigurations.${username} = home-manager.lib.homeManagerConfiguration {
+                inherit pkgs;
+                extraSpecialArgs = { inherit username; };
+                modules = [ ./home-manager/home.nix ];
             };
         };
 }

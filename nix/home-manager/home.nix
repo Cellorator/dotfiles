@@ -1,9 +1,8 @@
-{ lib, pkgs, config, ... }:
+{ lib, pkgs, config, username, ... }:
 
 let
-	username = "admin";
-    symlinks = import ./symlinks.nix { inherit config; inherit username; };
-    utils = import ./utils.nix { inherit config; inherit username; };
+    symlinks = import ./symlinks.nix { inherit config username; };
+    utils = import ./utils.nix { inherit config username; };
 in {
     imports = [
         (import ./gtk-theme.nix { inherit utils; })
@@ -36,6 +35,7 @@ in {
             (nerdfonts.override { fonts = [ "Hermit" ]; })
 
             clang
+            rustup
 
             wineWowPackages.staging
             reaper
