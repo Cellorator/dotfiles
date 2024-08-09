@@ -1,12 +1,12 @@
 { config, username, ... }:
 rec {
-    linkSource = target: {
-        source = config.lib.file.mkOutOfStoreSymlink "/home/${username}/dotfiles/${target}";
-    };
+        linkSource = target: {
+            source = config.lib.file.mkOutOfStoreSymlink "/home/${username}/dotfiles/${target}";
+        };
 
-    linkToHome = targets: builtins.listToAttrs (
-        map (x: { name = x; value = linkSource x; }) targets
-    );
+        linkToHome = targets: builtins.listToAttrs (
+            map (x: { name = x; value = linkSource x; }) targets
+        );
 
-    prepend = x: map (item: x + item);
+        prepend = x: map (item: x + item);
 }

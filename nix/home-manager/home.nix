@@ -1,11 +1,14 @@
-{ lib, pkgs, config, username, ... }:
+{ pkgs, config, username, ... }:
 
 let
     symlinks = import ./symlinks.nix { inherit config username; };
     utils = import ./utils.nix { inherit config username; };
 in {
+    _module.args = { inherit utils; };
+
     imports = [
-        (import ./gtk-theme.nix { inherit utils; })
+        ./gtk-theme.nix
+        ./programs/base.nix
     ];
 
 	home = {
@@ -16,26 +19,11 @@ in {
 		stateVersion = "24.05";
 
 		packages = with pkgs; [
-			fish
-            starship
-            pfetch
-			bat
-			zoxide
-            eza
-            fzf
-
-			wezterm
-			neovim
-
-            xclip
-            rofi
-            alttab
-            picom
-
             (nerdfonts.override { fonts = [ "Hermit" ]; })
 
             clang
             rustup
+            gnumake
 
             wineWowPackages.staging
             reaper

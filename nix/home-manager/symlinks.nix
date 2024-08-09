@@ -15,12 +15,4 @@ let
     prependStr = str: set: map (x: str + x) set;
 in linkHomeFolders [
         "bin"
-    ] //
-    linkHomeFolders (prependStr ".config/" [
-        "nvim"
-        "fish"
-        "wezterm"
-        "picom"
-        "awesome"
-        "rofi"
-    ])
+    ]
