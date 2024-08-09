@@ -35,7 +35,9 @@ in {
 
 		preferXdgDirectories = true;
 
-        file = symlinks;
+        file = utils.linkToHome [
+            "bin"
+        ];
 	};
 
 	programs = {
