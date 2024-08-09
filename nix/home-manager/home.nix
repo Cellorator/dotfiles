@@ -1,7 +1,6 @@
 { pkgs, config, username, ... }:
 
 let
-    symlinks = import ./symlinks.nix { inherit config username; };
     utils = import ./utils.nix { inherit config username; };
 in {
     _module.args = { inherit utils; };
@@ -9,6 +8,7 @@ in {
     imports = [
         ./gtk-theme.nix
         ./programs/base.nix
+        ./programs/extras.nix
     ];
 
 	home = {
@@ -20,17 +20,6 @@ in {
 
 		packages = with pkgs; [
             (nerdfonts.override { fonts = [ "Hermit" ]; })
-
-            clang
-            rustup
-            gnumake
-
-            wineWowPackages.staging
-            reaper
-            yabridge
-            yabridgectl
-            bottles
-
 		];
 
 		preferXdgDirectories = true;
