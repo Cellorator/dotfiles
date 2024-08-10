@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, hostname, username, ... }:
+{ config, pkgs, lib, hostname, username, ... }:
 
 {
     imports = [
@@ -86,8 +86,14 @@
     # Define a user account. Don't forget to set a password with ‘passwd’.
     users.users.${username} = {
         isNormalUser = true;
-        description = "Admin";
         extraGroups = [ "networkmanager" "wheel" ];
+        description =
+        let
+            first = builtins.substring 0 1;
+            tail = s: builtins.substring 1 (builtins.stringLength s) s;
+            capitallize = s: (lib.toUpper (first s)) + tail s;
+        in
+            capitallize username;
     };
 
     programs.nix-ld.enable = true;
