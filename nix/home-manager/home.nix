@@ -9,6 +9,11 @@ in {
         ./modules
     ];
 
+    nix = {
+        package = pkgs.nix;
+        settings.experimental-features = [ "nix-command" "flakes" ];
+    };
+
 	home = {
         inherit username;
 		homeDirectory = "/home/${username}";
