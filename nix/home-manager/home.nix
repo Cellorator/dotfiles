@@ -6,7 +6,6 @@ in {
     _module.args = { inherit utils; };
 
     imports = [
-        ./gtk-theme.nix
         ./modules
     ];
 

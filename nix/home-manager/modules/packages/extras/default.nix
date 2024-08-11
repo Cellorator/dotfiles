@@ -10,5 +10,7 @@
         yabridge
         yabridgectl
         bottles
+
+        firefox
     ];
 }

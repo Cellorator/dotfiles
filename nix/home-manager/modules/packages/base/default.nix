@@ -1,8 +1,5 @@
 { pkgs, utils, ... }:
 {
-    imports = [
-        ./extras.nix
-    ];
     config.home.packages = with pkgs; [
         wezterm
         fish
