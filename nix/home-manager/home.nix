@@ -24,6 +24,7 @@ in {
 		preferXdgDirectories = true;
 
         file = utils.linkToHome [
+            "Pictures/backgrounds"
             "bin"
         ];
 	};

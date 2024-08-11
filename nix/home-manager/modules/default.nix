@@ -24,6 +24,8 @@
         "wezterm"
         "fish"
         "nvim"
+
+        "awesome"
         "rofi"
         "picom"
     ]);
