@@ -19,9 +19,9 @@ abbr -a cd z
 abbr vim nvim
 abbr vi nvim
 
-alias ls="eza -1 --sort=type --icons"
-alias la="eza -la --sort=type --icons"
-alias tree="eza -Ta --sort=type --icons"
+alias ls="eza -1 --group-directories-first --icons"
+alias la="eza -la --group-directories-first --icons"
+alias tree="eza -Ta --group-directories-first --icons"
 alias cat="bat"
 
 # Zellij abbreviations
