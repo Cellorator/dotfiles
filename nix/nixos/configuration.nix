@@ -31,19 +31,6 @@
     # Select internationalisation properties.
     i18n.defaultLocale = "en_CA.UTF-8";
 
-    # Enable the X11 windowing system.
-    services.xserver = {
-        enable = true;
-        displayManager.lightdm.enable = true;
-        windowManager.awesome.enable = true;
-    };
-
-    # Configure keymap in X11
-    services.xserver.xkb = {
-        layout = "us";
-        variant = "";
-    };
-
     hardware.graphics.enable = true;
     services.xserver.videoDrivers = ["nvidia"];
     hardware.nvidia = {
