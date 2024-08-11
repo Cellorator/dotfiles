@@ -9,19 +9,11 @@
         # Include the results of the hardware scan.
         ./hardware-configuration.nix
         ./gc.nix
+        ./grub.nix
     ];
 
     nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-    # Bootloader.
-    boot.loader.grub = {
-        enable = true;
-        efiSupport = true;
-        device = "nodev";
-    };
-    boot.loader.efi.canTouchEfiVariables = true;
-
-    boot.kernelPackages = pkgs.linuxPackages_latest;
 
     networking.hostName = hostname; # Define your hostname.
     # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
