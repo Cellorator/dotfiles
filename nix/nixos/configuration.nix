@@ -45,9 +45,6 @@
     # Enable CUPS to print documents.
     services.printing.enable = true;
 
-    # Enable touchpad support (enabled default in most desktopManager).
-    # services.xserver.libinput.enable = true;
-
     # Define a user account. Don't forget to set a password with ‘passwd’.
     users.users.${username} = {
         isNormalUser = true;
@@ -64,7 +61,6 @@
     programs.nix-ld.enable = true;
 
     # Install firefox.
-    programs.firefox.enable = true;
     programs.dconf.enable = true;
 
     # Thunar
