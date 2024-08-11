@@ -1,32 +1,6 @@
-{ pkgs, utils, ... }:
 {
     imports = [
-        ./extras.nix
+        ./packages
+        ./gtk-theme.nix
     ];
-    config.home.packages = with pkgs; [
-        wezterm
-        fish
-        starship
-        pfetch
-        bat
-        zoxide
-        eza
-        fzf
-        neovim
-        xclip
-
-        rofi
-        alttab
-        picom
-    ];
-
-    config.home.file = utils.linkToHome (utils.prepend ".config/" [
-        "wezterm"
-        "fish"
-        "nvim"
-
-        "awesome"
-        "rofi"
-        "picom"
-    ]);
 }
