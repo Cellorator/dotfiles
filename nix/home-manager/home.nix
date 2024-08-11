@@ -7,9 +7,10 @@ in {
 
     imports = [
         ./gtk-theme.nix
-        ./programs/base.nix
-        ./programs/extras.nix
+        ./modules
     ];
+
+    windowManager.awesome.enable = true;
 
 	home = {
         inherit username;

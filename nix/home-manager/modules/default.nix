@@ -1,5 +1,9 @@
-{ pkgs, utils, ...}:
+{ pkgs, utils, ... }:
 {
+    imports = [
+        ./window-managers
+        ./extras.nix
+    ];
     config.home.packages = with pkgs; [
         wezterm
         fish
@@ -11,18 +15,11 @@
         fzf
         neovim
         xclip
-
-        rofi
-        alttab
-        picom
     ];
 
     config.home.file = utils.linkToHome (utils.prepend ".config/" [
-        "awesome"
         "wezterm"
         "fish"
         "nvim"
-        "rofi"
-        "picom"
     ]);
 }
