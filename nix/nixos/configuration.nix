@@ -8,12 +8,22 @@
     imports = [
         # Include the results of the hardware scan.
         ./hardware-configuration.nix
-        ./gc.nix
         ./grub.nix
+        ./x11.nix
+        ./nvidia.nix
     ];
 
-    nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
+    nix = {
+        settings = {
+            auto-optimise-store = true;
+            experimental-features = [ "nix-command" "flakes" ];
+        };
+        gc = {
+            automatic = true;
+            dates = "weekly";
+            options = "--delete-older-than 30d";
+        };
+    };
 
     networking.hostName = hostname; # Define your hostname.
     # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -30,15 +40,6 @@
 
     # Select internationalisation properties.
     i18n.defaultLocale = "en_CA.UTF-8";
-
-    hardware.graphics.enable = true;
-    services.xserver.videoDrivers = ["nvidia"];
-    hardware.nvidia = {
-        open = true;
-        modesetting.enable = true;
-        nvidiaSettings = true;
-        forceFullCompositionPipeline = true;
-    };
 
     # Enable CUPS to print documents.
     services.printing.enable = true;
