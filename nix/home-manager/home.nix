@@ -10,8 +10,6 @@ in {
         ./modules
     ];
 
-    windowManager.awesome.enable = true;
-
 	home = {
         inherit username;
 		homeDirectory = "/home/${username}";
