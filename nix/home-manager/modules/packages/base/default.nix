@@ -23,6 +23,7 @@
         "nvim"
 
         "awesome"
+        "qtile"
         "rofi"
         "picom"
     ]);
