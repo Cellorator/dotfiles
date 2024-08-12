@@ -517,6 +517,11 @@ client.connect_signal("mouse::enter", function(c)
     c:emit_signal("request::activate", "mouse_enter", {raise = false})
 end)
 
+-- Raise activated window, alttab doesn't switch to other workspaces on NixOS without this for some reason, specifically for awesome
+client.connect_signal("request::activate", function (c)
+    c.first_tag:view_only()
+end)
+
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
