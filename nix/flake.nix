@@ -22,13 +22,19 @@
            desktop = nixpkgs.lib.nixosSystem {
                 inherit system;
                 specialArgs = inputs;
-                modules = [ ./hosts/desktop ];
+                modules = [
+                    hosts/desktop
+                    modules/nixos/core/grub.nix
+                    modules/nixos/optional/nvidia.nix
+                    modules/nixos/optional/pipewire.nix
+                    modules/nixos/optional/x11.nix
+                ];
            };
         };
 
-        homeConfigurations.${username} = home-manager.lib.homeManagerConfiguration {
+        homeConfigurations.admin = home-manager.lib.homeManagerConfiguration {
             inherit pkgs;
-            extraSpecialArgs = inputs // { inherit username; };
+            extraSpecialArgs = inputs // { username = "admin"; };
             modules = [
                 ./home-manager/home.nix
             ];

@@ -2,16 +2,12 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, hostname, username, ... }:
+{ config, pkgs, lib, ... }:
 
 {
     imports = [
         # Include the results of the hardware scan.
         ./hardware-configuration.nix
-        ./grub.nix
-        ./x11.nix
-        ./nvidia.nix
-        ./pipewire.nix
     ];
 
     nix = {
@@ -26,7 +22,7 @@
         };
     };
 
-    networking.hostName = hostname; # Define your hostname.
+    networking.hostName = "nixos-desktop"; # Define your hostname.
     # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
     # Configure network proxy if necessary
@@ -46,16 +42,16 @@
     services.printing.enable = true;
 
     # Define a user account. Don't forget to set a password with ‘passwd’.
-    users.users.${username} = {
+    users.users.admin = {
         isNormalUser = true;
         extraGroups = [ "networkmanager" "wheel" ];
-        description =
-        let
-            first = builtins.substring 0 1;
-            tail = s: builtins.substring 1 (builtins.stringLength s) s;
-            capitallize = s: (lib.toUpper (first s)) + tail s;
-        in
-            capitallize username;
+        description = "Admin";
+        # let
+        #     first = builtins.substring 0 1;
+        #     tail = s: builtins.substring 1 (builtins.stringLength s) s;
+        #     capitallize = s: (lib.toUpper (first s)) + tail s;
+        # in
+        #     capitallize username;
     };
 
     programs.nix-ld.enable = true;
@@ -123,5 +119,5 @@
     # this value at the release version of the first install of this system.
     # Before changing this value read the documentation for this option
     # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-    system.stateVersion = "23.11"; # Did you read the comment?
+    system.stateVersion = "24.05"; # Did you read the comment?
 }
