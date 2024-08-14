@@ -17,14 +17,13 @@
                 inherit system;
                 config.allowUnfree = true;
             };
-
-            hostname = "nixos";
-            username = "admin";
         in {
-            nixosConfigurations.${hostname} = nixpkgs.lib.nixosSystem {
-                inherit system;
-                specialArgs = inputs // { inherit hostname username; };
-                modules = [ ./nixos/configuration.nix ];
+            nixosConfigurations = {
+               desktop = nixpkgs.lib.nixosSystem {
+                    inherit system;
+                    specialArgs = inputs;
+                    modules = [ ./hosts/desktop ];
+               };
             };
 
             homeConfigurations.${username} = home-manager.lib.homeManagerConfiguration {
