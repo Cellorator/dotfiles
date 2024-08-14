@@ -1,6 +1,6 @@
 { pkgs, utils, ... }:
 {
-    config.home.packages = with pkgs; [
+    home.packages = with pkgs; [
         wezterm
         fish
         starship
@@ -17,7 +17,7 @@
         picom
     ];
 
-    config.home.file = utils.linkToHome (utils.prepend ".config/" [
+    home.file = utils.linkToHome (utils.prepend ".config/" [
         "wezterm"
         "fish"
         "nvim"
@@ -27,4 +27,11 @@
         "rofi"
         "picom"
     ]);
+
+    programs.git = {
+        enable = true;
+        lfs.enable = true;
+        userName = "Cellorator";
+        userEmail = "66387348+Cellorator@users.noreply.github.com";
+    };
 }
