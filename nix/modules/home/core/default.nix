@@ -16,7 +16,7 @@ in {
         neovim
         xclip
 
-        rofi
+        rofi-wayland
         alttab
         picom
     ];

@@ -4,6 +4,7 @@
         ./gtk-theme.nix
         ./wine.nix
         ./pro-audio.nix
+        ./hyprland.nix
     ];
 
     home.packages = with pkgs; [
