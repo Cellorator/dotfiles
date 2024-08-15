@@ -9,9 +9,9 @@
         # Include the results of the hardware scan.
         ./hardware-configuration.nix
         ../../modules/nixos/core/grub.nix
-        ../../modules/nixos/optional/nvidia.nix
-        ../../modules/nixos/optional/pipewire.nix
-        ../../modules/nixos/optional/x11.nix
+        ../../modules/nixos/extras/nvidia.nix
+        ../../modules/nixos/extras/pipewire.nix
+        ../../modules/nixos/extras/x11.nix
         ../../modules/users/primary/nixos.nix
     ];
 
