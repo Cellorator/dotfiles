@@ -1,6 +1,10 @@
 { pkgs, ... }:
 {
-    config.home.packages = with pkgs; [
+    imports = [
+        ./gtk-theme.nix
+    ];
+
+    home.packages = with pkgs; [
         clang
         rustup
         gnumake

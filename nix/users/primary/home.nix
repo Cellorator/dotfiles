@@ -3,8 +3,7 @@
 {
     imports = [
         ../../modules/home/core
-        ../../modules/home/extras/pkgs.nix
-        ../../modules/home/extras/gtk-theme.nix
+        ../../modules/home/extras
     ];
 
     nix = {
