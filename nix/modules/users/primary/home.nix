@@ -1,12 +1,10 @@
-{ pkgs, config, username, ... }:
+{ pkgs, config, username, utils, ... }:
 
-let
-    utils = import ./utils.nix { inherit config username; };
-in {
-    _module.args = { inherit utils; };
-
+{
     imports = [
-        ./modules
+        ../../home/core
+        ../../home/extras/pkgs.nix
+        ../../home/extras/gtk-theme.nix
     ];
 
     nix = {

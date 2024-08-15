@@ -1,5 +1,9 @@
-{ pkgs, utils, ... }:
-{
+{ pkgs, config, username, ... }:
+let
+    utils = import ./utils.nix { inherit config username; };
+in {
+    _module.args = { inherit utils; };
+
     home.packages = with pkgs; [
         wezterm
         fish

@@ -1,5 +1,5 @@
 # Sets gtk theming options
-{ utils, ... }:
+{ config, utils, ... }:
 {
     config.home.file = utils.linkToHome (utils.prepend ".local/share/" [
         "themes/KanagawaDragon"
