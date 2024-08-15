@@ -8,6 +8,11 @@
     imports = [
         # Include the results of the hardware scan.
         ./hardware-configuration.nix
+        ../../modules/nixos/core/grub.nix
+        ../../modules/nixos/optional/nvidia.nix
+        ../../modules/nixos/optional/pipewire.nix
+        ../../modules/nixos/optional/x11.nix
+        ../../modules/users/primary/nixos.nix
     ];
 
     nix = {
@@ -40,19 +45,6 @@
 
     # Enable CUPS to print documents.
     services.printing.enable = true;
-
-    # Define a user account. Don't forget to set a password with ‘passwd’.
-    users.users.admin = {
-        isNormalUser = true;
-        extraGroups = [ "networkmanager" "wheel" ];
-        description = "Admin";
-        # let
-        #     first = builtins.substring 0 1;
-        #     tail = s: builtins.substring 1 (builtins.stringLength s) s;
-        #     capitallize = s: (lib.toUpper (first s)) + tail s;
-        # in
-        #     capitallize username;
-    };
 
     programs.nix-ld.enable = true;
 

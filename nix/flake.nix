@@ -1,5 +1,5 @@
 {
-    description = "My Home Manager configuration";
+    description = "My Nix configuration";
 
     inputs = {
         nixpkgs.url = "nixpkgs/nixos-unstable";
@@ -23,11 +23,7 @@
                 inherit system;
                 specialArgs = inputs;
                 modules = [
-                    hosts/desktop
-                    modules/nixos/core/grub.nix
-                    modules/nixos/optional/nvidia.nix
-                    modules/nixos/optional/pipewire.nix
-                    modules/nixos/optional/x11.nix
+                    ./hosts/desktop
                 ];
            };
         };
