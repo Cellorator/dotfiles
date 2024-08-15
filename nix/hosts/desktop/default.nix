@@ -12,7 +12,8 @@
         ../../modules/nixos/extras/nvidia.nix
         ../../modules/nixos/extras/pipewire.nix
         ../../modules/nixos/extras/x11.nix
-        ../../modules/users/primary/nixos.nix
+
+        ../../users/primary/nixos.nix
     ];
 
     nix = {

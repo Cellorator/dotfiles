@@ -30,7 +30,7 @@
             admin = home-manager.lib.homeManagerConfiguration {
                 inherit pkgs;
                 extraSpecialArgs = inputs // { username = "admin"; };
-                modules = [ ./modules/users/primary/home.nix ];
+                modules = [ ./users/primary/home.nix ];
             };
         };
     };

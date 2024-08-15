@@ -2,9 +2,9 @@
 
 {
     imports = [
-        ../../home/core
-        ../../home/extras/pkgs.nix
-        ../../home/extras/gtk-theme.nix
+        ../../modules/home/core
+        ../../modules/home/extras/pkgs.nix
+        ../../modules/home/extras/gtk-theme.nix
     ];
 
     nix = {
