@@ -1,9 +1,7 @@
 {
     imports = [
-        ./nvidia.nix
-        ./x11.nix
+        ./graphics
         ./pipewire.nix
         ./ssh.nix
-        ./hyprland.nix
     ];
 }
