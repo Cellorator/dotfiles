@@ -5,7 +5,6 @@ fish_add_path ~/bin
 fish_add_path ~/.cargo/bin
 
 set -gx EDITOR nvim
-set -gx QT_QPA_PLATFORMTHEME qt5ct
 set -gx BAT_THEME "base16-256"
 
 # Startup
@@ -15,14 +14,17 @@ pfetch
 
 # Useful abbreviations and aliases
 abbr -a cl clear
+abbr -a vi nvim
 abbr -a cd z
-abbr vim nvim
-abbr vi nvim
 
 alias ls="eza -1 --group-directories-first --icons"
 alias la="eza -la --group-directories-first --icons"
-alias tree="eza -Ta --group-directories-first --icons"
-alias cat="bat"
+alias tree="eza -T --group-directories-first --icons"
+alias bat="bat -n"
+alias cat="bat -n"
+
+alias fzf="fzf --preview 'bat -n --color=always {}'"
+alias vif "fzf --preview 'bat -n --color=always {}' | xargs nvim"
 
 # Zellij abbreviations
 abbr -a zl zellij
@@ -39,6 +41,7 @@ abbr -a gs git status
 abbr -a gd git diff
 abbr -a gl git log --oneline
 abbr -a gp git push
+abbr -a gpl git pull
 
 # Yadm abbreviations
 abbr -a ya yadm add
