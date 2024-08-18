@@ -7,7 +7,7 @@ config.font_size = 10.5
 config.custom_block_glyphs = false
 
 -- Colorscheme
-config.color_scheme = "kanagawa-dragon"
+config.color_scheme = "Kanagawa Dragon (Gogh)"
 
 config.enable_tab_bar = false
 config.window_padding = {
