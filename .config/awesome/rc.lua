@@ -55,7 +55,7 @@ beautiful.init("/home/admin/.config/awesome/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 
-terminal = "wezterm"
+terminal = "kitty"
 editor = os.getenv("EDITOR") or "nano"
 editor_cmd = terminal .. " -e " .. editor
 
