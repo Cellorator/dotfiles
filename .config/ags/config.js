@@ -1,5 +1,5 @@
-import Bar from "./bar.js"
-import NotificationPopups from "./notificationPopups.js"
+import Bar from "./modules/bar/main.js"
+import Notifications from "./modules/notifications/main.js"
 
 Utils.timeout(100, () => Utils.notify({
     summary: "cool",
@@ -12,7 +12,7 @@ Utils.timeout(100, () => Utils.notify({
 App.config({
     windows: [
         Bar(),
-        // NotificationPopups()
+        Notifications()
     ],
     style: "./style.css"
 })

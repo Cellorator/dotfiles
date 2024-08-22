@@ -1,4 +1,4 @@
-import { Separator } from "./separator.js"
+import { Separator } from "../widgets/separator.js"
 
 export default function Bar() {
     return Widget.Window({
