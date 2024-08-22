@@ -7,6 +7,8 @@ run() {
         "$@"&
     fi
 }
+
+run "snixembed" --fork
 run "picom" -b
 run "/usr/lib/xfce-polkit/xfce-polkit"
 run "dunst"
