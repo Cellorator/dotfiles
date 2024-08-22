@@ -56,7 +56,8 @@ return {
         config = function ()
             require("colorizer").setup({
                 user_default_options = {
-                    names = false,
+                    always_update = true,
+                    css = true,
                 }
             })
         end,
