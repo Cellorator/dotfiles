@@ -19,11 +19,7 @@ vim.opt.rtp:prepend(lazypath)
 local opts = {
 	install = {
 		colorscheme = { "kanagawa-dragon" }
-	},
-    checker = {
-        enabled = true,
-        frequency = 86400,
-    }
+	}
 }
 
 require("lazy").setup("plugins", opts)
