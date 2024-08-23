@@ -1,3 +1,4 @@
+import Workspaces from "./workspaces.js"
 import { Separator } from "../widgets/separator.js"
 
 export default function Bar() {
@@ -6,7 +7,7 @@ export default function Bar() {
         anchor: ['top', 'left', 'right'],
         layer: "overlay",
         exclusivity: "exclusive",
-        margins: [4, 8, 0, 8],
+        margins: [3, 6, 0, 6],
         child: Widget.CenterBox({
             startWidget: Left(),
             centerWidget: Widget.Label("cool2"),
@@ -35,23 +36,6 @@ function Right() {
     })
 }
 
-const hyprland = await Service.import("hyprland")
-
-function Workspaces() {
-    const activeId = hyprland.active.workspace.bind("id")
-    const workspaces = [...Array(10).keys()]
-        .map(id => id + 1)
-        .map(id => Widget.Button({
-            child: Widget.Label(`${id}`),
-            on_clicked: () => hyprland.messageAsync(`dispatch workspace ${id}`),
-            className: activeId.as(i => `${i === id ? "focused" : ""}`),
-        }))
-
-    return Widget.Box({
-        className: "workspaces",
-        children: workspaces,
-    })
-}
 
 const date = Variable("", {
     poll: [1000, 'date "+%H:%M %b %e"'],

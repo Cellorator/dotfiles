@@ -1,4 +1,5 @@
 window {
+    font-family: "Hurmit Nerd Font";
     font-size: 14px;
     background-color: @theme_bg_color;
     color: @theme_fg_color;
@@ -6,6 +7,7 @@ window {
 
 button {
     background-color: transparent;
+    padding: 0;
 }
 
 button:active {
@@ -16,6 +18,6 @@ button:hover {
     border-bottom: 3px solid @theme_fg_color;
 }
 
-.workspaces .focused {
+.workspaces .active {
     background-color: @theme_selected_bg_color;
 }
