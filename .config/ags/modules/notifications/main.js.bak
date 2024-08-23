@@ -1,6 +1,6 @@
 const notifications = await Service.import("notifications")
 
-export default function NotificationPopups(monitor = 0) {
+export default function Notifications(monitor = 0) {
     const list = Widget.Box({
         vertical: true,
         children: notifications.popups.map(Notification),
