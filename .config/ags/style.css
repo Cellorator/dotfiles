@@ -14,8 +14,8 @@ button:active {
     background-color: @theme_selected_bg_color;
 }
 
-button:hover {
-    border-bottom: 3px solid @theme_fg_color;
+.workspaces .hasClients {
+    background-color: red;
 }
 
 .workspaces .active {
