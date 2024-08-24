@@ -19,22 +19,25 @@ const idsWithClients = hyprland.bind("workspaces").as(workspaces => {
     return workspaces.filter(ws => ws.windows !== 0).map(ws => ws.id)
 })
 function Workspace(id) {
-    const button = Widget.Button({
-        on_clicked: () => hyprland.messageAsync(`dispatch workspace ${id}`),
-        child: Widget.Label(`${id}`),
-    })
-
-    return Widget.Box({
+    return Widget.Button({
         name: `workspace${id}`,
         className: Utils.merge([activeId, idsWithClients], (activeId, idsWithClients) => {
             if (activeId === id) return "active"
             if (idsWithClients.includes(id)) return "hasClients"
             return ""
         }),
-        spacing: 8,
-        children: [
-            button,
-            ForwardSlashSeparator()
-        ]
+        on_clicked: () => hyprland.messageAsync(`dispatch workspace ${id}`),
+        child: Widget.Box({
+            spacing: 8,
+            children: [Widget.Label(`${id}`), ForwardSlashSeparator()]
+        })
     })
+    //
+    // return Widget.Box({
+    //     spacing: 8,
+    //     children: [
+    //         button,
+    //         ForwardSlashSeparator()
+    //     ]
+    // })
 }
