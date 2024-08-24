@@ -17,20 +17,30 @@ button {
     min-height: 0px;
     min-width: 0px;
     padding: 0px;
-}
-
-.separator {
-    padding: 0px 8px;
+    margin: 0px;
 }
 
 .workspaces button {
-    background-color: @secondary-color;
-    color: @primary-color;
     border-radius: 0px;
+    background-color: transparent;
+}
+
+.workspaces .separator {
+    padding: 0;
+    margin: 0;
+}
+
+.workspaces .label {
+    padding: 0;
+    margin: 0;
 }
 
 .workspaces .active {
     background-color: @primary-color;
     color: @secondary-fg-color;
-    background-color: @theme_selected_bg_color;
+}
+
+.workspaces .active .separator {
+    background-color: @secondary-color;
+    color: @primary-color;
 }
