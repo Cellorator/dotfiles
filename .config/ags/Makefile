@@ -1,0 +1,2 @@
+run:
+	ags -q; ags

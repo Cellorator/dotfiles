@@ -1,18 +1,21 @@
 import Workspaces from "./workspaces.js"
-import { Separator } from "../widgets/separator.js"
 
 export default function Bar() {
+    const widgets = Widget.CenterBox({
+        className: 'bar-box',
+        startWidget: Left(),
+        centerWidget: Widget.Label("cool2"),
+        endWidget: Right()
+    })
+
     return Widget.Window({
         name: 'bar',
+        className: 'bar-window',
         anchor: ['top', 'left', 'right'],
-        layer: "overlay",
+        layer: 'top',
         exclusivity: "exclusive",
-        margins: [3, 6, 0, 6],
-        child: Widget.CenterBox({
-            startWidget: Left(),
-            centerWidget: Widget.Label("cool2"),
-            endWidget: Right()
-        })
+        margins: [4, 4, 0, 4],
+        child: widgets
     })
 }
 
@@ -30,7 +33,6 @@ function Right() {
         hpack: "end",
         children: [
             SysTray(),
-            Separator("", "red", "blue"),
             Clock(),
         ]
     })

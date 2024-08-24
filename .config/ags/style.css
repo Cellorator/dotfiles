@@ -1,23 +1,35 @@
-window {
+    @define-color fg-color @theme_fg_color;
+    @define-color bg-color @theme_bg_color;
+    @define-color primary-color #8ba4b0;
+    @define-color secondary-color #252535;
+    @define-color secondary-fg-color #0d0d0c;
+
+.bar-box {
     font-family: "Hurmit Nerd Font";
     font-size: 14px;
     background-color: @theme_bg_color;
-    color: @theme_fg_color;
+
+    padding: 0px 16px;
+    border-radius: 20px;
 }
 
 button {
+    min-height: 0px;
+    min-width: 0px;
+}
+
+.workspaces {
+    color: @primary-color;
+    background-color: @secondary-color;
+}
+
+.workspaces button {
     background-color: transparent;
-    padding: 0;
-}
-
-button:active {
-    background-color: @theme_selected_bg_color;
-}
-
-.workspaces .hasClients {
-    background-color: red;
+    padding: 0px;
 }
 
 .workspaces .active {
+    background-color: @primary-color;
+    color: @secondary-fg-color;
     background-color: @theme_selected_bg_color;
 }
