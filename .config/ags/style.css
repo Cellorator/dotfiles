@@ -16,16 +16,17 @@
 button {
     min-height: 0px;
     min-width: 0px;
+    padding: 0px;
 }
 
-.workspaces {
-    color: @primary-color;
-    background-color: @secondary-color;
+.separator {
+    padding: 0px 8px;
 }
 
 .workspaces button {
-    background-color: transparent;
-    padding: 0px;
+    background-color: @secondary-color;
+    color: @primary-color;
+    border-radius: 0px;
 }
 
 .workspaces .active {

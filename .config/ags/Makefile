@@ -1,2 +1,2 @@
 run:
-	ags -q; ags
+	ags -q; ags &

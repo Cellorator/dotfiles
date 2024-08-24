@@ -1,3 +1,8 @@
 export { ForwardSlashSeparator }
 
-const ForwardSlashSeparator = () => Widget.Label('')
+function ForwardSlashSeparator() {
+    return Widget.Label({
+        label: '',
+        className: "separator forward-slash"
+    })
+}

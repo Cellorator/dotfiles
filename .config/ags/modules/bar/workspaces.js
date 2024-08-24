@@ -8,7 +8,6 @@ export default function Workspaces() {
 
     return Widget.Box({
         className: "workspaces",
-        spacing: 8,
         children: workspaces,
     })
 }
@@ -28,16 +27,7 @@ function Workspace(id) {
         }),
         on_clicked: () => hyprland.messageAsync(`dispatch workspace ${id}`),
         child: Widget.Box({
-            spacing: 8,
             children: [Widget.Label(`${id}`), ForwardSlashSeparator()]
         })
     })
-    //
-    // return Widget.Box({
-    //     spacing: 8,
-    //     children: [
-    //         button,
-    //         ForwardSlashSeparator()
-    //     ]
-    // })
 }
