@@ -1,4 +1,10 @@
-import { ForwardSlashSeparator, RightHardCircleSeparator } from "../widgets/separator.js"
+import {
+    Separator,
+    ForwardSlashSeparator,
+    LeftHardCircleSeparator,
+    RightHardCircleSeparator
+} from "../widgets/separator.js"
+
 const hyprland = await Service.import("hyprland")
 
 export default function Workspaces() {
@@ -32,6 +38,11 @@ function Workspace(id) {
                     class_name: 'label'
                 })
             ]
+
+            if (id == 1) {
+                arr.unshift(LeftHardCircleSeparator())
+            }
+
             if (s == 'active') {
                 arr.push(RightHardCircleSeparator())
             } else {
@@ -44,7 +55,6 @@ function Workspace(id) {
     return Widget.Button({
         name: `workspace${id}`,
         class_name: status,
-        attribute: status.as(i => `${i}`),
         on_clicked: () => hyprland.messageAsync(`dispatch workspace ${id}`),
         child: content,
     })

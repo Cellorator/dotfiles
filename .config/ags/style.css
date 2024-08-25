@@ -4,43 +4,41 @@
     @define-color secondary-color #252535;
     @define-color secondary-fg-color #0d0d0c;
 
-.bar-box {
-    font-family: "Hurmit Nerd Font";
-    font-size: 14px;
-    background-color: @theme_bg_color;
-
-    padding: 0px 16px;
-    border-radius: 20px;
-}
-
 button {
     min-height: 0px;
     min-width: 0px;
     padding: 0px;
     margin: 0px;
+    border-width: 0px;
+}
+
+.separators {
+    font-size: 16px;
+}
+
+.bar-box {
+    font-family: "Hurmit Nerd Font";
+    font-size: 14px;
+    background-color: @bg-color;
+    border-radius: 20px;
 }
 
 .workspaces button {
     border-radius: 0px;
-    background-color: transparent;
-}
-
-.workspaces .separator {
-    padding: 0;
-    margin: 0;
+    background-color: @secondary-color;
+    color: @primary-color;
 }
 
 .workspaces .label {
-    padding: 0;
-    margin: 0;
+    padding: 0px 8px;
 }
 
 .workspaces .active {
     background-color: @primary-color;
-    color: @secondary-fg-color;
+    color: @secondary-color;
 }
 
-.workspaces .active .separator {
+.workspaces .active .separators {
     background-color: @secondary-color;
     color: @primary-color;
 }
