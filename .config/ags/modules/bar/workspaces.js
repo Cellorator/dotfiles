@@ -40,11 +40,16 @@ function Workspace(id) {
             ]
 
             if (id == 1) {
-                arr.unshift(LeftHardCircleSeparator())
+                arr.unshift(Widget.Label(' '))
             }
 
             if (s == 'active') {
+                arr.unshift(LeftHardCircleSeparator())
                 arr.push(RightHardCircleSeparator())
+            } else if (id == 1) {
+                arr.unshift(LeftHardCircleSeparator())
+            } else if (id == 9) {
+                arr.push(Widget.Label(' '))
             } else {
                 arr.push(ForwardSlashSeparator())
             }
