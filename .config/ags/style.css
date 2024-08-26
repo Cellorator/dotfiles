@@ -3,7 +3,7 @@
     @define-color secondary-fg-color #0d0d0c;
     @define-color primary-color #8ba4b0;
     @define-color secondary-color #252535;
-    @define-color tertiary-color #949fb5;
+    @define-color tertiary-color #8992a7;
 
 button {
     min-height: 0px;
@@ -39,6 +39,7 @@ button {
 }
 
 .workspace.hasClients .label {
+    text-decoration-line: underline;
 }
 
 .workspace.active .label {
