@@ -1,8 +1,9 @@
     @define-color fg-color @theme_fg_color;
     @define-color bg-color @theme_bg_color;
+    @define-color secondary-fg-color #0d0d0c;
     @define-color primary-color #8ba4b0;
     @define-color secondary-color #252535;
-    @define-color secondary-fg-color #0d0d0c;
+    @define-color tertiary-color #949fb5;
 
 button {
     min-height: 0px;
@@ -17,16 +18,16 @@ button {
     font-size: 14px;
     background-color: @bg-color;
     border-radius: 20px;
+    padding: 4px;
 }
 
 .bar-box button {
     background-color: transparent;
 }
 
-.workspaces {
+.left {
     border-radius: 20px;
     background-color: @secondary-color;
-    padding: 5px;
 }
 
 .workspace {
@@ -37,8 +38,7 @@ button {
     padding: 0 8px;
 }
 
-.workspace:not(.hasClients) .label {
-    color: transparent;
+.workspace.hasClients .label {
 }
 
 .workspace.active .label {
@@ -53,7 +53,7 @@ button {
 }
 
 .systray {
-    padding: 0 8px;
+    padding-left: 8px;
 }
 
 .systray .icon {

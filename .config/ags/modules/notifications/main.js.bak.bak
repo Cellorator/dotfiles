@@ -1,0 +1,48 @@
+const notifications = await Service.import("notifications")
+
+export default function Notifications() {
+    const list = Widget.Box({
+        css: 'min-width 2px, min-height 2px',
+        className: 'notifications',
+        vertical: true,
+        children: notifications.popups.map(Notification)
+    })
+
+    list.hook(notifications, (_, id) => {
+        const n = notifications.getNotification(id)
+        if (n) {
+            list.children = [Notification(n), ...list.children]
+        }
+    }, 'notified')
+
+    list.hook(notifications, (_, id) => {
+        const n = notifications.getNotification(id)
+        if (n) {
+            list.children.find(n => n.attribute.id === id)?.destroy()
+        }
+    }, 'dismissed')
+
+    return Widget.Window({
+        name: 'notifications',
+        anchor: ['right', 'top'],
+        margins: [35, 6, 0, 0],
+        exclusivity: "ignore",
+        child: list
+    })
+}
+
+function Notification(n) {
+    const title = Widget.Label({
+        label: n.summary
+    })
+
+    return Widget.EventBox({
+        onPrimaryClick: n.dismiss,
+        attribute: { id: n.id },
+        child: Widget.Box({
+            children: [
+                title,
+            ]
+        }),
+    })
+}

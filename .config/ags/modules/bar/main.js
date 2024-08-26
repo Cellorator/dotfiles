@@ -6,7 +6,6 @@ export default function Bar() {
     const widgets = Widget.CenterBox({
         className: 'bar-box',
         startWidget: Left(),
-        centerWidget: Widget.Label("cool2"),
         endWidget: Right()
     })
 
@@ -23,6 +22,7 @@ export default function Bar() {
 
 function Left() {
     return Widget.Box({
+        hpack: 'start',
         className: 'left',
         children: [
             Workspaces(),

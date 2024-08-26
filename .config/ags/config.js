@@ -1,6 +1,14 @@
 import Bar from "./modules/bar/main.js"
 import Notifications from "./modules/notifications/main.js"
 
+App.config({
+    windows: [
+        Notifications(),
+        Bar(),
+    ],
+    style: "./style.css"
+})
+
 Utils.timeout(100, () => Utils.notify({
     summary: "cool",
     body: "AGGGFDDF",
@@ -8,11 +16,3 @@ Utils.timeout(100, () => Utils.notify({
         "COOL AFAIN": () => print("pressed"),
     },
 }))
-
-App.config({
-    windows: [
-        Bar(),
-        Notifications()
-    ],
-    style: "./style.css"
-})
