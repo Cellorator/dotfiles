@@ -1,4 +1,5 @@
 import Workspaces from "./workspaces.js"
+import SysTray from "./sysTray.js"
 import Clock from "./clock.js"
 
 export default function Bar() {
@@ -22,7 +23,7 @@ export default function Bar() {
 
 function Left() {
     return Widget.Box({
-        spacing: 8,
+        className: 'left',
         children: [
             Workspaces(),
         ]
@@ -31,26 +32,11 @@ function Left() {
 
 function Right() {
     return Widget.Box({
-        hpack: "end",
+        hpack: 'end',
+        className: 'right',
         children: [
             SysTray(),
             Clock(),
         ]
-    })
-}
-
-const systemtray = await Service.import('systemtray')
-
-/** @param {import('types/service/systemtray').TrayItem} item */
-const SysTrayItem = item => Widget.Button({
-    child: Widget.Icon().bind('icon', item, 'icon'),
-    tooltipMarkup: item.bind('tooltip_markup'),
-    onPrimaryClick: (_, event) => item.activate(event),
-    onSecondaryClick: (_, event) => item.openMenu(event),
-});
-
-function SysTray() {
-    return Widget.Box({
-        children: systemtray.bind('items').as(i => i.map(SysTrayItem))
     })
 }

@@ -19,6 +19,10 @@ button {
     border-radius: 20px;
 }
 
+.bar-box button {
+    background-color: transparent;
+}
+
 .workspaces {
     border-radius: 20px;
     background-color: @secondary-color;
@@ -26,7 +30,6 @@ button {
 }
 
 .workspace {
-    background-color: transparent;
     color: @primary-color;
 }
 
@@ -43,7 +46,22 @@ button {
     color: @secondary-fg-color;
 }
 
+.right {
+    border-radius: 20px;
+    background-color: @secondary-color;
+    color: @primary-color;
+}
+
+.systray {
+    padding: 0 8px;
+}
+
+.systray .icon {
+    padding: 0 8px;
+}
+
 .clock {
+    padding: 0 8px;
     border-radius: 20px;
     background-color: @primary-color;
     color: @secondary-fg-color;
