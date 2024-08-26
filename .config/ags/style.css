@@ -43,3 +43,12 @@ button {
     color: @secondary-fg-color;
 }
 
+.clock {
+    border-radius: 20px;
+    background-color: @primary-color;
+    color: @secondary-fg-color;
+}
+
+.day,.date,.time {
+    padding: 0 8px;
+}

@@ -1,12 +1,17 @@
 export {
     Separator,
     ForwardSlashSeparator,
+    BackwardSlashSeparator,
     LeftHardCircleSeparator,
     RightHardCircleSeparator
 }
 
 function ForwardSlashSeparator() {
     return Separator('')
+}
+
+function BackwardSlashSeparator() {
+    return Separator('')
 }
 
 function LeftHardCircleSeparator() {
