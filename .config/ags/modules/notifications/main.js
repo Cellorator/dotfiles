@@ -5,6 +5,8 @@ import {
 
 const notifications = await Service.import("notifications")
 
+notifications.popupTimeout = 10000
+
 export default function Notifications(monitor = 0) {
     const list = Widget.Box({
         vertical: true,
@@ -27,64 +29,59 @@ export default function Notifications(monitor = 0) {
     return Widget.Window({
         monitor,
         name: `notifications${monitor}`,
-        class_name: "notification-popups",
         anchor: ['top', 'right'],
+        margins: [0, 6],
+        css: 'background-color: transparent',
         child: Widget.Box({
-            css: 'min-width: 2px; min-height: 2px',
-            vertical: true,
             class_name: "notifications",
+            vertical: true,
             child: list
         })
     })
 }
 
 function Notification(n) {
-    // const title = Widget.CenterBox({
-    //     className: 'title',
-    //     hpack: 'fill',
-    //     startWidget: LeftHardCircleSeparator(),
-    //     centerWidget: Widget.Label({
-    //         label: n.summary,
-    //         use_markup: true,
-    //     }),
-    //     endWidget: RightHardCircleSeparator()
-    // })
-    const title = Widget.Label({
-        label: n.summary,
+    const title = Widget.CenterBox({
+        className: 'title',
+        hpack: 'center',
+        startWidget: LeftHardCircleSeparator(),
+        centerWidget: Widget.Label(n.summary),
+        endWidget: RightHardCircleSeparator()
     })
     const body = Widget.Label({
         class_name: "body",
-        use_markup: true,
         label: n.body,
         wrap: true,
+        justification: 'center',
     })
-
     const actions = Widget.Box({
         class_name: "actions",
+        hpack: 'center',
         children: n.actions.map(({ id, label }) => Widget.Button({
             class_name: "action-button",
             on_clicked: () => {
                 n.invoke(id)
                 n.dismiss()
             },
-            hexpand: true,
             child: Widget.Label(label),
         })),
     })
 
     return Widget.EventBox(
         {
-            class_name: `notification ${n.urgency}`,
             attribute: { id: n.id },
             on_primary_click: n.dismiss,
         },
         Widget.Box(
             {
+                class_name: `notification ${n.urgency}`,
                 vertical: true,
+                children: [
+                    title,
+                    body,
+                    actions
+                ]
             },
-            title,
-            body,
-            actions
         ),
     )
 }
