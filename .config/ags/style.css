@@ -39,5 +39,5 @@ button {
 
 .workspaces .active .label {
     background-color: @primary-color;
-    color: @secondary-color;
+    color: @secondary-fg-color;
 }

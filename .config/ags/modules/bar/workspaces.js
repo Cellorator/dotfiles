@@ -25,9 +25,17 @@ const idsWithClients = hyprland.bind("workspaces").as(workspaces => {
 })
 function Workspace(id) {
     const status = Utils.merge([activeId, idsWithClients], (activeId, idsWithClients) => {
-        if (activeId === id) return 'active'
-        if (idsWithClients.includes(id)) return 'hasClients'
-        return ''
+        let s = [];
+        if (activeId == id) {
+            s.push('active')
+        } else if (activeId == id + 1) {
+            s.push('nextToActive')
+        }
+        if (idsWithClients.includes(id)) {
+            s.push('hasClients')
+        }
+
+        return s
     })
 
     const content = Widget.Box({
@@ -39,27 +47,36 @@ function Workspace(id) {
                 })
             ]
 
-            if (id == 1) {
-                arr.unshift(Widget.Label(' '))
+
+            if (s.includes('nextToActive')) {
+                if (id == 1) {
+                    arr.unshift(Separator(' '))
+                }
+                return arr
             }
 
-            if (s == 'active') {
-                arr.unshift(LeftHardCircleSeparator())
-                arr.push(RightHardCircleSeparator())
-            } else if (id == 1) {
-                arr.unshift(LeftHardCircleSeparator())
-            } else if (id == 9) {
-                arr.push(Widget.Label(' '))
-            } else {
+            if (!s.includes('active')) {
+                if (id == 9) {
+                    arr.push(Separator(' '))
+                    return arr
+                }
+
+                if (id == 1) {
+                    arr.unshift(Separator(' '))
+                }
                 arr.push(ForwardSlashSeparator())
+                return arr
             }
+
+            arr.unshift(LeftHardCircleSeparator())
+            arr.push(RightHardCircleSeparator())
             return arr
         })
     })
 
     return Widget.Button({
         name: `workspace${id}`,
-        class_name: status,
+        class_names: status,
         on_clicked: () => hyprland.messageAsync(`dispatch workspace ${id}`),
         child: content,
     })
