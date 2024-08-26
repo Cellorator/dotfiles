@@ -1,4 +1,5 @@
 import Workspaces from "./workspaces.js"
+import Clock from "./clock.js"
 
 export default function Bar() {
     const widgets = Widget.CenterBox({
@@ -37,18 +38,6 @@ function Right() {
         ]
     })
 }
-
-
-const date = Variable("", {
-    poll: [1000, 'date "+%H:%M %b %e"'],
-})
-
-function Clock() {
-    return Widget.Label({
-        label: date.bind(),
-    })
-}
-
 
 const systemtray = await Service.import('systemtray')
 
