@@ -12,10 +12,6 @@ button {
     border-width: 0px;
 }
 
-.workspaces .separators {
-    font-size: 16px;
-}
-
 .bar-box {
     font-family: "Hurmit Nerd Font";
     font-size: 14px;
@@ -24,20 +20,26 @@ button {
 }
 
 .workspaces {
-    border-radius: 200px;
+    border-radius: 20px;
     background-color: @secondary-color;
+    padding: 5px;
 }
 
-.workspaces button {
+.workspace {
     background-color: transparent;
     color: @primary-color;
 }
 
-.workspaces .label {
-    padding: 0px 8px;
+.workspace .label {
+    padding: 0 8px;
 }
 
-.workspaces .active .label {
+.workspace:not(.hasClients) .label {
+    color: transparent;
+}
+
+.workspace.active .label {
     background-color: @primary-color;
     color: @secondary-fg-color;
 }
+

@@ -21,7 +21,7 @@ export default function Workspaces() {
 const activeId = hyprland.active.workspace.bind("id").as(Number)
 // Get array of ids of workspaces with at least one client
 const idsWithClients = hyprland.bind("workspaces").as(workspaces => {
-    return workspaces.filter(ws => ws.windows !== 0).map(ws => ws.id)
+    return workspaces.filter(ws => ws.windows != 0).map(ws => ws.id)
 })
 function Workspace(id) {
     const status = Utils.merge([activeId, idsWithClients], (activeId, idsWithClients) => {
@@ -76,7 +76,7 @@ function Workspace(id) {
 
     return Widget.Button({
         name: `workspace${id}`,
-        class_names: status,
+        class_names: status.as(s => ['workspace', ...s]),
         on_clicked: () => hyprland.messageAsync(`dispatch workspace ${id}`),
         child: content,
     })
