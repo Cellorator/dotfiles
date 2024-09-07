@@ -25,5 +25,6 @@
   "nvim-nio": { "branch": "master", "commit": "a428f309119086dc78dd4b19306d2d67be884eee" },
   "nvim-treesitter": { "branch": "master", "commit": "ccbaee59547425ef8b766433a6020ac191f3151f" },
   "nvim-web-devicons": { "branch": "master", "commit": "9793801f974bba70e4ac5d7eae6c4f5659993d8e" },
+  "render-markdown.nvim": { "branch": "main", "commit": "2f9d4f0be8784ed4fef5960eb7b80bf60c5fdf56" },
   "vim-processing": { "branch": "master", "commit": "91aaa18a54f8e507e48353ba87b1eb4ecd82a17c" }
 }
