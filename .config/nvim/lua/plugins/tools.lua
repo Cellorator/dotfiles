@@ -9,4 +9,21 @@ return {
             map("n", "<leader>dd", "<cmd>FzfLua dap_commands<CR>")
         end
     },
+    {
+        "epwalsh/obsidian.nvim",
+        dependencies = { "nvim-lua/plenary.nvim" },
+        opts = {
+            workspaces = {
+                {
+                    name = "school",
+                    path = "~/Obsidian/School/",
+                }
+            },
+            daily_notes = {
+                folder = "Daily Notes",
+                template = "Daily Notes/Template.md"
+            },
+            ui = { enable = false },
+        }
+    }
 }
