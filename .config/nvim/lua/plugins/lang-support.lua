@@ -10,9 +10,15 @@ return {
     {
         "MeanderingProgrammer/render-markdown.nvim",
         opts = {
-            enabled = false,
-            latex = { enabled = false }
+            latex = { enabled = false },
+            win_options = {
+                conceallevel = { rendered = 2 }
+            }
         },
         dependencies = { "nvim-tree/nvim-web-devicons" },
+    },
+    {
+        "robbielyman/latex.nvim",
+        config = true,
     }
 }
