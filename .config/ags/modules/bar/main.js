@@ -1,5 +1,6 @@
 import Workspaces from "./workspaces.js"
 import SysTray from "./sysTray.js"
+import Audio from "./audio.js"
 import Clock from "./clock.js"
 
 export default function Bar() {
