@@ -386,7 +386,10 @@ awful.rules.rules = {
             c.fullscreen = true
         end
     },
-
+    {
+        rule = { class = "firefox" },
+        properties = { maximize = false }
+    },
     -- All clients will match this rule.
     { rule = { },
       properties = { border_width = beautiful.border_width,
