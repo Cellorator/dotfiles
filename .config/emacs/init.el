@@ -1,12 +1,16 @@
 ;; Don't show splash screen
 (setq inhibit-startup-message t)
 
+(setq warning-minimum-level :emergency)
+
+(setq frame-resize-pixelwise t) ; Remove weird gaps at bottom and right edges
+
+(menu-bar-mode -1)
 (tool-bar-mode -1) ; Disable tool bar
 (scroll-bar-mode -1) ; Disable scroll bar
 
 (column-number-mode) ; Display column number on mode bar
 (global-display-line-numbers-mode 1) ; Display line numbers
-
 
 (require 'package)
 
@@ -38,3 +42,17 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+;; Key Bindings
+(use-package general
+    :config
+    (general-evil-setup t))
+
+;; Vim Bindings
+(use-package evil
+    :init
+    :config
+    (evil-mode 1))
+
+(general-def 'insert
+    "jj" 'evil-normal-state)
