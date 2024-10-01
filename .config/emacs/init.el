@@ -12,6 +12,8 @@
 (column-number-mode) ; Display column number on mode bar
 (global-display-line-numbers-mode 1) ; Display line numbers
 
+(set-frame-font "Hurmit Nerd Font 12" nil t)
+
 (require 'package)
 
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
@@ -35,7 +37,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages '(kanagawa-themes)))
+ '(package-selected-packages '(math-preview kanagawa-themes)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -56,3 +58,12 @@
 
 (general-def 'insert
     "jj" 'evil-normal-state)
+
+(use-package markdown-mode
+  :ensure t
+  :mode ("README\\.md\\'" . gfm-mode)
+  :commands (markdown-mode gfm-mode)
+  :init (setq markdown-command "multimarkdown")
+  )
+
+(use-package math-preview)
