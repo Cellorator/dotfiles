@@ -57,7 +57,9 @@
     (evil-mode 1))
 
 (general-def 'insert
-    "jj" 'evil-normal-state)
+    "j" (general-key-dispatch 'self-insert-command
+        :timeout 0.1
+        "k" 'evil-normal-state))
 
 (use-package markdown-mode
   :ensure t
