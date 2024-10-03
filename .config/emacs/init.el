@@ -12,7 +12,7 @@
 (column-number-mode) ; Display column number on mode bar
 (global-display-line-numbers-mode 1) ; Display line numbers
 
-(set-frame-font "Hurmit Nerd Font 12" nil t)
+(set-face-attribute 'default nil :family "Hurmit Nerd Font" :height 120)
 
 (require 'package)
 
