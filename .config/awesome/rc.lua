@@ -209,6 +209,7 @@ globalkeys = gears.table.join(
     awful.key({ modkey }, "r", function() awful.util.spawn("rofi -show drun") end),
     awful.key({ modkey }, "Return", function () awful.spawn(terminal) end,
               {description = "open a terminal", group = "launcher"}),
+    awful.key({ modkey }, "e", function () awful.spawn("emacsclient -c") end),
     awful.key({ modkey }, "b", function () awful.spawn("firefox") end,
                {description = "open browser", group = "launcher"}),
 
