@@ -13,6 +13,7 @@ run "udiskie" --tray
 run "blueman-applet"
 run "nm-applet" --no-agent
 run "snixembed"
+run "emacs --daemon"
 
 # Kill and run alttab, so settings apply on WM reload
 pkill alttab
