@@ -1,9 +1,10 @@
 #+TITLE My Emacs Config
 #+AUTHOR Cellorator
+#+auto_tangle: t
 
 * Package Manager
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC elisp :tangle ./init.el
 ;; Install elpaca
 (defvar elpaca-installer-version 0.7)
 (defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
@@ -49,54 +50,72 @@
      (elpaca-use-package-mode))
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp
-;; Don't show splash screen
-(setq inhibit-startup-message t)
+* Install Packages
 
-(setq warning-minimum-level :emergency)
-
-(setq frame-resize-pixelwise t) ; Remove weird gaps at bottom and right edges
-
-(menu-bar-mode -1)
-(tool-bar-mode -1) ; Disable tool bar
-(scroll-bar-mode -1) ; Disable scroll bar
-
-(column-number-mode) ; Display column number on mode bar
-(global-display-line-numbers-mode 1) ; Display line numbers
-
-(set-face-attribute 'default nil :family "monospace" :height 120)
-
-(use-package kanagawa-themes
-    :ensure t
-    :config
-    (load-theme 'kanagawa-dragon t))
+#+BEGIN_SRC elisp :tangle ./init.el
+  (use-package kanagawa-themes
+      :ensure t
+      :config
+      (load-theme 'kanagawa-dragon t))
 
 
-;; Key Bindings
-(use-package general
-    :ensure (:wait t)
-    :config
-    (general-evil-setup t))
+  ;; Key Bindings
+  (use-package general
+      :ensure (:wait t)
+      :config
+      (general-evil-setup t))
 
-;; Vim Bindings
-(use-package evil
-    :ensure t
-    :init
-    :config
-    (evil-mode 1))
+  ;; Vim Bindings
+  (use-package evil
+      :ensure t
+      :init
+      :config
+      (evil-mode 1))
 
-(general-def 'insert
-    "j" (general-key-dispatch 'self-insert-command
-	:timeout 0.1
-	"k" 'evil-normal-state))
+  (general-def 'insert
+      "j" (general-key-dispatch 'self-insert-command
+      :timeout 0.1
+      "k" 'evil-normal-state))
 
-(use-package markdown-mode
-    :ensure t
-    :mode ("README\\.md\\'" . gfm-mode)
-    :commands (markdown-mode gfm-mode)
-    :init (setq markdown-command "multimarkdown")
-    )
+  (use-package markdown-mode
+      :ensure t
+      :mode ("README\\.md\\'" . gfm-mode)
+      :commands (markdown-mode gfm-mode)
+      :init (setq markdown-command "multimarkdown")
+      )
 
-(use-package math-preview
-    :ensure t)
+  (use-package math-preview
+      :ensure t)
+
+  (use-package restart-emacs :ensure t)
+
+  (use-package org-auto-tangle
+  :ensure t
+  :load-path "site-lisp/org-auto-tangle/"    ;; this line is necessary only if you cloned the repo in your site-lisp directory 
+  :defer t
+  :hook (org-mode . org-auto-tangle-mode))
+#+END_SRC
+
+* Options
+
+#+BEGIN_SRC emacs-lisp :tangle ./init.el
+    ;; Don't show splash screen
+    (setq inhibit-startup-message t)
+
+    (setq warning-minimum-level :emergency)
+
+    (setq frame-resize-pixelwise t) ; Remove weird gaps at bottom and right edges
+
+    (menu-bar-mode -1) ; Disable menu bar
+    (tool-bar-mode -1) ; Disable tool bar
+    (scroll-bar-mode -1) ; Disable scroll bar
+
+    (column-number-mode) ; Display column number on mode bar
+
+    (global-display-line-numbers-mode 1) ; Display line numbers
+    (set-face-attribute 'default nil :family "monospace" :height 120)
+
+  (setq-default tab-width 4 indent-tabs-mode nil)
+  (setq org-src-tab-acts-natively t)
+    (setq org-src-tab-preserve-indentation t)
 #+END_SRC
