@@ -20,19 +20,9 @@ return {
 				})
 			end
 
-			local lua_setup = function()
-				lsp.lua_ls.setup({
-					settings = {
-						Lua = { diagnostics = { globals = { "vim" } } }
-					}
-				})
-			end
-
 			require("mason-lspconfig").setup({
-				ensure_installed = { "lua_ls" },
 				handlers = {
 					default_setup,
-					lua_ls = lua_setup
 				},
 			})
 
