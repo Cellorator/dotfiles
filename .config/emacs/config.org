@@ -146,9 +146,7 @@ Setting the leader key and some basic commands for navigating emacs and the file
 #+BEGIN_SRC emacs-lisp
 (use-package ivy
   :ensure t
-  :config
-  (ivy-mode)
-  (counsel-mode))
+  :config (ivy-mode))
 #+END_SRC
 
 ** Quality of Life

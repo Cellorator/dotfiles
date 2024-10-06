@@ -93,9 +93,7 @@
 
 (use-package ivy
   :ensure t
-  :config
-  (ivy-mode)
-  (counsel-mode))
+  :config (ivy-mode))
 
 (use-package restart-emacs
   :ensure t)
