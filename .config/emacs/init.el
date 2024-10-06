@@ -28,7 +28,7 @@
 				       "--eval" "(byte-recompile-directory \".\" 0 'force)")))
 		 ((require 'elpaca))
 		 ((elpaca-generate-autoloads "elpaca" repo)))
-	    (progn (message "%s" (buffer-string)) (kill-buffer buffer))
+            (progn (message "%s" (buffer-string)) (kill-buffer buffer))
 	  (error "%s" (with-current-buffer buffer (buffer-string))))
       ((error) (warn "%s" err) (delete-directory repo 'recursive))))
   (unless (require 'elpaca-autoloads nil t)
@@ -40,66 +40,67 @@
 
 ;; Install use-package support and enable :ensure support
 (elpaca elpaca-use-package
-     (elpaca-use-package-mode))
+  (elpaca-use-package-mode))
+
+(use-package general
+  :ensure (:wait t)
+  :config (general-evil-setup t))
+
+(use-package evil
+  :ensure t
+  :init (setq evil-want-C-i-jump nil) ; Make TAB work properly in org-mode
+  :config (evil-mode 1))
 
 (use-package kanagawa-themes
-    :ensure t
-    :config
-    (load-theme 'kanagawa-dragon t))
+  :ensure t
+  :config (load-theme 'kanagawa-dragon t))
 
-
-;; Key Bindings
-(use-package general
-    :ensure (:wait t)
-    :config
-    (general-evil-setup t))
-
-;; Vim Bindings
-(use-package evil
-    :ensure t
-    :init
-    :config
-    (evil-mode 1))
 
 (general-def 'insert
-    "j" (general-key-dispatch 'self-insert-command
-    :timeout 0.1
-    "k" 'evil-normal-state))
+  "j" (general-key-dispatch 'self-insert-command
+	:timeout 0.1
+	"k" 'evil-normal-state))
 
 (use-package markdown-mode
-    :ensure t
-    :mode ("README\\.md\\'" . gfm-mode)
-    :commands (markdown-mode gfm-mode)
-    :init (setq markdown-command "multimarkdown")
-    )
+  :ensure t
+  :mode ("README\\.md\\'" . gfm-mode)
+  :cmmands (markdown-mode gfm-mode)
+  :init (setq markdown-command "multimarkdown"))
 
 (use-package math-preview
-    :ensure t)
+  :ensure t)
 
 (use-package restart-emacs :ensure t)
 
 (use-package org-auto-tangle
-:ensure t
-:load-path "site-lisp/org-auto-tangle/"    ;; this line is necessary only if you cloned the repo in your site-lisp directory 
-:defer t
-:hook (org-mode . org-auto-tangle-mode))
+  :ensure t
+  :load-path "site-lisp/org-auto-tangle/"    ;; this line is necessary only if you cloned the repo in your site-lisp directory 
+  :defer t
+  :hook (org-mode . org-auto-tangle-mode))
+
+(use-package ivy
+  :ensure t
+  :config
+  (ivy-mode)
+  (counsel-mode))
 
 ;; Don't show splash screen
-  (setq inhibit-startup-message t)
+(setq inhibit-startup-message t)
 
-  (setq warning-minimum-level :emergency)
+(setq warning-minimum-level :emergency)
 
-  (setq frame-resize-pixelwise t) ; Remove weird gaps at bottom and right edges
+(setq frame-resize-pixelwise t) ; Remove weird gaps at bottom and right edges
 
-  (menu-bar-mode -1) ; Disable menu bar
-  (tool-bar-mode -1) ; Disable tool bar
-  (scroll-bar-mode -1) ; Disable scroll bar
+(menu-bar-mode -1) ; Disable menu bar
+(tool-bar-mode -1) ; Disable tool bar
+(scroll-bar-mode -1) ; Disable scroll bar
 
-  (column-number-mode) ; Display column number on mode bar
+(column-number-mode) ; Display column number on mode bar
 
-  (global-display-line-numbers-mode 1) ; Display line numbers
-  (set-face-attribute 'default nil :family "monospace" :height 120)
+(global-display-line-numbers-mode 1) ; Display line numbers
+(set-face-attribute 'default nil :family "monospace" :height 120)
 
-(setq-default tab-width 4 indent-tabs-mode nil)
+					; (setq-default indent-tabs-mode nil)
+					; (setq-default tab-width 4)
 (setq org-src-tab-acts-natively t)
-  (setq org-src-tab-preserve-indentation t)
+(setq org-src-preserve-indentation t)
