@@ -73,13 +73,13 @@
   "br" '(revert-buffer :wk "Reload changes to buffer")
   "bw" '(kill-this-buffer :wk "Kill current buffer"))
 
-;; Reload config
+;; Reload
 (defun reload-config()
   (interactive)
   (load-file user-init-file))
 (<leader>
-  "rr" '(restart-emacs :wk "Restart Emacs")
-  "rc" '(reload-config :wk "Reload configuration"))
+  "rr" '(reload-config :wk "Reload configuration"))
+  "re" '(restart-emacs :wk "Restart Emacs")
 
 (use-package kanagawa-themes
   :ensure t
@@ -114,9 +114,7 @@
 (column-number-mode) ; Display column number on mode bar
 
 (global-display-line-numbers-mode 1) ; Display line numbers
-(set-face-attribute 'default nil :family "monospace" :height 120)
+(set-face-attribute 'default nil :family "Hurmit Nerd Font")
 
-					; (setq-default indent-tabs-mode nil)
-					; (setq-default tab-width 4)
 (setq org-src-tab-acts-natively t)
 (setq org-src-preserve-indentation t)
