@@ -59,9 +59,19 @@
   :global-prefix "C-SPC") ; Use Ctrl + Space as leader in insert mode
 
 ;; Filesystem
-(<leader> "f" '(:ignore t :which-key "Find")
-	  "ff" '(find-file :which-key "Find file")
-	  "fd" '(dired :which-key "Find directory (dired)"))
+(<leader>
+  "f" '(:ignore t :wk "Find")
+  "ff" '(find-file :wk "Find file")
+  "fd" '(dired :wk "Find directory (dired)"))
+
+;; Buffers
+(<leader>
+  "b" '(:ignore t :wk "Buffers")
+  "bb" '(switch-to-buffer :wk "Switch to buffer")
+  "bj" '(next-buffer :wk "Next buffer")
+  "bk" '(previous-buffer :wk "Previous buffer")
+  "br" '(revert-buffer :wk "Reload changes to buffer")
+  "bw" '(kill-this-buffer :wk "Kill current buffer"))
 
 (use-package kanagawa-themes
   :ensure t
