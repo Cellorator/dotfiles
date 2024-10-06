@@ -5,7 +5,15 @@
 
 * Package Manager
 
-Install and setup the elpaca package manager
+** Disable package.el
+
+#+BEGIN_SRC emacs-lisp :tangle ./early-init.el
+(setq package-enable-at-startup nil)
+(setenv "PATH" (format "%s:%s" "/data/data/com.termux/files/usr/bin" (getenv "PATH")))
+(push "/data/data/com.termux/files/usr/bin" exec-path)
+#+END_SRC
+
+** Install elpaca
 
 #+BEGIN_SRC emacs-lisp
 ;; Install elpaca
@@ -170,4 +178,28 @@ Setting the leader key and some basic commands for navigating emacs and the file
 
 (setq org-src-tab-acts-natively t)
 (setq org-src-preserve-indentation t)
+#+END_SRC
+
+** Android
+
+*** Use Termux binaries 
+
+#+BEGIN_SRC emacs-lisp :tangle ./early-init.el
+(when (string-equal system-type "android")
+  ;; Add Termux binaries to PATH environment
+  (let ((termuxpath "/data/data/com.termux/files/usr/bin"))
+    (setenv "PATH" (concat (getenv "PATH") ":" termuxpath))
+    (setq exec-path (append exec-path (list termuxpath)))))
+#+END_SRC
+
+*** Specific configuration
+
+#+BEGIN_SRC emacs-lisp
+(when (string-equal system-type "android")
+  ;; Enable menu bar
+  (menu-bar-mode 1)
+  ;; Set font
+  (set-face-attribute 'default nil :family "monospace")
+  ;; Open keyboard
+  (setq touch-screen-display-keyboard t))
 #+END_SRC

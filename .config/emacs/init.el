@@ -118,3 +118,11 @@
 
 (setq org-src-tab-acts-natively t)
 (setq org-src-preserve-indentation t)
+
+(when (string-equal system-type "android")
+  ;; Enable menu bar
+  (menu-bar-mode 1)
+  ;; Set font
+  (set-face-attribute 'default nil :family "monospace")
+  ;; Open keyboard
+  (setq touch-screen-display-keyboard t))
