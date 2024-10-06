@@ -51,6 +51,18 @@
   :init (setq evil-want-C-i-jump nil) ; Make TAB work properly in org-mode
   :config (evil-mode 1))
 
+;; Set leader key
+(general-create-definer <leader>
+  :states '(normal insert visual emacs)
+  :keymaps 'override
+  :prefix "SPC"
+  :global-prefix "C-SPC") ; Use Ctrl + Space as leader in insert mode
+
+;; Filesystem
+(<leader> "f" '(:ignore t :which-key "Find")
+	  "ff" '(find-file :which-key "Find file")
+	  "fd" '(dired :which-key "Find directory (dired)"))
+
 (use-package kanagawa-themes
   :ensure t
   :config (load-theme 'kanagawa-dragon t))
