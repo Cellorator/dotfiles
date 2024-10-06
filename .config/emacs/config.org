@@ -104,32 +104,29 @@ Setting the leader key and some basic commands for navigating emacs and the file
   "bk" '(previous-buffer :wk "Previous buffer")
   "br" '(revert-buffer :wk "Reload changes to buffer")
   "bw" '(kill-this-buffer :wk "Kill current buffer"))
+
+;; Reload config
+(defun reload-config()
+  (interactive)
+  (load-file user-init-file))
+(<leader>
+  "rr" '(restart-emacs :wk "Restart Emacs")
+  "rc" '(reload-config :wk "Reload configuration"))
 #+END_SRC
 
-* Install Packages
+* Packages
+
+** Theme
 
 #+BEGIN_SRC emacs-lisp
 (use-package kanagawa-themes
   :ensure t
   :config (load-theme 'kanagawa-dragon t))
+#+END_SRC
 
+** org-mode
 
-(general-def 'insert
-  "j" (general-key-dispatch 'self-insert-command
-	:timeout 0.1
-	"k" 'evil-normal-state))
-
-(use-package markdown-mode
-  :ensure t
-  :mode ("README\\.md\\'" . gfm-mode)
-  :cmmands (markdown-mode gfm-mode)
-  :init (setq markdown-command "multimarkdown"))
-
-(use-package math-preview
-  :ensure t)
-
-(use-package restart-emacs :ensure t)
-
+#+BEGIN_SRC emacs-lisp
 (use-package org-auto-tangle
   :ensure t
   :load-path "site-lisp/org-auto-tangle/"    ;; this line is necessary only if you cloned the repo in your site-lisp directory 
@@ -137,13 +134,19 @@ Setting the leader key and some basic commands for navigating emacs and the file
   :hook (org-mode . org-auto-tangle-mode))
 #+END_SRC
 
-* Ivy
+** ivy
 #+BEGIN_SRC emacs-lisp
 (use-package ivy
   :ensure t
   :config
   (ivy-mode)
   (counsel-mode))
+#+END_SRC
+
+** Quality of Life
+#+BEGIN_SRC emacs-lisp
+(use-package restart-emacs
+  :ensure t)
 #+END_SRC
 
 * Options

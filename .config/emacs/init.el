@@ -73,26 +73,17 @@
   "br" '(revert-buffer :wk "Reload changes to buffer")
   "bw" '(kill-this-buffer :wk "Kill current buffer"))
 
+;; Reload config
+(defun reload-config()
+  (interactive)
+  (load-file user-init-file))
+(<leader>
+  "rr" '(restart-emacs :wk "Restart Emacs")
+  "rc" '(reload-config :wk "Reload configuration"))
+
 (use-package kanagawa-themes
   :ensure t
   :config (load-theme 'kanagawa-dragon t))
-
-
-(general-def 'insert
-  "j" (general-key-dispatch 'self-insert-command
-	:timeout 0.1
-	"k" 'evil-normal-state))
-
-(use-package markdown-mode
-  :ensure t
-  :mode ("README\\.md\\'" . gfm-mode)
-  :cmmands (markdown-mode gfm-mode)
-  :init (setq markdown-command "multimarkdown"))
-
-(use-package math-preview
-  :ensure t)
-
-(use-package restart-emacs :ensure t)
 
 (use-package org-auto-tangle
   :ensure t
@@ -105,6 +96,9 @@
   :config
   (ivy-mode)
   (counsel-mode))
+
+(use-package restart-emacs
+  :ensure t)
 
 ;; Don't show splash screen
 (setq inhibit-startup-message t)
