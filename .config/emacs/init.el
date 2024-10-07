@@ -94,6 +94,6 @@
   ;; Enable menu bar
   (menu-bar-mode 1)
   ;; Set font
-  (set-face-attribute 'default nil :family "sans serif")
+  (set-face-attribute 'default nil :family "monospace")
   ;; Open keyboard
   (setq touch-screen-display-keyboard t))
