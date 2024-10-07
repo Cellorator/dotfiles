@@ -52,8 +52,8 @@
   (interactive)
   (load-file user-init-file))
 (<leader>
-  "rr" '(reload-config :wk "Reload configuration"))
-  "re" '(restart-emacs :wk "Restart Emacs")
+  "rr" '(reload-config :wk "Reload configuration")
+  "re" '(restart-emacs :wk "Restart Emacs"))
 
 (use-package org-auto-tangle
   :ensure t
@@ -85,7 +85,7 @@
 (column-number-mode) ; Display column number on mode bar
 
 (global-display-line-numbers-mode 1) ; Display line numbers
-(set-face-attribute 'default nil :family "Hurmit Nerd Font")
+(set-face-attribute 'default nil :family "Hurmit Nerd Font" :height 120)
 
 (setq org-src-tab-acts-natively t)
 (setq org-src-preserve-indentation t)
