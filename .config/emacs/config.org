@@ -5,60 +5,24 @@
 
 * Package Manager
 
-** Disable package.el
-
-#+BEGIN_SRC emacs-lisp :tangle ./early-init.el
-(setq package-enable-at-startup nil)
-(setenv "PATH" (format "%s:%s" "/data/data/com.termux/files/usr/bin" (getenv "PATH")))
-(push "/data/data/com.termux/files/usr/bin" exec-path)
-#+END_SRC
-
-** Install elpaca
-
 #+BEGIN_SRC emacs-lisp
-;; Install elpaca
-(defvar elpaca-installer-version 0.7)
-(defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
-(defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
-(defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
-(defvar elpaca-order '(elpaca :repo "https://github.com/progfolio/elpaca.git"
-			      :ref nil :depth 1
-			      :files (:defaults "elpaca-test.el" (:exclude "extensions"))
-			      :build (:not elpaca--activate-package)))
-(let* ((repo  (expand-file-name "elpaca/" elpaca-repos-directory))
-       (build (expand-file-name "elpaca/" elpaca-builds-directory))
-       (order (cdr elpaca-order))
-       (default-directory repo))
-  (add-to-list 'load-path (if (file-exists-p build) build repo))
-  (unless (file-exists-p repo)
-    (make-directory repo t)
-    (when (< emacs-major-version 28) (require 'subr-x))
-    (condition-case-unless-debug err
-	(if-let ((buffer (pop-to-buffer-same-window "*elpaca-bootstrap*"))
-		 ((zerop (apply #'call-process `("git" nil ,buffer t "clone"
-						 ,@(when-let ((depth (plist-get order :depth)))
-						     (list (format "--depth=%d" depth) "--no-single-branch"))
-						 ,(plist-get order :repo) ,repo))))
-		 ((zerop (call-process "git" nil buffer t "checkout"
-				       (or (plist-get order :ref) "--"))))
-		 (emacs (concat invocation-directory invocation-name))
-		 ((zerop (call-process emacs nil buffer nil "-Q" "-L" "." "--batch"
-				       "--eval" "(byte-recompile-directory \".\" 0 'force)")))
-		 ((require 'elpaca))
-		 ((elpaca-generate-autoloads "elpaca" repo)))
-            (progn (message "%s" (buffer-string)) (kill-buffer buffer))
-	  (error "%s" (with-current-buffer buffer (buffer-string))))
-      ((error) (warn "%s" err) (delete-directory repo 'recursive))))
-  (unless (require 'elpaca-autoloads nil t)
-    (require 'elpaca)
-    (elpaca-generate-autoloads "elpaca" repo)
-    (load "./elpaca-autoloads")))
-(add-hook 'after-init-hook #'elpaca-process-queues)
-(elpaca `(,@elpaca-order))
+;; Initialize package sources
+(require 'package)
 
-;; Install use-package support and enable :ensure support
-(elpaca elpaca-use-package
-  (elpaca-use-package-mode))
+(setq package-archives '(("melpa" . "https://melpa.org/packages/")
+                         ("org" . "https://orgmode.org/elpa/")
+                         ("elpa" . "https://elpa.gnu.org/packages/")))
+
+(package-initialize)
+(unless package-archive-contents
+  (package-refresh-contents))
+
+;; Initialize use-package on non-Linux platforms
+(unless (package-installed-p 'use-package)
+  (package-install 'use-package))
+
+(require 'use-package)
+(setq use-package-always-ensure t)
 #+END_SRC
 
 * Keybinds
@@ -71,7 +35,7 @@ Conveniently set keybinds
 
 #+BEGIN_SRC emacs-lisp
 (use-package general
-  :ensure (:wait t)
+  :ensure t
   :config (general-evil-setup t))
 #+END_SRC
 
@@ -124,14 +88,6 @@ Setting the leader key and some basic commands for navigating emacs and the file
 
 * Packages
 
-** Theme
-
-#+BEGIN_SRC emacs-lisp
-(use-package kanagawa-themes
-  :ensure t
-  :config (load-theme 'kanagawa-dragon t))
-#+END_SRC
-
 ** org-mode
 
 #+BEGIN_SRC emacs-lisp
@@ -155,6 +111,14 @@ Setting the leader key and some basic commands for navigating emacs and the file
   :ensure t)
 #+END_SRC
 
+** Theme
+
+#+BEGIN_SRC emacs-lisp
+(use-package kanagawa-themes
+  :ensure t
+  :config (load-theme 'kanagawa-dragon t))
+#+END_SRC
+
 * Options
 
 #+BEGIN_SRC emacs-lisp
@@ -164,7 +128,6 @@ Setting the leader key and some basic commands for navigating emacs and the file
 (setq warning-minimum-level :emergency)
 
 (setq frame-resize-pixelwise t) ; Remove weird gaps at bottom and right edges
-
 (menu-bar-mode -1) ; Disable menu bar
 (tool-bar-mode -1) ; Disable tool bar
 (scroll-bar-mode -1) ; Disable scroll bar
