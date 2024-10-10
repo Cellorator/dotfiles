@@ -55,6 +55,27 @@
   "rr" '(reload-config :wk "Reload configuration")
   "re" '(restart-emacs :wk "Restart Emacs"))
 
+(<leader>
+  "o" '(:ignore t :wk "org-mode"))
+
+(use-package org-roam
+  :ensure t
+  :custom
+  (org-roam-directory (file-truename "~/org"))
+  :general
+  (<leader>
+    "oi" '(org-roam-node-insert :wk "Insert node")
+    "of" '(org-roam-node-find :wk "Find node"))
+  :config
+  (org-roam-db-autosync-toggle))
+
+;; Prettier
+(use-package org-superstar
+  :ensure t
+  :hook
+  (org-mode . (lambda () (org-superstar-mode 1))))
+
+;; For tangling configuration file on save
 (use-package org-auto-tangle
   :ensure t
   :load-path "site-lisp/org-auto-tangle/"    ;; this line is necessary only if you cloned the repo in your site-lisp directory 
@@ -100,3 +121,16 @@
   (setq touch-screen-display-keyboard t) 
   ;; Make keybinds work with on-screen keyboard
   (setq overriding-text-conversion-style nil))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(org-roam restart-emacs org-superstar org-auto-tangle magit-section kanagawa-themes ivy general evil emacsql)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

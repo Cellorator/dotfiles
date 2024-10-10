@@ -29,7 +29,7 @@
 
 My keybinds powered by general.el and evil
 
-** general.el
+* general.el
 
 Conveniently set keybinds
 
@@ -90,7 +90,40 @@ Setting the leader key and some basic commands for navigating emacs and the file
 
 ** org-mode
 
+*** Options
+
 #+BEGIN_SRC emacs-lisp
+(<leader>
+  "o" '(:ignore t :wk "org-mode"))
+#+END_SRC
+
+*** org-roam
+
+Knowledge management system for taking notes
+
+#+BEGIN_SRC emacs-lisp
+(use-package org-roam
+  :ensure t
+  :custom
+  (org-roam-directory (file-truename "~/org"))
+  :general
+  (<leader>
+    "oi" '(org-roam-node-insert :wk "Insert node")
+    "of" '(org-roam-node-find :wk "Find node"))
+  :config
+  (org-roam-db-autosync-toggle))
+#+END_SRC
+
+*** Useful Stuff
+
+#+BEGIN_SRC emacs-lisp
+;; Prettier
+(use-package org-superstar
+  :ensure t
+  :hook
+  (org-mode . (lambda () (org-superstar-mode 1))))
+
+;; For tangling configuration file on save
 (use-package org-auto-tangle
   :ensure t
   :load-path "site-lisp/org-auto-tangle/"    ;; this line is necessary only if you cloned the repo in your site-lisp directory 
