@@ -16,6 +16,35 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
+;; Don't show splash screen
+(setq inhibit-startup-message t)
+
+(setq warning-minimum-level :emergency)
+
+(setq frame-resize-pixelwise t) ; Remove weird gaps at bottom and right edges
+(menu-bar-mode -1) ; Disable menu bar
+(tool-bar-mode -1) ; Disable tool bar
+(scroll-bar-mode -1) ; Disable scroll bar
+
+(column-number-mode) ; Display column number on mode bar
+
+(global-display-line-numbers-mode 1) ; Display line numbers
+(set-face-attribute 'default nil :family "Hurmit Nerd Font" :height 120)
+
+(setq org-src-tab-acts-natively t)
+(setq org-src-preserve-indentation t)
+
+(when (string-equal system-type "android")
+  ;; Enable bars
+  (menu-bar-mode 1)
+  (tool-bar-mode 1)
+  ;; Set font
+  (set-face-attribute 'default nil :family "monospace")
+  ;; Open keyboard
+  (setq touch-screen-display-keyboard t) 
+  ;; Make keybinds work with on-screen keyboard
+  (setq overriding-text-conversion-style nil))
+
 (use-package general
   :ensure t
   :config (general-evil-setup t))
@@ -55,6 +84,10 @@
   "rr" '(reload-config :wk "Reload configuration")
   "re" '(restart-emacs :wk "Restart Emacs"))
 
+;; Preview latex fragments
+(setq org-startup-with-latex-preview t)
+
+;; Bindings
 (<leader>
   "o" '(:ignore t :wk "org-mode"))
 
@@ -64,16 +97,33 @@
   (org-roam-directory (file-truename "~/org"))
   :general
   (<leader>
-    "oi" '(org-roam-node-insert :wk "Insert node")
-    "of" '(org-roam-node-find :wk "Find node"))
+    "of" '(org-roam-node-find :wk "Find node")
+    "oi" '(org-roam-node-insert-immediate :wk "Insert node"))
   :config
   (org-roam-db-autosync-toggle))
+
+;; Insert a node without needing to edit it
+(defun org-roam-node-insert-immediate (arg &rest args)
+  (interactive "P")
+  (let ((args (cons arg args))
+        (org-roam-capture-templates (list (append (car org-roam-capture-templates)
+                                                  '(:immediate-finish t)))))
+    (apply #'org-roam-node-insert args)))
 
 ;; Prettier
 (use-package org-superstar
   :ensure t
   :hook
   (org-mode . (lambda () (org-superstar-mode 1))))
+
+(use-package org-appear
+  :ensure t
+  :hook (org-mode . org-appear-mode))
+
+(use-package org-fragtog
+  :ensure t
+  :after org
+  :hook (org-mode . org-fragtog-mode))
 
 ;; For tangling configuration file on save
 (use-package org-auto-tangle
@@ -92,45 +142,3 @@
 (use-package kanagawa-themes
   :ensure t
   :config (load-theme 'kanagawa-dragon t))
-
-;; Don't show splash screen
-(setq inhibit-startup-message t)
-
-(setq warning-minimum-level :emergency)
-
-(setq frame-resize-pixelwise t) ; Remove weird gaps at bottom and right edges
-(menu-bar-mode -1) ; Disable menu bar
-(tool-bar-mode -1) ; Disable tool bar
-(scroll-bar-mode -1) ; Disable scroll bar
-
-(column-number-mode) ; Display column number on mode bar
-
-(global-display-line-numbers-mode 1) ; Display line numbers
-(set-face-attribute 'default nil :family "Hurmit Nerd Font" :height 120)
-
-(setq org-src-tab-acts-natively t)
-(setq org-src-preserve-indentation t)
-
-(when (string-equal system-type "android")
-  ;; Enable bars
-  (menu-bar-mode 1)
-  (tool-bar-mode 1)
-  ;; Set font
-  (set-face-attribute 'default nil :family "monospace")
-  ;; Open keyboard
-  (setq touch-screen-display-keyboard t) 
-  ;; Make keybinds work with on-screen keyboard
-  (setq overriding-text-conversion-style nil))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(org-roam restart-emacs org-superstar org-auto-tangle magit-section kanagawa-themes ivy general evil emacsql)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
