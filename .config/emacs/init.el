@@ -92,12 +92,17 @@
   "rr" '(reload-config :wk "Reload configuration")
   "re" '(restart-emacs :wk "Restart Emacs"))
 
-;; Preview latex fragments
-(setq org-startup-with-latex-preview t)
+(require 'org)
+(setq org-hide-emphasis-markers t) ; Hide bold and italic markup
+(setq org-startup-with-latex-preview t) ; Enable latex previews
+(setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5)) ; Make latex preview bigger
 
 ;; Bindings
 (<leader>
   "o" '(:ignore t :wk "org-mode"))
+
+(general-def 'normal org-mode-map
+  "RET" 'org-open-at-point)
 
 (use-package org-roam
   :ensure t
@@ -120,25 +125,29 @@
 
 ;; Prettier
 (use-package org-superstar
-  :ensure t
-  :hook
-  (org-mode . (lambda () (org-superstar-mode 1))))
+  :hook (org-mode . (lambda () (org-superstar-mode 1)))
+  :ensure t)
 
 (use-package org-appear
-  :ensure t
-  :hook (org-mode . org-appear-mode))
+  :hook (org-mode . org-appear-mode)
+  :ensure t)
 
 (use-package org-fragtog
-  :ensure t
-  :after org
-  :hook (org-mode . org-fragtog-mode))
+  :hook (org-mode . org-fragtog-mode)
+  :ensure t)
 
 ;; For tangling configuration file on save
 (use-package org-auto-tangle
-  :ensure t
   :load-path "site-lisp/org-auto-tangle/"    ;; this line is necessary only if you cloned the repo in your site-lisp directory 
   :defer t
-  :hook (org-mode . org-auto-tangle-mode))
+  :hook (org-mode . org-auto-tangle-mode)
+  :ensure t)
+
+(use-package corfu
+  :ensure t
+  :init (global-corfu-mode)
+  :config
+  (setq corfu-auto t))
 
 (use-package ivy
   :ensure t
