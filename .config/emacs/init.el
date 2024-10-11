@@ -51,8 +51,16 @@
 
 (use-package evil
   :ensure t
-  :init (setq evil-want-C-i-jump nil) ; Make TAB work properly in org-mode
+  :init
+  (setq evil-want-C-i-jump nil) ; Make TAB work properly in org-mode
+  (setq evil-undo-system 'undo-fu)
   :config (evil-mode 1))
+
+;; Undo and redo
+(use-package undo-fu :ensure t)
+(use-package undo-fu-session
+  :ensure t
+  :config (undo-fu-session-global-mode))
 
 ;; Set leader key
 (general-create-definer <leader>
