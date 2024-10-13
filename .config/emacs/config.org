@@ -115,8 +115,6 @@ Emulate vim keybindings
   :config (undo-fu-session-global-mode))
 #+end_src
 
-
-
 ** Basics
 
 Setting the leader key and some basic commands for navigating emacs and the filesystem
