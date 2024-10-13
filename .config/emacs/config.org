@@ -163,12 +163,12 @@ Setting the leader key and some basic commands for navigating emacs and the file
   :ensure t)
 #+end_src
 
-*** ivy
+*** vertico
 
 #+begin_src emacs-lisp
-(use-package ivy
-  :ensure t
-  :config (ivy-mode))
+(use-package vertico
+  :init (vertico-mode)
+  :ensure t)
 #+end_src
 
 ** Tools
@@ -231,10 +231,11 @@ Some small quality of life stuff
 #+begin_src emacs-lisp
 (require 'org)
 
-(setq org-startup-indented t)
+(setq
+ org-startup-indented t ; Indent headings
 
-(setq org-startup-with-latex-preview t) ; Enable latex previews
-(setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5)) ; Make latex preview bigger
+ org-startup-with-latex-preview t ; Enable latex previews
+ org-format-latex-options (plist-put org-format-latex-options :scale 1.5)) ; Make latex preview bigger
 
 ;; Bindings
 (<leader>

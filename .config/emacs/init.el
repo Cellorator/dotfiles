@@ -103,9 +103,9 @@
   :init (global-corfu-mode)
   :ensure t)
 
-(use-package ivy
-  :ensure t
-  :config (ivy-mode))
+(use-package vertico
+  :init (vertico-mode)
+  :ensure t)
 
 (use-package treesit-auto
   :custom (treesit-auto-install t)
@@ -138,10 +138,11 @@
 
 (require 'org)
 
-(setq org-startup-indented t)
+(setq
+ org-startup-indented t ; Indent headings
 
-(setq org-startup-with-latex-preview t) ; Enable latex previews
-(setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5)) ; Make latex preview bigger
+ org-startup-with-latex-preview t ; Enable latex previews
+ org-format-latex-options (plist-put org-format-latex-options :scale 1.5)) ; Make latex preview bigger
 
 ;; Bindings
 (<leader>
