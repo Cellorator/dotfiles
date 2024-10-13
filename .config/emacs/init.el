@@ -75,6 +75,10 @@
   :prefix "SPC"
   :global-prefix "C-SPC") ; Use Ctrl + Space as leader in insert mode
 
+;; Macros
+(<leader>
+  "SPC" (general-key "C-c C-c"))
+
 ;; Filesystem
 (<leader>
   "f" '(:ignore t :wk "Find")
