@@ -241,6 +241,17 @@ Knowledge management system for taking notes
 
 Useful thingies
 
+*** Tree-sitter
+
+#+begin_src  emacs-lisp
+(use-package treesit-auto
+  :custom (treesit-auto-install t)
+  :config
+  (treesit-auto-add-to-auto-mode-alist 'all)
+  (global-treesit-auto-mode)
+  :ensure t)
+#+end_src
+
 *** Magit
 
 An interface for Git
