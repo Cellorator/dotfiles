@@ -97,9 +97,13 @@ Emulate vim keybindings
 (use-package evil
   :ensure t
   :init
-  (setq evil-want-C-i-jump nil) ; Make TAB work properly in org-mode
   (setq evil-undo-system 'undo-fu)
   :config (evil-mode 1))
+
+(use-package evil-collection
+  :config (evil-collection-init)
+  :ensure t
+  :after evil)
 
 ;; Undo and redo
 (use-package undo-fu :ensure t)
