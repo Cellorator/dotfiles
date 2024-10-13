@@ -6,7 +6,7 @@
 
 * Package Manager
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 ;; Initialize package sources
 (require 'package)
 
@@ -24,11 +24,11 @@
 
 (require 'use-package)
 (setq use-package-always-ensure t)
-#+END_SRC
+#+end_src
 
 * Options
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq inhibit-startup-message t) ; Don't show splash screen
 
 (setq warning-minimum-level :emergency)
@@ -48,23 +48,23 @@
 (setq org-src-preserve-indentation t) ; Don't indent when making a new line in code blocks
 
 (global-visual-line-mode) ; Enable line wrap
-#+END_SRC
+#+end_src
 
 ** Android
 
 *** Use Termux binaries 
 
-#+BEGIN_SRC emacs-lisp :tangle ./early-init.el
+#+begin_src emacs-lisp :tangle ./early-init.el
 (when (string-equal system-type "android")
   ;; Add Termux binaries to PATH environment
   (let ((termuxpath "/data/data/com.termux/files/usr/bin"))
     (setenv "PATH" (concat (getenv "PATH") ":" termuxpath))
     (setq exec-path (append exec-path (list termuxpath)))))
-#+END_SRC
+#+end_src
 
 *** Specific configuration
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (when (string-equal system-type "android")
   ;; Enable bars
   (menu-bar-mode 1)
@@ -75,7 +75,7 @@
   (setq touch-screen-display-keyboard t) 
   ;; Make keybinds work with on-screen keyboard
   (setq overriding-text-conversion-style nil))
-#+END_SRC
+#+end_src
 
 * Keybinds
 
@@ -85,17 +85,17 @@ My keybinds powered by general.el and evil
 
 Conveniently set keybinds
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package general
   :config (general-evil-setup t)
   :ensure t)
-#+END_SRC
+#+end_src
 
 ** evil
 
 Emulate vim keybindings
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package evil
   :init
   (setq evil-want-C-i-jump nil) ; Make TAB work normally (auto-indent)
@@ -112,13 +112,13 @@ Emulate vim keybindings
 (use-package undo-fu-session
   :ensure t
   :config (undo-fu-session-global-mode))
-#+END_SRC
+#+end_src
 
 ** Basics
 
 Setting the leader key and some basic commands for navigating emacs and the filesystem
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 ;; Set leader key
 (general-create-definer <leader>
   :states '(normal insert visual emacs)
@@ -148,7 +148,7 @@ Setting the leader key and some basic commands for navigating emacs and the file
 (<leader>
   "rr" '(reload-config :wk "Reload configuration")
   "re" '(restart-emacs :wk "Restart Emacs"))
-#+END_SRC
+#+end_src
 
 * Packages
 
@@ -156,20 +156,20 @@ Setting the leader key and some basic commands for navigating emacs and the file
 
 *** corfu
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package corfu
   :custom (corfu-auto t)
   :init (global-corfu-mode)
   :ensure t)
-#+END_SRC
+#+end_src
 
 *** ivy
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package ivy
   :ensure t
   :config (ivy-mode))
-#+END_SRC
+#+end_src
 
 ** Tools
 
@@ -190,19 +190,19 @@ Useful thingies
 
 An interface for Git
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package magit
   :general
   (<leader>
     "g" '(magit :wk "Open Magit"))
   :ensure t)
-#+END_SRC
+#+end_src
 
 ** QOL
 
 Some small quality of life stuff
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package smartparens
   :config
   (smartparens-global-mode)
@@ -214,21 +214,21 @@ Some small quality of life stuff
   :ensure t)
 
 (use-package restart-emacs :ensure t)
-#+END_SRC
+#+end_src
 
 ** Theme
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package kanagawa-themes
   :config (load-theme 'kanagawa-dragon t)
   :ensure t)
-#+END_SRC
+#+end_src
 
 ** org-mode
 
 *** Options
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (require 'org)
 
 (setq org-startup-indented t)
@@ -242,10 +242,10 @@ Some small quality of life stuff
 
 (general-def 'normal org-mode-map
   "RET" 'org-open-at-point)
-#+END_SRC
+#+end_src
 
 *** Useful Stuff
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 ;; Prettier
 (use-package org-modern
   :custom
@@ -277,13 +277,13 @@ Some small quality of life stuff
   :defer t
   :hook (org-mode . org-auto-tangle-mode)
   :ensure t)
-#+END_SRC
+#+end_src
 
 *** org-roam
 
 Knowledge management system for taking notes
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package org-roam
   :ensure t
   :custom
@@ -302,4 +302,4 @@ Knowledge management system for taking notes
         (org-roam-capture-templates (list (append (car org-roam-capture-templates)
                                                   '(:immediate-finish t)))))
     (apply #'org-roam-node-insert args)))
-#+END_SRC
+#+end_src
