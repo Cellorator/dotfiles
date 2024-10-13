@@ -219,6 +219,7 @@ Knowledge management system for taking notes
 #+END_SRC
 
 ** Completion
+
 *** corfu
 
 #+BEGIN_SRC emacs-lisp
@@ -238,10 +239,23 @@ Knowledge management system for taking notes
 
 ** Tools
 
+Useful thingies
+
+*** Magit
+
+An interface for Git
+
 #+BEGIN_SRC emacs-lisp
+(use-package magit
+  :general
+  (<leader>
+    "g" '(magit :wk "Open Magit"))
+  :ensure t)
 #+END_SRC
 
 ** QOL
+
+Some small quality of life stuff
 
 #+BEGIN_SRC emacs-lisp
 (use-package smartparens
