@@ -16,8 +16,7 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
-;; Don't show splash screen
-(setq inhibit-startup-message t)
+(setq inhibit-startup-message t) ; Don't show splash screen
 
 (setq warning-minimum-level :emergency)
 
@@ -28,12 +27,14 @@
 (scroll-bar-mode -1) ; Disable scroll bar
 
 (column-number-mode) ; Display column number on mode bar
-
 (global-display-line-numbers-mode 1) ; Display line numbers
+
 (set-face-attribute 'default nil :family "Hurmit Nerd Font" :height 120)
 
-(setq org-src-tab-acts-natively t)
-(setq org-src-preserve-indentation t)
+(setq org-src-tab-acts-natively t) ; Make tab work in code blocks properly
+(setq org-src-preserve-indentation t) ; Don't indent when making a new line in code blocks
+
+(global-visual-line-mode) ; Enable line wrap
 
 (when (string-equal system-type "android")
   ;; Enable bars
@@ -97,6 +98,44 @@
   "rr" '(reload-config :wk "Reload configuration")
   "re" '(restart-emacs :wk "Restart Emacs"))
 
+(use-package corfu
+  :custom (corfu-auto t)
+  :init (global-corfu-mode)
+  :ensure t)
+
+(use-package ivy
+  :ensure t
+  :config (ivy-mode))
+
+(use-package treesit-auto
+  :custom (treesit-auto-install t)
+  :config
+  (treesit-auto-add-to-auto-mode-alist 'all)
+  (global-treesit-auto-mode)
+  :ensure t)
+
+(use-package magit
+  :general
+  (<leader>
+    "g" '(magit :wk "Open Magit"))
+  :ensure t)
+
+(use-package smartparens
+  :config
+  (smartparens-global-mode)
+  (require 'smartparens-config)
+  :ensure t)
+
+(use-package evil-commentary
+  :config (evil-commentary-mode)
+  :ensure t)
+
+(use-package restart-emacs :ensure t)
+
+(use-package kanagawa-themes
+  :config (load-theme 'kanagawa-dragon t)
+  :ensure t)
+
 (require 'org)
 (setq org-hide-emphasis-markers t) ; Hide bold and italic markup
 (setq org-startup-with-latex-preview t) ; Enable latex previews
@@ -146,42 +185,4 @@
   :load-path "site-lisp/org-auto-tangle/"    ;; this line is necessary only if you cloned the repo in your site-lisp directory 
   :defer t
   :hook (org-mode . org-auto-tangle-mode)
-  :ensure t)
-
-(use-package corfu
-  :custom (corfu-auto t)
-  :init (global-corfu-mode)
-  :ensure t)
-
-(use-package ivy
-  :ensure t
-  :config (ivy-mode))
-
-(use-package treesit-auto
-  :custom (treesit-auto-install t)
-  :config
-  (treesit-auto-add-to-auto-mode-alist 'all)
-  (global-treesit-auto-mode)
-  :ensure t)
-
-(use-package magit
-  :general
-  (<leader>
-    "g" '(magit :wk "Open Magit"))
-  :ensure t)
-
-(use-package smartparens
-  :config
-  (smartparens-global-mode)
-  (require 'smartparens-config)
-  :ensure t)
-
-(use-package evil-commentary
-  :config (evil-commentary-mode)
-  :ensure t)
-
-(use-package restart-emacs :ensure t)
-
-(use-package kanagawa-themes
-  :config (load-theme 'kanagawa-dragon t)
   :ensure t)
