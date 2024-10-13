@@ -178,7 +178,3 @@
 (use-package kanagawa-themes
   :config (load-theme 'kanagawa-dragon t)
   :ensure t)
-
-(use-package highlight-indent-guides
-  :hook prog-mode
-  :ensure t)
