@@ -138,6 +138,8 @@
 
 (require 'org)
 
+(setq org-startup-indented t)
+
 (setq org-startup-with-latex-preview t) ; Enable latex previews
 (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5)) ; Make latex preview bigger
 
@@ -148,28 +150,11 @@
 (general-def 'normal org-mode-map
   "RET" 'org-open-at-point)
 
-(use-package org-roam
-  :ensure t
-  :custom
-  (org-roam-directory (file-truename "~/org"))
-  :general
-  (<leader>
-    "of" '(org-roam-node-find :wk "Find node")
-    "oi" '(org-roam-node-insert-immediate :wk "Insert node"))
-  :config
-  (org-roam-db-autosync-toggle))
-
-;; Insert a node without needing to edit it
-(defun org-roam-node-insert-immediate (arg &rest args)
-  (interactive "P")
-  (let ((args (cons arg args))
-        (org-roam-capture-templates (list (append (car org-roam-capture-templates)
-                                                  '(:immediate-finish t)))))
-    (apply #'org-roam-node-insert args)))
-
 ;; Prettier
-(use-package org-superstar
-  :hook (org-mode . (lambda () (org-superstar-mode 1)))
+(use-package org-modern
+  :custom
+  (org-modern-star 'replace)
+  :hook org-mode
   :ensure t)
 
 (use-package org-appear
@@ -196,3 +181,22 @@
   :defer t
   :hook (org-mode . org-auto-tangle-mode)
   :ensure t)
+
+(use-package org-roam
+  :ensure t
+  :custom
+  (org-roam-directory (file-truename "~/org"))
+  :general
+  (<leader>
+    "of" '(org-roam-node-find :wk "Find node")
+    "oi" '(org-roam-node-insert-immediate :wk "Insert node"))
+  :config
+  (org-roam-db-autosync-toggle))
+
+;; Insert a node without needing to edit it
+(defun org-roam-node-insert-immediate (arg &rest args)
+  (interactive "P")
+  (let ((args (cons arg args))
+        (org-roam-capture-templates (list (append (car org-roam-capture-templates)
+                                                  '(:immediate-finish t)))))
+    (apply #'org-roam-node-insert args)))

@@ -231,6 +231,8 @@ Some small quality of life stuff
 #+BEGIN_SRC emacs-lisp
 (require 'org)
 
+(setq org-startup-indented t)
+
 (setq org-startup-with-latex-preview t) ; Enable latex previews
 (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5)) ; Make latex preview bigger
 
@@ -242,37 +244,13 @@ Some small quality of life stuff
   "RET" 'org-open-at-point)
 #+END_SRC
 
-*** org-roam
-
-Knowledge management system for taking notes
-
-#+BEGIN_SRC emacs-lisp
-(use-package org-roam
-  :ensure t
-  :custom
-  (org-roam-directory (file-truename "~/org"))
-  :general
-  (<leader>
-    "of" '(org-roam-node-find :wk "Find node")
-    "oi" '(org-roam-node-insert-immediate :wk "Insert node"))
-  :config
-  (org-roam-db-autosync-toggle))
-
-;; Insert a node without needing to edit it
-(defun org-roam-node-insert-immediate (arg &rest args)
-  (interactive "P")
-  (let ((args (cons arg args))
-        (org-roam-capture-templates (list (append (car org-roam-capture-templates)
-                                                  '(:immediate-finish t)))))
-    (apply #'org-roam-node-insert args)))
-#+END_SRC
-
 *** Useful Stuff
-
 #+BEGIN_SRC emacs-lisp
 ;; Prettier
-(use-package org-superstar
-  :hook (org-mode . (lambda () (org-superstar-mode 1)))
+(use-package org-modern
+  :custom
+  (org-modern-star 'replace)
+  :hook org-mode
   :ensure t)
 
 (use-package org-appear
@@ -299,4 +277,29 @@ Knowledge management system for taking notes
   :defer t
   :hook (org-mode . org-auto-tangle-mode)
   :ensure t)
+#+END_SRC
+
+*** org-roam
+
+Knowledge management system for taking notes
+
+#+BEGIN_SRC emacs-lisp
+(use-package org-roam
+  :ensure t
+  :custom
+  (org-roam-directory (file-truename "~/org"))
+  :general
+  (<leader>
+    "of" '(org-roam-node-find :wk "Find node")
+    "oi" '(org-roam-node-insert-immediate :wk "Insert node"))
+  :config
+  (org-roam-db-autosync-toggle))
+
+;; Insert a node without needing to edit it
+(defun org-roam-node-insert-immediate (arg &rest args)
+  (interactive "P")
+  (let ((args (cons arg args))
+        (org-roam-capture-templates (list (append (car org-roam-capture-templates)
+                                                  '(:immediate-finish t)))))
+    (apply #'org-roam-node-insert args)))
 #+END_SRC
