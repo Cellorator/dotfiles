@@ -149,7 +149,7 @@
   :ensure t)
 
 (use-package corfu
-  :custom (corfu-autor t)
+  :custom (corfu-auto t)
   :init (global-corfu-mode)
   :ensure t)
 
@@ -174,3 +174,20 @@
 (use-package kanagawa-themes
   :config (load-theme 'kanagawa-dragon t)
   :ensure t)
+
+(use-package highlight-indent-guides
+  :hook prog-mode
+  :ensure t)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(highlight-indent-guides undo-fu-session undo-fu smartparens restart-emacs org-superstar org-roam org-fragtog org-auto-tangle org-appear kanagawa-themes ivy general evil-commentary evil-collection corfu company)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
