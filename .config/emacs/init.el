@@ -202,7 +202,9 @@
   :general
   (<leader>
     "of" '(org-roam-node-find :wk "Find node")
-    "oi" '(org-roam-node-insert-immediate :wk "Insert node"))
+    "oi" '(org-roam-node-insert-immediate :wk "Insert node")
+    "ot" '(org-roam-tag-add :wk "Add tags")
+    "oa" '(org-roam-alias-add :wk "Add aliases"))
   :config
   (org-roam-db-autosync-toggle))
 
