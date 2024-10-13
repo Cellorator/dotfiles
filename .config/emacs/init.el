@@ -22,6 +22,7 @@
 (setq warning-minimum-level :emergency)
 
 (setq frame-resize-pixelwise t) ; Remove weird gaps at bottom and right edges
+
 (menu-bar-mode -1) ; Disable menu bar
 (tool-bar-mode -1) ; Disable tool bar
 (scroll-bar-mode -1) ; Disable scroll bar
@@ -50,15 +51,15 @@
   :ensure t)
 
 (use-package evil
-  :ensure t
   :init
+  (setq evil-want-C-i-jump nil) ; Make TAB work normally (auto-indent)
   (setq evil-undo-system 'undo-fu)
-  :config (evil-mode 1))
-
+  :config (evil-mode 1)
+  :ensure t)
 (use-package evil-collection
   :config (evil-collection-init)
-  :ensure t
-  :after evil)
+  :after evil
+  :ensure t)
 
 ;; Undo and redo
 (use-package undo-fu :ensure t)
@@ -156,10 +157,18 @@
   :ensure t
   :config (ivy-mode))
 
+
+
+(use-package smartparens
+  :config
+  (smartparens-global-mode)
+  (require 'smartparens-config)
+  :ensure t)
+
 (use-package evil-commentary
   :config (evil-commentary-mode)
   :ensure t)
-  
+
 (use-package restart-emacs :ensure t)
 
 (use-package kanagawa-themes
