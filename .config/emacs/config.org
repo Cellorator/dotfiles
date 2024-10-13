@@ -85,8 +85,8 @@ Conveniently set keybinds
 
 #+BEGIN_SRC emacs-lisp
 (use-package general
-  :ensure t
-  :config (general-evil-setup t))
+  :config (general-evil-setup t)
+  :ensure t)
 #+END_SRC
 
 ** evil
@@ -218,10 +218,9 @@ Knowledge management system for taking notes
 
 #+BEGIN_SRC emacs-lisp
 (use-package corfu
-  :ensure t
+  :custom (corfu-autor t)
   :init (global-corfu-mode)
-  :config
-  (setq corfu-auto t))
+  :ensure t)
 #+END_SRC
 
 *** ivy
@@ -235,14 +234,17 @@ Knowledge management system for taking notes
 ** Tools
 
 #+BEGIN_SRC emacs-lisp
-(use-package restart-emacs
+(use-package evil-commentary
+  :config (evil-commentary-mode)
   :ensure t)
+  
+(use-package restart-emacs :ensure t)
 #+END_SRC
 
 ** Theme
 
 #+BEGIN_SRC emacs-lisp
 (use-package kanagawa-themes
-  :ensure t
-  :config (load-theme 'kanagawa-dragon t))
+  :config (load-theme 'kanagawa-dragon t)
+  :ensure t)
 #+END_SRC

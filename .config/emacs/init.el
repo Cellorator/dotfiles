@@ -46,8 +46,8 @@
   (setq overriding-text-conversion-style nil))
 
 (use-package general
-  :ensure t
-  :config (general-evil-setup t))
+  :config (general-evil-setup t)
+  :ensure t)
 
 (use-package evil
   :ensure t
@@ -144,18 +144,20 @@
   :ensure t)
 
 (use-package corfu
-  :ensure t
+  :custom (corfu-autor t)
   :init (global-corfu-mode)
-  :config
-  (setq corfu-auto t))
+  :ensure t)
 
 (use-package ivy
   :ensure t
   :config (ivy-mode))
 
-(use-package restart-emacs
+(use-package evil-commentary
+  :config (evil-commentary-mode)
   :ensure t)
+  
+(use-package restart-emacs :ensure t)
 
 (use-package kanagawa-themes
-  :ensure t
-  :config (load-theme 'kanagawa-dragon t))
+  :config (load-theme 'kanagawa-dragon t)
+  :ensure t)
