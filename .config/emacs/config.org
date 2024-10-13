@@ -154,23 +154,26 @@ Setting the leader key and some basic commands for navigating emacs and the file
 
 ** Completion
 
-*** corfu
-
 #+begin_src emacs-lisp
+;; A completion-style for space separated completion
+(use-package orderless
+  :ensure t
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-overrides '((file (styles basic partial-completion)))))
+
+;; Buffer completion
 (use-package corfu
   :custom (corfu-auto t)
   :init (global-corfu-mode)
   :ensure t)
-#+end_src
 
-*** vertico
-
-#+begin_src emacs-lisp
+;; Completion UI
 (use-package vertico
   :init (vertico-mode)
   :ensure t)
-#+end_src
 
+#+end_src
 ** Tools
 
 Useful thingies
@@ -289,6 +292,9 @@ Knowledge management system for taking notes
   :ensure t
   :custom
   (org-roam-directory (file-truename "~/org"))
+  (org-roam-node-display-template
+   (concat "${title:*} "
+           (propertize "${tags:30}" 'face 'org-tag)))
   :general
   (<leader>
     "of" '(org-roam-node-find :wk "Find node")

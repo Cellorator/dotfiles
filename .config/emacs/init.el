@@ -98,11 +98,20 @@
   "rr" '(reload-config :wk "Reload configuration")
   "re" '(restart-emacs :wk "Restart Emacs"))
 
+;; A completion-style for space separated completion
+(use-package orderless
+  :ensure t
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-overrides '((file (styles basic partial-completion)))))
+
+;; Buffer completion
 (use-package corfu
   :custom (corfu-auto t)
   :init (global-corfu-mode)
   :ensure t)
 
+;; Completion UI
 (use-package vertico
   :init (vertico-mode)
   :ensure t)
@@ -187,6 +196,9 @@
   :ensure t
   :custom
   (org-roam-directory (file-truename "~/org"))
+  (org-roam-node-display-template
+   (concat "${title:*} "
+           (propertize "${tags:30}" 'face 'org-tag)))
   :general
   (<leader>
     "of" '(org-roam-node-find :wk "Find node")
