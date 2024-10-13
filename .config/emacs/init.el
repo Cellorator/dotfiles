@@ -137,7 +137,7 @@
   :ensure t)
 
 (require 'org)
-(setq org-hide-emphasis-markers t) ; Hide bold and italic markup
+
 (setq org-startup-with-latex-preview t) ; Enable latex previews
 (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5)) ; Make latex preview bigger
 
@@ -173,8 +173,18 @@
   :ensure t)
 
 (use-package org-appear
-  :hook (org-mode . org-appear-mode)
+  :custom
+  (org-hide-emphasis-markers t) ; Hide bold and italic markup
+  (org-appear-trigger 'manual)
+  :hook (org-mode . (lambda ()
+		      (org-appear-mode)
+		      (add-hook 'evil-insert-state-entry-hook
+				#'org-appear-manual-start nil t)
+		      (add-hook 'evil-insert-state-exit-hook
+				#'org-appear-manual-stop nil t)))
+  :after org
   :ensure t)
+
 
 (use-package org-fragtog
   :hook (org-mode . org-fragtog-mode)
