@@ -50,6 +50,8 @@
 (set-face-attribute 'variable-pitch nil :family variable-width-font :height 1.2)
 
 (global-visual-line-mode) ; Enable line wrap
+
+(savehist-mode) ; Save minibuffer history
 #+end_src
 
 ** Android
@@ -168,8 +170,7 @@ Useful thingies
 (use-package orderless
   :ensure t
   :custom
-  (completion-styles '(orderless basic))
-  (completion-category-overrides '((file (styles basic partial-completion)))))
+  (completion-styles '(orderless basic)))
 
 ;; Buffer completion
 (use-package corfu
@@ -185,6 +186,9 @@ Useful thingies
 ;; Annotations in completion UI
 (use-package marginalia
   :init (marginalia-mode)
+  :ensure t)
+
+(use-package consult
   :ensure t)
 
 ;; Cool git front-end

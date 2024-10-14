@@ -38,6 +38,8 @@
 
 (global-visual-line-mode) ; Enable line wrap
 
+(savehist-mode) ; Save minibuffer history
+
 (when (string-equal system-type "android")
   ;; Enable bars
   (menu-bar-mode 1)
@@ -109,8 +111,7 @@
 (use-package orderless
   :ensure t
   :custom
-  (completion-styles '(orderless basic))
-  (completion-category-overrides '((file (styles basic partial-completion)))))
+  (completion-styles '(orderless basic)))
 
 ;; Buffer completion
 (use-package corfu
@@ -126,6 +127,9 @@
 ;; Annotations in completion UI
 (use-package marginalia
   :init (marginalia-mode)
+  :ensure t)
+
+(use-package consult
   :ensure t)
 
 ;; Cool git front-end

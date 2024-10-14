@@ -5,3 +5,4 @@ undo-fu-session/*
 transient/*
 bookmarks
 .org-id-locations
+/.config/emacs/history
