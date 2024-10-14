@@ -147,9 +147,9 @@
 
 (use-package restart-emacs :ensure t)
 
-    (use-package kanagawa-themes
-    :config (load-theme 'kanagawa-dragon t)
-    :ensure t)
+(use-package kanagawa-themes
+  :config (load-theme 'kanagawa-dragon t)
+  :ensure t)
 
 (require 'org)
 

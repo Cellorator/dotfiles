@@ -212,13 +212,14 @@ Some small quality of life stuff
 
 (use-package restart-emacs :ensure t)
 #+end_src
+
 ** Theme
 
-    #+begin_src emacs-lisp
-    (use-package kanagawa-themes
-    :config (load-theme 'kanagawa-dragon t)
-    :ensure t)
-    #+end_src
+ #+begin_src emacs-lisp
+(use-package kanagawa-themes
+  :config (load-theme 'kanagawa-dragon t)
+  :ensure t)
+#+end_src
 
 ** org-mode
 
