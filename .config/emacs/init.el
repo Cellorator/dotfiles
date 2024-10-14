@@ -176,18 +176,17 @@
   :custom
   (org-hide-emphasis-markers t) ; Hide bold and italic markup
   (org-appear-trigger 'manual)
-  :hook (org-mode . (lambda ()
-		      (org-appear-mode)
-		      (add-hook 'evil-insert-state-entry-hook
-				#'org-appear-manual-start nil t)
-		      (add-hook 'evil-insert-state-exit-hook
-				#'org-appear-manual-stop nil t)))
+  :hook org-mode
+  :config
+  (add-hook 'evil-insert-state-entry-hook #'org-appear-manual-start nil t)
+  (add-hook 'evil-insert-state-exit-hook #'org-appear-manual-stop nil t)
   :after org
   :ensure t)
 
 
 (use-package org-fragtog
   :hook (org-mode . org-fragtog-mode)
+  :after org
   :ensure t)
 
 ;; For tangling configuration file on save
@@ -195,23 +194,31 @@
   :load-path "site-lisp/org-auto-tangle/"    ;; this line is necessary only if you cloned the repo in your site-lisp directory 
   :defer t
   :hook (org-mode . org-auto-tangle-mode)
+  :after org
   :ensure t)
 
 (use-package org-roam
-  :ensure t
   :custom
   (org-roam-directory (file-truename "~/org"))
   (org-roam-node-display-template
    (concat "${title:*} "
            (propertize "${tags:30}" 'face 'org-tag)))
-  :general
-  (<leader>
-    "of" '(org-roam-node-find :wk "Find node")
-    "oi" '(org-roam-node-insert-immediate :wk "Insert node")
-    "ot" '(org-roam-tag-add :wk "Add tags")
-    "oa" '(org-roam-alias-add :wk "Add aliases"))
+  :general (<leader>
+	     "of" '(org-roam-node-find :wk "Find node")
+	     "oi" '(org-roam-node-insert-immediate :wk "Insert node")
+	     "ot" '(org-roam-tag-add :wk "Add tags")
+	     "oa" '(org-roam-alias-add :wk "Add aliases")
+	     "ob" '(org-roam-buffer-toggle :wk "Open org-roam buffer"))
   :config
-  (org-roam-db-autosync-toggle))
+  (org-roam-db-autosync-toggle)
+  (add-to-list 'display-buffer-alist
+               '("\\*org-roam\\*"
+		 (display-buffer-in-direction)
+		 (direction . right)
+		 (window-width . 0.33)
+		 (window-height . fit-window-to-buffer)))
+  :after org
+  :ensure t)
 
 ;; Insert a node without needing to edit it
 (defun org-roam-node-insert-immediate (arg &rest args)

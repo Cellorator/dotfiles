@@ -3,3 +3,4 @@ eln-cache/*
 elpa/*
 undo-fu-session/*
 transient/*
+bookmarks
