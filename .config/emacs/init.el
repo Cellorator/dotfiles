@@ -157,6 +157,9 @@
 (require 'org)
 (setq org-src-tab-acts-natively t) ; Make tab work in code blocks
 (setq org-src-preserve-indentation t) ; Don't indent when making a new line in code blocks
+(setq org-hide-emphasis-markers t) ; Hide bold and italic markup
+
+(add-hook 'org-mode-hook '(lambda () (display-line-numbers-mode -1))) ; Display line numbers
 
 ;; Bindings
 (<leader>
@@ -245,35 +248,25 @@
 
 ;; Make stuff dissapear and stuff
 (use-package org-appear
-  :custom
-  ;; Hide bold and italic markup
-  (org-hide-emphasis-markers t)
-  (org-appear-autoemphasis t)
-  ;; Show latex syntax like \times or \alpha and a^2
-  (org-pretty-entites t)
-  (org-appear-autoentities t)
-  (org-appear-autosubmarkers t)
-  ;; Use hook for activation
-  (org-appear-trigger 'manual)
   :hook org-mode
-  :config
-  (org-toggle-pretty-entities)
-  (add-hook 'evil-insert-state-entry-hook #'org-appear-manual-start nil t)
-  (add-hook 'evil-insert-state-exit-hook #'org-appear-manual-stop nil t)
   :after org
   :ensure t)
 
 ;; Preview latex in editor
 (use-package org-fragtog
   :custom (org-startup-with-latex-preview t)
-  :hook (org-mode . org-fragtog-mode)
-  ;; :config (setq org-startup-with-latex-preview t) ; Enable latex previews
+  :hook org-mode
   :after org
+  :ensure t)
+
+(use-package olivetti
+  :custom (olivetti-body-width 0.5)
+  :hook org-mode
   :ensure t)
 
 ;; For tangling configuration file on save
 (use-package org-auto-tangle
   :defer t
-  :hook (org-mode . org-auto-tangle-mode)
+  :hook org-mode
   :after org
   :ensure t)
