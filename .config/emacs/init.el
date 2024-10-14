@@ -17,7 +17,6 @@
 (setq use-package-always-ensure t)
 
 (setq inhibit-startup-message t) ; Don't show splash screen
-
 (setq warning-minimum-level :emergency)
 
 (setq frame-resize-pixelwise t) ; Remove weird gaps at bottom and right edges
@@ -29,6 +28,10 @@
 (column-number-mode) ; Display column number on mode bar
 (global-display-line-numbers-mode 1) ; Display line numbers
 
+(custom-theme-set-faces
+   'user
+   '(variable-pitch ((t (:family "Metropolis" :height 140 :weight medium))))
+   '(fixed-pitch ((t ( :family "Hurmit Nerd Font" :height 120 :weight medium)))))
 (set-face-attribute 'default nil :family "Hurmit Nerd Font" :height 120)
 
 (setq org-src-tab-acts-natively t) ; Make tab work in code blocks properly
@@ -164,6 +167,21 @@
 
 (general-def 'normal org-mode-map
   "RET" 'org-open-at-point)
+
+;; (add-hook 'org-mode-hook 'variable-pitch-mode) ; Use variable-width font in org-mode
+;; (custom-theme-set-faces
+;;  'user
+;;  '(org-block ((t (:inherit fixed-pitch))))
+;;  '(org-code ((t (:inherit (shadow fixed-pitch)))))
+;;  '(org-document-info ((t (:inherit (shadow fixed-pitch)))))
+;;  '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
+;;  '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
+;;  '(org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+;;  '(org-property-value ((t (:inherit fixed-pitch))) t)
+;;  '(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+;;  '(org-table ((t (:inherit (fixed-pitch)))))
+;;  '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
+;;  '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))
 
 ;; Prettier
 (use-package org-modern
