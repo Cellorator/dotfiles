@@ -156,7 +156,9 @@ Setting the leader key and some basic commands for navigating emacs and the file
 
 * Packages
 
-** Completion
+** Tools
+
+Useful thingies
 
 #+begin_src emacs-lisp
 ;; A completion-style for space separated completion
@@ -177,31 +179,19 @@ Setting the leader key and some basic commands for navigating emacs and the file
   :init (vertico-mode)
   :ensure t)
 
-#+end_src
-** Tools
+;; Cool git front-end
+(use-package magit
+  :general
+  (<leader>
+    "g" '(magit :wk "Open Magit"))
+  :ensure t)
 
-Useful thingies
-
-*** Tree-sitter
-
-#+begin_src  emacs-lisp
+;; Treesitter
 (use-package treesit-auto
   :custom (treesit-auto-install t)
   :config
   (treesit-auto-add-to-auto-mode-alist 'all)
   (global-treesit-auto-mode)
-  :ensure t)
-#+end_src
-
-*** Magit
-
-An interface for Git
-
-#+begin_src emacs-lisp
-(use-package magit
-  :general
-  (<leader>
-    "g" '(magit :wk "Open Magit"))
   :ensure t)
 #+end_src
 
@@ -290,7 +280,6 @@ Some small quality of life stuff
   (add-hook 'evil-insert-state-exit-hook #'org-appear-manual-stop nil t)
   :after org
   :ensure t)
-
 
 (use-package org-fragtog
   :hook (org-mode . org-fragtog-mode)

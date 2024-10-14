@@ -120,17 +120,19 @@
   :init (vertico-mode)
   :ensure t)
 
+;; Cool git front-end
+(use-package magit
+  :general
+  (<leader>
+    "g" '(magit :wk "Open Magit"))
+  :ensure t)
+
+;; Treesitter
 (use-package treesit-auto
   :custom (treesit-auto-install t)
   :config
   (treesit-auto-add-to-auto-mode-alist 'all)
   (global-treesit-auto-mode)
-  :ensure t)
-
-(use-package magit
-  :general
-  (<leader>
-    "g" '(magit :wk "Open Magit"))
   :ensure t)
 
 (use-package smartparens
@@ -200,7 +202,6 @@
   (add-hook 'evil-insert-state-exit-hook #'org-appear-manual-stop nil t)
   :after org
   :ensure t)
-
 
 (use-package org-fragtog
   :hook (org-mode . org-fragtog-mode)
