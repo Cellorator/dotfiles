@@ -147,9 +147,9 @@
 
 (use-package restart-emacs :ensure t)
 
-(use-package kanagawa-themes
-  :config (load-theme 'kanagawa-dragon t)
-  :ensure t)
+    (use-package kanagawa-themes
+    :config (load-theme 'kanagawa-dragon t)
+    :ensure t)
 
 (require 'org)
 
@@ -172,26 +172,31 @@
 (set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
 (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
 (set-face-attribute 'org-code nil :inherit '(shadow fixed-pitch))
-(set-face-attribute 'org-drawer nil :inherit '(shadow fixed-pitch))
-(set-face-attribute 'org-meta-line nil :inherit '(shadow fixed-pitch))
 (set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
 (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
-(set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+(set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
+
+;; Metadata stuff
+(set-face-attribute 'org-drawer nil :inherit '(font-lock-comment-face fixed-pitch))
 (set-face-attribute 'org-property-value nil :inherit '(font-lock-comment-face fixed-pitch))
 (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
-(set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
+(set-face-attribute 'org-document-info-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+(set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+(set-face-attribute 'org-meta-line nil :inherit '(shadow fixed-pitch))
 
 (add-hook 'org-mode-hook 'variable-pitch-mode) ; Use variable-width font in org-mode
 
 (plist-put org-format-latex-options :scale 1.5) ; Make latex preview bigger
 
-;; Prettier
+;; Replace text with cool symbols
 (use-package org-modern
   :custom
   (org-modern-star 'replace)
+  (org-modern-keyword nil)
   :hook org-mode
   :ensure t)
 
+;; Make stuff dissapear and stuff
 (use-package org-appear
   :custom
   (org-hide-emphasis-markers t) ; Hide bold and italic markup
@@ -203,6 +208,7 @@
   :after org
   :ensure t)
 
+;; Preview latex in editor
 (use-package org-fragtog
   :hook (org-mode . org-fragtog-mode)
   :after org
@@ -210,7 +216,6 @@
 
 ;; For tangling configuration file on save
 (use-package org-auto-tangle
-  :load-path "site-lisp/org-auto-tangle/"    ;; this line is necessary only if you cloned the repo in your site-lisp directory 
   :defer t
   :hook (org-mode . org-auto-tangle-mode)
   :after org
