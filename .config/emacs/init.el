@@ -28,10 +28,13 @@
 (column-number-mode) ; Display column number on mode bar
 (global-display-line-numbers-mode 1) ; Display line numbers
 
-(set-face-attribute 'default nil :family "Hurmit Nerd Font" :height 120)
-(set-face-attribute 'fixed-pitch nil :family "Hurmit Nerd Font" :height 120)
+(setq default-font "Hurmit Nerd Font")
+(setq monospace-font default-font)
+(setq variable-width-font "Metropolis")
+(set-face-attribute 'default nil :family default-font :height 120)
+(set-face-attribute 'fixed-pitch nil :family monospace-font :height 120)
 
-(set-face-attribute 'variable-pitch nil :family "Metropolis" :height 1.25)
+(set-face-attribute 'variable-pitch nil :family variable-width-font :height 1.2)
 
 (global-visual-line-mode) ; Enable line wrap
 
@@ -152,14 +155,8 @@
   :ensure t)
 
 (require 'org)
-
-(setq
- org-src-tab-acts-natively t ; Make tab work in code blocks properly
- org-src-preserve-indentation t ; Don't indent when making a new line in code blocks
- 
- org-startup-indented t ; Indent headings
-
- org-startup-with-latex-preview t) ; Enable latex previews
+(setq org-src-tab-acts-natively t) ; Make tab work in code blocks
+(setq org-src-preserve-indentation t) ; Don't indent when making a new line in code blocks
 
 ;; Bindings
 (<leader>
@@ -168,58 +165,43 @@
 (general-def 'normal org-mode-map
   "RET" 'org-open-at-point)
 
-(require 'org-indent)
-(set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
-(set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
-(set-face-attribute 'org-code nil :inherit '(shadow fixed-pitch))
-(set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
-(set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
-(set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
+;; Font theming
+;; (set-face-attribute 'org-code nil :inherit '(shadow fixed-pitch))
+;; (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
 
-;; Metadata stuff
-(set-face-attribute 'org-drawer nil :inherit '(font-lock-comment-face fixed-pitch))
-(set-face-attribute 'org-property-value nil :inherit '(font-lock-comment-face fixed-pitch))
-(set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
-(set-face-attribute 'org-document-info-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
-(set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
-(set-face-attribute 'org-meta-line nil :inherit '(shadow fixed-pitch))
+;; (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
+;; (set-face-attribute 'org-block-begin-line nil :inherit 'fixed-pitch)
+;; (set-face-attribute 'org-block-end-line nil :inherit 'fixed-pitch)
 
-(add-hook 'org-mode-hook 'variable-pitch-mode) ; Use variable-width font in org-mode
+;; (set-face-attribute 'org-drawer nil :inherit 'fixed-pitch)
+;; (set-face-attribute 'org-special-keyword nil :inherit 'fixed-pitch)
+;; (set-face-attribute 'org-property-value nil :inherit 'fixed-pitch)
+;; (set-face-attribute 'org-meta-line nil :inherit 'fixed-pitch)
+(set-face-attribute 'org-document-info-keyword nil :inherit 'fixed-pitch)
+;; (set-face-attribute 'org-meta-line nil :inherit 'fixed-pitch)
+
+;; Resize Org headings
+(dolist (face '((org-level-1 . 1.4)
+                (org-level-2 . 1.3)
+                (org-level-3 . 1.2)
+                (org-level-4 . 1.1)
+                (org-level-5 . 1.1)
+                (org-level-6 . 1.1)
+                (org-level-7 . 1.1)
+                (org-level-8 . 1.1)))
+  (set-face-attribute (car face) nil :font monospace-font :weight 'bold :height (cdr face)))
+
+;; Make the document title a bit bigger
+(set-face-attribute 'org-document-title nil :font monospace-font :weight
+'bold :height 1.8)
+
+;; Fix indentation to fixed-pitch
+;; (require 'org-indent)
+;; (set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
+
+;; (add-hook 'org-mode-hook 'variable-pitch-mode) ; Use variable-width font in org-mode
 
 (plist-put org-format-latex-options :scale 1.5) ; Make latex preview bigger
-
-;; Replace text with cool symbols
-(use-package org-modern
-  :custom
-  (org-modern-star 'replace)
-  (org-modern-keyword nil)
-  :hook org-mode
-  :ensure t)
-
-;; Make stuff dissapear and stuff
-(use-package org-appear
-  :custom
-  (org-hide-emphasis-markers t) ; Hide bold and italic markup
-  (org-appear-trigger 'manual)
-  :hook org-mode
-  :config
-  (add-hook 'evil-insert-state-entry-hook #'org-appear-manual-start nil t)
-  (add-hook 'evil-insert-state-exit-hook #'org-appear-manual-stop nil t)
-  :after org
-  :ensure t)
-
-;; Preview latex in editor
-(use-package org-fragtog
-  :hook (org-mode . org-fragtog-mode)
-  :after org
-  :ensure t)
-
-;; For tangling configuration file on save
-(use-package org-auto-tangle
-  :defer t
-  :hook (org-mode . org-auto-tangle-mode)
-  :after org
-  :ensure t)
 
 (use-package org-roam
   :custom
@@ -252,3 +234,46 @@
         (org-roam-capture-templates (list (append (car org-roam-capture-templates)
                                                   '(:immediate-finish t)))))
     (apply #'org-roam-node-insert args)))
+
+;; Replace text with cool symbols
+(use-package org-modern
+  :custom
+  (org-modern-star 'replace)
+  (org-modern-keyword nil)
+  :hook org-mode
+  :ensure t)
+
+;; Make stuff dissapear and stuff
+(use-package org-appear
+  :custom
+  ;; Hide bold and italic markup
+  (org-hide-emphasis-markers t)
+  (org-appear-autoemphasis t)
+  ;; Show latex syntax like \times or \alpha and a^2
+  (org-pretty-entites t)
+  (org-appear-autoentities t)
+  (org-appear-autosubmarkers t)
+  ;; Use hook for activation
+  (org-appear-trigger 'manual)
+  :hook org-mode
+  :config
+  (org-toggle-pretty-entities)
+  (add-hook 'evil-insert-state-entry-hook #'org-appear-manual-start nil t)
+  (add-hook 'evil-insert-state-exit-hook #'org-appear-manual-stop nil t)
+  :after org
+  :ensure t)
+
+;; Preview latex in editor
+(use-package org-fragtog
+  :custom (org-startup-with-latex-preview t)
+  :hook (org-mode . org-fragtog-mode)
+  ;; :config (setq org-startup-with-latex-preview t) ; Enable latex previews
+  :after org
+  :ensure t)
+
+;; For tangling configuration file on save
+(use-package org-auto-tangle
+  :defer t
+  :hook (org-mode . org-auto-tangle-mode)
+  :after org
+  :ensure t)
