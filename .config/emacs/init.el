@@ -28,14 +28,10 @@
 (column-number-mode) ; Display column number on mode bar
 (global-display-line-numbers-mode 1) ; Display line numbers
 
-(custom-theme-set-faces
-   'user
-   '(variable-pitch ((t (:family "Metropolis" :height 140 :weight medium))))
-   '(fixed-pitch ((t ( :family "Hurmit Nerd Font" :height 120 :weight medium)))))
 (set-face-attribute 'default nil :family "Hurmit Nerd Font" :height 120)
+(set-face-attribute 'fixed-pitch nil :family "Hurmit Nerd Font" :height 120)
 
-(setq org-src-tab-acts-natively t) ; Make tab work in code blocks properly
-(setq org-src-preserve-indentation t) ; Don't indent when making a new line in code blocks
+(set-face-attribute 'variable-pitch nil :family "Metropolis" :height 1.25)
 
 (global-visual-line-mode) ; Enable line wrap
 
@@ -156,10 +152,12 @@
 (require 'org)
 
 (setq
+ org-src-tab-acts-natively t ; Make tab work in code blocks properly
+ org-src-preserve-indentation t ; Don't indent when making a new line in code blocks
+ 
  org-startup-indented t ; Indent headings
 
- org-startup-with-latex-preview t ; Enable latex previews
- org-format-latex-options (plist-put org-format-latex-options :scale 1.5)) ; Make latex preview bigger
+ org-startup-with-latex-preview t) ; Enable latex previews
 
 ;; Bindings
 (<leader>
@@ -168,20 +166,22 @@
 (general-def 'normal org-mode-map
   "RET" 'org-open-at-point)
 
-;; (add-hook 'org-mode-hook 'variable-pitch-mode) ; Use variable-width font in org-mode
-;; (custom-theme-set-faces
-;;  'user
-;;  '(org-block ((t (:inherit fixed-pitch))))
-;;  '(org-code ((t (:inherit (shadow fixed-pitch)))))
-;;  '(org-document-info ((t (:inherit (shadow fixed-pitch)))))
-;;  '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
-;;  '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
-;;  '(org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch)))))
-;;  '(org-property-value ((t (:inherit fixed-pitch))) t)
-;;  '(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
-;;  '(org-table ((t (:inherit (fixed-pitch)))))
-;;  '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
-;;  '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))
+(require 'org-indent)
+(set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
+(set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
+(set-face-attribute 'org-code nil :inherit '(shadow fixed-pitch))
+(set-face-attribute 'org-drawer nil :inherit '(shadow fixed-pitch))
+(set-face-attribute 'org-meta-line nil :inherit '(shadow fixed-pitch))
+(set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
+(set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
+(set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+(set-face-attribute 'org-property-value nil :inherit '(font-lock-comment-face fixed-pitch))
+(set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+(set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
+
+(add-hook 'org-mode-hook 'variable-pitch-mode) ; Use variable-width font in org-mode
+
+(plist-put org-format-latex-options :scale 1.5) ; Make latex preview bigger
 
 ;; Prettier
 (use-package org-modern
