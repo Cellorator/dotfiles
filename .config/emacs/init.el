@@ -123,6 +123,11 @@
   :init (vertico-mode)
   :ensure t)
 
+;; Annotations in completion UI
+(use-package marginalia
+  :init (marginalia-mode)
+  :ensure t)
+
 ;; Cool git front-end
 (use-package magit
   :general
