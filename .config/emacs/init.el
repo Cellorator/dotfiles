@@ -199,7 +199,8 @@
 
 (use-package org-roam
   :custom
-  (org-roam-directory (file-truename "~/org"))
+  (org-roam-directory (file-truename "~/notes/main"))
+  (org-roam-db-location (file-truename "~/notes/org-roam.db"))
   (org-roam-node-display-template
    (concat "${title:*} "
            (propertize "${tags:30}" 'face 'org-tag)))
