@@ -305,9 +305,9 @@ Knowledge management system for taking notes
   :custom
   (org-roam-directory (file-truename "~/notes/main"))
   (org-roam-db-location (file-truename "~/notes/org-roam.db"))
-  (org-roam-node-display-template
-   (concat "${title:*} "
-           (propertize "${tags:30}" 'face 'org-tag)))
+  (org-roam-node-display-template (concat
+				   "${title:*} "
+				   (propertize "${tags:30}" 'face 'org-tag)))
   :general (<leader>
 	     "of" '(org-roam-node-find :wk "Find node")
 	     "oi" '(org-roam-node-insert-immediate :wk "Insert node")
@@ -315,7 +315,7 @@ Knowledge management system for taking notes
 	     "oa" '(org-roam-alias-add :wk "Add aliases")
 	     "ob" '(org-roam-buffer-toggle :wk "Open org-roam buffer"))
   :config
-  (org-roam-db-autosync-toggle)
+  (org-roam-db-autosync-mode)
   (add-to-list 'display-buffer-alist
                '("\\*org-roam\\*"
 		 (display-buffer-in-direction)
@@ -345,6 +345,15 @@ Knowledge management system for taking notes
 
 *** Extra Packages
 #+begin_src emacs-lisp
+;; Nice org keybindings for evil
+(use-package evil-org
+  :hook org-mode
+  :config
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys)
+  :after org
+  :ensure t)
+
 ;; Replace text with cool symbols
 (use-package org-modern
   :custom
@@ -378,3 +387,4 @@ Knowledge management system for taking notes
   :after org
   :ensure t)
 #+end_src
+
