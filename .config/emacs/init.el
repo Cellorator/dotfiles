@@ -168,11 +168,12 @@
 (setq org-src-preserve-indentation t) ; Don't indent when making a new line in code blocks
 (setq org-hide-emphasis-markers t) ; Hide bold and italic markup
 
-(add-hook 'org-mode-hook '(lambda () (display-line-numbers-mode -1))) ; Display line numbers
+(add-hook 'org-mode-hook (lambda () (display-line-numbers-mode -1))) ; Display line numbers
 
 ;; Bindings
 (<leader>
-  "o" '(:ignore t :wk "org-mode"))
+  "o" '(:ignore t :wk "org-mode")
+  "oci" '(org-id-get-create :wk "Create ID for file/headline"))
 
 (general-def 'normal org-mode-map
   "RET" 'org-open-at-point)
@@ -247,6 +248,15 @@
                                                   '(:immediate-finish t)))))
     (apply #'org-roam-node-insert args)))
 
+(use-package org-roam-ui
+  :custom
+  (org-roam-ui-sync-theme t)
+  (org-roam-ui-follow t)
+  (org-roam-ui-update-on-save t)
+  (org-roam-ui-open-on-start t)
+  :after org-roam
+  :ensure t)
+
 ;; Replace text with cool symbols
 (use-package org-modern
   :custom
@@ -279,3 +289,16 @@
   :hook org-mode
   :after org
   :ensure t)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(org-roam-ui vertico undo-fu-session undo-fu treesit-auto smartparens restart-emacs org-superstar org-roam org-modern org-fragtog org-auto-tangle org-appear orderless olivetti marginalia magit kanagawa-themes ivy highlight-indent-guides general evil-commentary evil-collection corfu consult company)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

@@ -243,11 +243,12 @@ Some small quality of life stuff
 (setq org-src-preserve-indentation t) ; Don't indent when making a new line in code blocks
 (setq org-hide-emphasis-markers t) ; Hide bold and italic markup
 
-(add-hook 'org-mode-hook '(lambda () (display-line-numbers-mode -1))) ; Display line numbers
+(add-hook 'org-mode-hook (lambda () (display-line-numbers-mode -1))) ; Display line numbers
 
 ;; Bindings
 (<leader>
-  "o" '(:ignore t :wk "org-mode"))
+  "o" '(:ignore t :wk "org-mode")
+  "oci" '(org-id-get-create :wk "Create ID for file/headline"))
 
 (general-def 'normal org-mode-map
   "RET" 'org-open-at-point)
@@ -331,6 +332,15 @@ Knowledge management system for taking notes
         (org-roam-capture-templates (list (append (car org-roam-capture-templates)
                                                   '(:immediate-finish t)))))
     (apply #'org-roam-node-insert args)))
+
+(use-package org-roam-ui
+  :custom
+  (org-roam-ui-sync-theme t)
+  (org-roam-ui-follow t)
+  (org-roam-ui-update-on-save t)
+  (org-roam-ui-open-on-start t)
+  :after org-roam
+  :ensure t)
 #+end_src
 
 *** Extra Packages
