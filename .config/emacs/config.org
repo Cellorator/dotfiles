@@ -333,6 +333,7 @@ Knowledge management system for taking notes
                                                   '(:immediate-finish t)))))
     (apply #'org-roam-node-insert args)))
 
+;; Set up org-roam-ui
 (use-package org-roam-ui
   :custom
   (org-roam-ui-sync-theme t)
@@ -341,6 +342,10 @@ Knowledge management system for taking notes
   (org-roam-ui-open-on-start t)
   :after org-roam
   :ensure t)
+(use-package websocket
+    :after org-roam
+    :ensure t)
+
 #+end_src
 
 *** Extra Packages

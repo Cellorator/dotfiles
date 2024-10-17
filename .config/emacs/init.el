@@ -248,6 +248,7 @@
                                                   '(:immediate-finish t)))))
     (apply #'org-roam-node-insert args)))
 
+;; Set up org-roam-ui
 (use-package org-roam-ui
   :custom
   (org-roam-ui-sync-theme t)
@@ -256,6 +257,9 @@
   (org-roam-ui-open-on-start t)
   :after org-roam
   :ensure t)
+(use-package websocket
+    :after org-roam
+    :ensure t)
 
 ;; Nice org keybindings for evil
 (use-package evil-org
