@@ -3,6 +3,6 @@ eln-cache/*
 elpa/*
 undo-fu-session/*
 transient/*
-bookmarks
 .org-id-locations
+bookmarks
 history
