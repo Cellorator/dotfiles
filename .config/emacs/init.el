@@ -40,6 +40,10 @@
 
 (savehist-mode) ; Save minibuffer history
 
+;; Disable backups and autosaves
+(setq make-backup-files nil)
+(setq auto-save-default nil)
+
 (when (string-equal system-type "android")
   ;; Enable bars
   (menu-bar-mode 1)
@@ -218,14 +222,28 @@
 
 (use-package org-roam
   :custom
-  (org-roam-directory (file-truename "~/notes/main"))
+  (org-roam-directory (file-truename "~/notes"))
   (org-roam-db-location (file-truename "~/notes/org-roam.db"))
-  (org-roam-node-display-template (concat
-				   "${title:*} "
-				   (propertize "${tags:30}" 'face 'org-tag)))
+  (org-roam-capture-templates
+   '(("m" "main" plain "%?"
+      :if-new (file+head "main/${slug}.org"
+                         "#+title: ${title}\n")
+      :immediate-finish t
+      :unnarrowed t)
+     ("r" "reference" plain "%?"
+      :if-new
+      (file+head "reference/${title}.org" "#+title: ${title}\n")
+      :immediate-finish t
+      :unnarrowed t)
+     ("d" "document" plain "%?"
+      :if-new
+      (file+head "document/${title}.org" "#+title: ${title}\n#+filetags: :document:\n")
+      :immediate-finish t
+      :unnarrowed t)))
   :general (<leader>
 	     "of" '(org-roam-node-find :wk "Find node")
 	     "oi" '(org-roam-node-insert-immediate :wk "Insert node")
+	     "oc" '(org-roam-capture :wk "Capture node")
 	     "ot" '(org-roam-tag-add :wk "Add tags")
 	     "oa" '(org-roam-alias-add :wk "Add aliases")
 	     "ob" '(org-roam-buffer-toggle :wk "Open org-roam buffer"))
