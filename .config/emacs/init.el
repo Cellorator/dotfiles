@@ -150,6 +150,7 @@
 
 ;; Pdf-tools
 (use-package pdf-tools
+  :unless (eq system-type 'android)
   :config (pdf-loader-install)
   :ensure t)
 
