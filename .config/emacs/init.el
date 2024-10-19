@@ -44,6 +44,10 @@
 (setq make-backup-files nil)
 (setq auto-save-default nil)
 
+(setq-default indent-tabs-mode nil) ;; Use spaces instead of tabs
+
+(setq-default show-trailing-whitespace t) ;; Highligh trailing spaces
+
 (when (string-equal system-type "android")
   ;; Enable bars
   (menu-bar-mode 1)
@@ -51,7 +55,7 @@
   ;; Set font
   (set-face-attribute 'default nil :family "monospace")
   ;; Open keyboard
-  (setq touch-screen-display-keyboard t) 
+  (setq touch-screen-display-keyboard t)
   ;; Make keybinds work with on-screen keyboard
   (setq overriding-text-conversion-style nil))
 
@@ -252,20 +256,20 @@
       :immediate-finish t
       :unnarrowed t)))
   :general (<leader>
-	     "of" '(org-roam-node-find :wk "Find node")
-	     "oi" '(org-roam-node-insert-immediate :wk "Insert node")
-	     "oc" '(org-roam-capture :wk "Capture node")
-	     "ot" '(org-roam-tag-add :wk "Add tags")
-	     "oa" '(org-roam-alias-add :wk "Add aliases")
-	     "ob" '(org-roam-buffer-toggle :wk "Open org-roam buffer"))
+             "of" '(org-roam-node-find :wk "Find node")
+             "oi" '(org-roam-node-insert-immediate :wk "Insert node")
+             "oc" '(org-roam-capture :wk "Capture node")
+             "ot" '(org-roam-tag-add :wk "Add tags")
+             "oa" '(org-roam-alias-add :wk "Add aliases")
+             "ob" '(org-roam-buffer-toggle :wk "Open org-roam buffer"))
   :config
   (org-roam-db-autosync-mode)
   (add-to-list 'display-buffer-alist
                '("\\*org-roam\\*"
-		 (display-buffer-in-direction)
-		 (direction . right)
-		 (window-width . 0.33)
-		 (window-height . fit-window-to-buffer)))
+                 (display-buffer-in-direction)
+                 (direction . right)
+                 (window-width . 0.33)
+                 (window-height . fit-window-to-buffer)))
   :after org
   :ensure t)
 
@@ -287,8 +291,8 @@
   :after org-roam
   :ensure t)
 (use-package websocket
-    :after org-roam
-    :ensure t)
+  :after org-roam
+  :ensure t)
 
 ;; Nice org keybindings for evil
 (use-package evil-org
