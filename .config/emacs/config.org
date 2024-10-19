@@ -89,21 +89,15 @@
 
 My keybinds powered by general.el and evil
 
-** general.el
-
-Conveniently set keybinds
+** Setup
 
 #+begin_src emacs-lisp
+;; More convenient set keybinds
 (use-package general
   :config (general-evil-setup t)
   :ensure t)
-#+end_src
 
-** evil
-
-Emulate vim keybindings
-
-#+begin_src emacs-lisp
+;; Emulate vim keybindings
 (use-package evil
   :init
   (setq evil-want-keybinding nil) ; So evil-collection doesn't yell at me
@@ -172,6 +166,8 @@ Setting the leader key and some basic commands for navigating emacs and the file
 
 Useful thingies
 
+*** Completion
+
 #+begin_src emacs-lisp
 ;; A completion-style for space separated completion
 (use-package orderless
@@ -197,7 +193,11 @@ Useful thingies
 
 (use-package consult
   :ensure t)
+#+end_src
 
+*** Misc
+
+#+begin_src emacs-lisp
 ;; Cool git front-end
 (use-package magit
   :general

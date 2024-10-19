@@ -55,10 +55,12 @@
   ;; Make keybinds work with on-screen keyboard
   (setq overriding-text-conversion-style nil))
 
+;; More convenient set keybinds
 (use-package general
   :config (general-evil-setup t)
   :ensure t)
 
+;; Emulate vim keybindings
 (use-package evil
   :init
   (setq evil-want-keybinding nil) ; So evil-collection doesn't yell at me
