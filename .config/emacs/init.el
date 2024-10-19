@@ -103,6 +103,9 @@
   "br" '(revert-buffer :wk "Reload changes to buffer")
   "bw" '(kill-this-buffer :wk "Kill current buffer"))
 
+(<leader>
+  "ole" '(org-latex-export-to-pdf :wk "Export to latex pdf"))
+
 ;; Reload
 (defun reload-config()
   (interactive)
@@ -141,6 +144,11 @@
   :general
   (<leader>
     "g" '(magit :wk "Open Magit"))
+  :ensure t)
+
+;; Pdf-tools
+(use-package pdf-tools
+  :config (pdf-loader-install)
   :ensure t)
 
 ;; Treesitter
