@@ -196,6 +196,15 @@ Useful thingies
 
 (use-package consult
   :ensure t)
+
+;; Completion for annotations
+(use-package citar
+  :custom
+  (citar-bibliography '("~/notes/references/bibliography.bib"))
+  :hook
+  (LaTeX-mode . citar-capf-setup)
+  (org-mode . citar-capf-setup)
+  :ensure t)
 #+end_src
 
 *** Misc
@@ -322,25 +331,33 @@ Knowledge management system for taking notes
   (org-roam-directory (file-truename "~/notes"))
   (org-roam-db-location (file-truename "~/notes/org-roam.db"))
   (org-roam-capture-templates
-   '(("m" "main" plain "%?"
-      :if-new (file+head "main/${slug}.org"
-                         "#+title: ${title}\n")
+   '(("m" "main note" plain "%?"
+      :if-new (file+head "main/${slug}.org" "#+title: ${title}\n")
       :immediate-finish t
       :unnarrowed t)
-     ("r" "reference" plain "%?"
-      :if-new
-      (file+head "reference/${title}.org" "#+title: ${title}\n")
+     ("r" "reference note" plain "%?"
+      :if-new (file+head "references/${title}.org" "#+title: ${title}\n")
       :immediate-finish t
       :unnarrowed t)
-     ("d" "document" plain "%?"
+     ("n" "literature note" plain "%?"
+      :target
+      (file+head
+       "references/${citar-citekey}.org"
+       "#+title: ${citar-citekey} (${citar-date}). ${note-title}\n")
+      :unnarrowed t)
+     ("b" "bibliography note" plain "%?"
+      :if-new (file+head "references/${citekey}.org" "#+title: ${title}\n")
+      :immediate-finish t
+      :unnarrowed t)
+     ("a" "article" plain "%?"
       :if-new
-      (file+head "document/${title}.org" "#+title: ${title}\n#+filetags: :document:\n")
+      (file+head "articles/${title}.org" "#+title: ${title}\n#+filetags: :document:\n")
       :immediate-finish t
       :unnarrowed t)))
   :general (<leader>
              "of" '(org-roam-node-find :wk "Find node")
              "oi" '(org-roam-node-insert-immediate :wk "Insert node")
-             "oc" '(org-roam-capture :wk "Capture node")
+             "oo" '(org-roam-capture :wk "Capture node")
              "ot" '(org-roam-tag-add :wk "Add tags")
              "oa" '(org-roam-alias-add :wk "Add aliases")
              "ob" '(org-roam-buffer-toggle :wk "Open org-roam buffer"))
@@ -377,17 +394,9 @@ Knowledge management system for taking notes
   :ensure t)
 #+end_src
 
-*** Extra Packages
-#+begin_src emacs-lisp
-;; Nice org keybindings for evil
-(use-package evil-org
-  :hook org-mode
-  :config
-  (require 'evil-org-agenda)
-  (evil-org-agenda-set-keys)
-  :after org
-  :ensure t)
+*** Visuals
 
+#+begin_src emacs-lisp
 ;; Replace text with cool symbols
 (use-package org-modern
   :custom
@@ -409,9 +418,36 @@ Knowledge management system for taking notes
   :after org
   :ensure t)
 
+;; Center text
 (use-package olivetti
   :custom (olivetti-body-width 0.5)
   :hook org-mode
+  :ensure t)
+
+#+end_src
+
+*** Extra Packages
+#+begin_src emacs-lisp
+;; Nice org keybindings for evil
+(use-package evil-org
+  :hook org-mode
+  :config
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys)
+  :after org
+  :ensure t)
+
+;; Integration with citar
+(use-package citar-org-roam
+  :custom
+  (org-cite-insert-processor 'citar)
+  (org-cite-follow-processor 'citar)
+  (org-cite-activate-processor 'citar)
+  :config (citar-org-roam-mode)
+  :general
+  (<leader> :keymap org-mode-map
+    "oci" '(org-cite-insert :wk "Insert a org-mode citation"))
+  :after (citar org-roam)
   :ensure t)
 
 ;; For tangling configuration file on save
