@@ -176,25 +176,44 @@ Useful thingies
 (use-package orderless
   :ensure t
   :custom
-  (completion-styles '(orderless basic)))
-
-;; Buffer completion
-(use-package corfu
-  :custom (corfu-auto t)
-  :init (global-corfu-mode)
-  :ensure t)
+  (completion-styles '(orderless basic))
+  (completion-category-defaults nil)
+  (completion-category-overrides '((file (styles partial-completion)))))
 
 ;; Completion UI
 (use-package vertico
   :init (vertico-mode)
   :ensure t)
 
+(use-package consult
+  :hook
+  (minibuffer-setup . (lambda ()
+                        (setq completion-in-region-function
+                              #'consult-completion-in-region)))
+  :ensure t)
+
+;; Buffer completion
+(use-package corfu
+  :custom
+  (corfu-auto t)
+  (global-corfu-minibuffer nil)
+  :init (global-corfu-mode)
+  :ensure t)
+
+(use-package cape
+  :init
+  (add-hook 'completion-at-point-functions #'cape-dabbrev)
+  (add-hook 'completion-at-point-functions #'cape-dict)
+  (add-hook 'completion-at-point-functions #'cape-elisp-block)
+  (add-hook 'completion-at-point-functions #'cape-elisp-symbol)
+  (add-hook 'completion-at-point-functions #'cape-file)
+  (add-hook 'completion-at-point-functions #'cape-keyword)
+  (add-hook 'completion-at-point-functions #'cape-tex)
+  :ensure t)
+
 ;; Annotations in completion UI
 (use-package marginalia
   :init (marginalia-mode)
-  :ensure t)
-
-(use-package consult
   :ensure t)
 
 ;; Completion for annotations
