@@ -149,6 +149,7 @@
 (use-package citar
   :custom
   (citar-bibliography '("~/notes/references/bibliography.bib"))
+  (citar-notes-paths '("~/notes/references"))
   :hook
   (LaTeX-mode . citar-capf-setup)
   (org-mode . citar-capf-setup)
@@ -201,7 +202,7 @@
 ;; Bindings
 (<leader>
   "o" '(:ignore t :wk "org-mode")
-  "oci" '(org-id-get-create :wk "Create ID for file/headline"))
+  "oid" '(org-id-get-create :wk "Create ID for file/headline"))
 
 (general-def 'normal org-mode-map
   "RET" 'org-open-at-point)
@@ -262,10 +263,6 @@
       (file+head
        "references/${citar-citekey}.org"
        "#+title: ${citar-citekey} (${citar-date}). ${note-title}\n")
-      :unnarrowed t)
-     ("b" "bibliography note" plain "%?"
-      :if-new (file+head "references/${citekey}.org" "#+title: ${title}\n")
-      :immediate-finish t
       :unnarrowed t)
      ("a" "article" plain "%?"
       :if-new
@@ -350,13 +347,11 @@
 ;; Integration with citar
 (use-package citar-org-roam
   :custom
+  (org-cite-global-bibliography citar-bibliography)
   (org-cite-insert-processor 'citar)
   (org-cite-follow-processor 'citar)
   (org-cite-activate-processor 'citar)
   :config (citar-org-roam-mode)
-  :general
-  (<leader> :keymap org-mode-map
-    "oci" '(org-cite-insert :wk "Insert a org-mode citation"))
   :after (citar org-roam)
   :ensure t)
 
