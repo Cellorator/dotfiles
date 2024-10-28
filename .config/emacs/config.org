@@ -5,7 +5,6 @@
 #+startup: overview
 
 * Package Manager
-
 #+begin_src emacs-lisp
 ;; Initialize package sources
 (require 'package)
@@ -27,7 +26,6 @@
 #+end_src
 
 * Options
-
 #+begin_src emacs-lisp
 (setq inhibit-startup-message t) ; Don't show splash screen
 (setq warning-minimum-level :emergency)
@@ -89,13 +87,11 @@
 #+end_src
 
 * Keybinds
-
 My keybinds powered by general.el and evil
 
 ** Setup
-
 #+begin_src emacs-lisp
-;; More convenient set keybinds
+;; More convenient keybind setting
 (use-package general
   :config (general-evil-setup t)
   :ensure t)
@@ -121,7 +117,6 @@ My keybinds powered by general.el and evil
 #+end_src
 
 ** Basics
-
 Setting the leader key and some basic commands for navigating emacs and the filesystem
 
 #+begin_src emacs-lisp
@@ -164,13 +159,10 @@ Setting the leader key and some basic commands for navigating emacs and the file
 #+end_src
 
 * Packages
-
 ** Tools
-
 Useful thingies
 
 *** Completion
-
 #+begin_src emacs-lisp
 ;; A completion-style for space separated completion
 (use-package orderless
@@ -202,14 +194,16 @@ Useful thingies
 
 (use-package cape
   :init
+  (add-hook 'completion-at-point-functions #'cape-keyword)
   (add-hook 'completion-at-point-functions #'cape-dabbrev)
   (add-hook 'completion-at-point-functions #'cape-dict)
+  (add-hook 'completion-at-point-functions #'cape-file)
   (add-hook 'completion-at-point-functions #'cape-elisp-block)
   (add-hook 'completion-at-point-functions #'cape-elisp-symbol)
-  (add-hook 'completion-at-point-functions #'cape-file)
-  (add-hook 'completion-at-point-functions #'cape-keyword)
   (add-hook 'completion-at-point-functions #'cape-tex)
   :ensure t)
+
+
 
 ;; Annotations in completion UI
 (use-package marginalia
@@ -228,7 +222,6 @@ Useful thingies
 #+end_src
 
 *** Misc
-
 #+begin_src emacs-lisp
 ;; Cool git front-end
 (use-package magit
@@ -253,7 +246,6 @@ Useful thingies
 #+end_src
 
 ** QOL
-
 Some small quality of life stuff
 
 #+begin_src emacs-lisp
@@ -271,7 +263,6 @@ Some small quality of life stuff
 #+end_src
 
 ** Theme
-
  #+begin_src emacs-lisp
 (use-package kanagawa-themes
   :config (load-theme 'kanagawa-dragon t)
@@ -279,9 +270,7 @@ Some small quality of life stuff
 #+end_src
 
 ** org-mode
-
 *** Options
-
 #+begin_src emacs-lisp
 (require 'org)
 (setq org-src-tab-acts-natively t) ; Make tab work in code blocks
@@ -300,7 +289,6 @@ Some small quality of life stuff
 #+end_src
 
 *** Theming
-
 #+begin_src emacs-lisp
 ;; Font theming
 ;; (set-face-attribute 'org-code nil :inherit '(shadow fixed-pitch))
@@ -342,7 +330,6 @@ Some small quality of life stuff
 #+end_src
 
 *** org-roam
-
 Knowledge management system for taking notes
 
 #+begin_src emacs-lisp
@@ -411,7 +398,6 @@ Knowledge management system for taking notes
 #+end_src
 
 *** Visuals
-
 #+begin_src emacs-lisp
 ;; Replace text with cool symbols
 (use-package org-modern

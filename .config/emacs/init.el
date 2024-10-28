@@ -59,7 +59,7 @@
   ;; Make keybinds work with on-screen keyboard
   (setq overriding-text-conversion-style nil))
 
-;; More convenient set keybinds
+;; More convenient keybind setting
 (use-package general
   :config (general-evil-setup t)
   :ensure t)
@@ -150,14 +150,16 @@
 
 (use-package cape
   :init
+  (add-hook 'completion-at-point-functions #'cape-keyword)
   (add-hook 'completion-at-point-functions #'cape-dabbrev)
   (add-hook 'completion-at-point-functions #'cape-dict)
+  (add-hook 'completion-at-point-functions #'cape-file)
   (add-hook 'completion-at-point-functions #'cape-elisp-block)
   (add-hook 'completion-at-point-functions #'cape-elisp-symbol)
-  (add-hook 'completion-at-point-functions #'cape-file)
-  (add-hook 'completion-at-point-functions #'cape-keyword)
   (add-hook 'completion-at-point-functions #'cape-tex)
   :ensure t)
+
+
 
 ;; Annotations in completion UI
 (use-package marginalia
