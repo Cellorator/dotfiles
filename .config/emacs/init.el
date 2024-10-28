@@ -83,6 +83,11 @@
   :ensure t
   :config (undo-fu-session-global-mode))
 
+(use-package which-key
+  :custom
+  (which-key-add-column-padding 3)
+  :config (which-key-mode))
+
 ;; Set leader key
 (general-create-definer <leader>
   :states '(normal insert visual emacs)
@@ -157,8 +162,6 @@
   (add-hook 'completion-at-point-functions #'cape-elisp-block)
   (add-hook 'completion-at-point-functions #'cape-tex)
   :ensure t)
-
-
 
 ;; Annotations in completion UI
 (use-package marginalia
