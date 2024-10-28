@@ -215,8 +215,7 @@
 
 (require 'org)
 (setq org-src-tab-acts-natively t) ; Make tab work in code blocks
-(setq org-src-preserve-indentation t) ; Don't indent when making a new line in code blocks
-(setq org-hide-emphasis-markers t) ; Hide bold and italic markup
+(setq org-src-preserve-indentation t) ; Stop annoying indentation when making a new line in code blocks
 
 (add-hook 'org-mode-hook (lambda () (display-line-numbers-mode -1))) ; Display line numbers
 
@@ -339,6 +338,8 @@
 
 ;; Make stuff dissapear and stuff
 (use-package org-appear
+  :custom
+  (org-hide-emphasis-markers t) ; Hide bold and italic markup
   :hook org-mode
   :after org
   :ensure t)
