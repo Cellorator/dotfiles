@@ -267,7 +267,12 @@ Some small quality of life stuff
 ** Theme
  #+begin_src emacs-lisp
 (use-package kanagawa-themes
-  :config (load-theme 'kanagawa-dragon t)
+  ;; :config (load-theme 'kanagawa-dragon t)
+  :ensure t)
+(use-package doom-themes
+  :config
+  (doom-themes-org-config)
+  (load-theme 'doom-old-hope t)
   :ensure t)
 #+end_src
 

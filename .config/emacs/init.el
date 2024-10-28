@@ -212,7 +212,12 @@
 (use-package restart-emacs :ensure t)
 
 (use-package kanagawa-themes
-  :config (load-theme 'kanagawa-dragon t)
+  ;; :config (load-theme 'kanagawa-dragon t)
+  :ensure t)
+(use-package doom-themes
+  :config
+  (doom-themes-org-config)
+  (load-theme 'doom-old-hope t)
   :ensure t)
 
 (require 'org)
