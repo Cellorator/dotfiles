@@ -308,7 +308,7 @@
                (window-height . fit-window-to-buffer)))
 
 (setq org-roam-capture-templates
-      '(("m" "main note" plain "%?"
+      '(("i" "main note" plain "%?"
          :if-new (file+head "main/${slug}.org" "#+title: ${title}\n")
          :immediate-finish t
          :unnarrowed t)
