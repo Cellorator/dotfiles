@@ -332,15 +332,6 @@
   :after org
   :ensure t)
 
-;; ;; Insert a node without needing to edit it
-;; (defun org-roam-node-insert-immediate (arg &rest args)
-;;   (interactive "P")
-;;   (let ((args (cons arg args))
-;;         (org-roam-capture-templates (list (append (car org-roam-capture-templates)
-;;                                                   '(:immediate-finish t)))))
-;;     (apply #'org-roam-node-insert args)))
-
-;; Set up org-roam-ui
 (use-package org-roam-ui
   :custom
   (org-roam-ui-sync-theme t)
@@ -349,6 +340,7 @@
   (org-roam-ui-open-on-start t)
   :after org-roam
   :ensure t)
+
 (use-package websocket
   :after org-roam
   :ensure t)
@@ -367,30 +359,74 @@
       '(("i" "main note" plain "%?"
          :target (file+head
                   "main/$%<%Y%m%dT%H%M%S>--${title}.org"
-                  "#+title: ${title}\n#+date: [%<%Y-%m-%d %a %H:%S>]\n\n")
+                  "#+title: ${title}\n#+date: [%<%Y-%m-%d %a %H:%S>]\n")
          :immediate-finish t
          :unnarrowed t)
 
         ("r" "reference note" plain "%?"
          :target (file+head
                   "references/%<%Y%m%dT%H%M%S>--${title}.org"
-                  "#+title: ${title}\n#+date: [%<%Y-%m-%d %a %H:%S>]\n\n")
+                  "#+title: ${title}\n#+date: [%<%Y-%m-%d %a %H:%S>]\n")
          :immediate-finish t
          :unnarrowed t)
 
         ("l" "literature note" plain "%?"
          :target (file+head
                   "references/%<%Y%m%dT%H%M%S>--${citar-citekey}.org"
-                  "#+title: ${citar-citekey} ${title}\n#+date: [%<%Y-%m-%d %a %H:%S>]\n\n")
+                  "#+title: ${citar-citekey} ${title}\n#+date: [%<%Y-%m-%d %a %H:%S>]\n")
          :immediate-finish t
          :unnarrowed t)
 
         ("a" "article" plain "%?"
          :target (file+head
-                  "articles/%<%Y%m%dT%H%M%S>--${title}.org"
-                  "#+title: ${title}\n#+date: [%<%Y-%m-%d %a %H:%S>]\n\n\n")
+                  "articles/${title}.org"
+                  "#+title: ${title}\n#+date: [%<%Y-%m-%d %a %H:%S>]\n")
          :immediate-finish t
          :unnarrowed t)))
+
+(require 'ucs-normalize)
+(cl-defmethod org-roam-node-slug ((node org-roam-node))
+  "Return the slug of NODE."
+  (let ((title (org-roam-node-title node))
+        (slug-trim-chars '(;; Combining Diacritical Marks https://www.unicode.org/charts/PDF/U0300.pdf
+                           768 ; U+0300 COMBINING GRAVE ACCENT
+                           769 ; U+0301 COMBINING ACUTE ACCENT
+                           770 ; U+0302 COMBINING CIRCUMFLEX ACCENT
+                           771 ; U+0303 COMBINING TILDE
+                           772 ; U+0304 COMBINING MACRON
+                           774 ; U+0306 COMBINING BREVE
+                           775 ; U+0307 COMBINING DOT ABOVE
+                           776 ; U+0308 COMBINING DIAERESIS
+                           777 ; U+0309 COMBINING HOOK ABOVE
+                           778 ; U+030A COMBINING RING ABOVE
+                           780 ; U+030C COMBINING CARON
+                           795 ; U+031B COMBINING HORN
+                           803 ; U+0323 COMBINING DOT BELOW
+                           804 ; U+0324 COMBINING DIAERESIS BELOW
+                           805 ; U+0325 COMBINING RING BELOW
+                           807 ; U+0327 COMBINING CEDILLA
+                           813 ; U+032D COMBINING CIRCUMFLEX ACCENT BELOW
+                           814 ; U+032E COMBINING BREVE BELOW
+                           816 ; U+0330 COMBINING TILDE BELOW
+                           817 ; U+0331 COMBINING MACRON BELOW
+                           )))
+    (cl-flet* ((nonspacing-mark-p (char)
+                                  (memq char slug-trim-chars))
+               (strip-nonspacing-marks (s)
+                                       (ucs-normalize-NFC-string
+                                        (apply #'string (seq-remove #'nonspacing-mark-p
+                                                                    (ucs-normalize-NFD-string s)))))
+               (cl-replace (title pair)
+                           (replace-regexp-in-string (car pair) (cdr pair) title)))
+      (let* ((pairs `(("[^[:alnum:][:digit:]]" . "-") ;; convert anything not alphanumeric
+                      ("--*" . "-")                   ;; remove sequential underscores
+                      ("^-" . "")                     ;; remove starting underscore
+                      ("-$" . "")))                   ;; remove ending underscore
+             (slug (-reduce-from #'cl-replace (strip-nonspacing-marks title) pairs)))
+        (downcase slug)))))
+
+(use-package denote
+  :ensure t)
 
 (<leader>
   "of" '(org-roam-node-find :wk "Find node")
