@@ -223,13 +223,13 @@
 (require 'org)
 (setq org-src-tab-acts-natively t) ; Make tab work in code blocks
 (setq org-src-preserve-indentation t) ; Stop annoying indentation when making a new line in code blocks
+(setq org-preview-latex-image-directory (concat user-emacs-directory "cache/org-latex"))
 
 (add-hook 'org-mode-hook (lambda () (display-line-numbers-mode -1))) ; Display line numbers
 
 ;; Bindings
 (<leader>
-  "o" '(:ignore t :wk "org-mode")
-  "oid" '(org-id-get-create :wk "Create ID for file/headline"))
+  "o" '(:ignore t :wk "org-mode"))
 
 (general-def 'normal org-mode-map
   "RET" 'org-open-at-point)
@@ -273,54 +273,16 @@
 (plist-put org-format-latex-options :scale 1.5) ; Make latex preview bigger
 
 (use-package org-roam
-  :custom
-  (org-roam-directory (file-truename "~/notes"))
-  (org-roam-db-location (file-truename "~/notes/org-roam.db"))
-  (org-roam-capture-templates
-   '(("m" "main note" plain "%?"
-      :if-new (file+head "main/${slug}.org" "#+title: ${title}\n")
-      :immediate-finish t
-      :unnarrowed t)
-     ("r" "reference note" plain "%?"
-      :if-new (file+head "references/${title}.org" "#+title: ${title}\n")
-      :immediate-finish t
-      :unnarrowed t)
-     ("n" "literature note" plain "%?"
-      :target
-      (file+head
-       "references/${citar-citekey}.org"
-       "#+title: ${citar-citekey} (${citar-date}). ${note-title}\n")
-      :unnarrowed t)
-     ("a" "article" plain "%?"
-      :if-new
-      (file+head "articles/${title}.org" "#+title: ${title}\n#+filetags: :document:\n")
-      :immediate-finish t
-      :unnarrowed t)))
-  :general (<leader>
-             "of" '(org-roam-node-find :wk "Find node")
-             "oi" '(org-roam-node-insert-immediate :wk "Insert node")
-             "oo" '(org-roam-capture :wk "Capture node")
-             "ot" '(org-roam-tag-add :wk "Add tags")
-             "oa" '(org-roam-alias-add :wk "Add aliases")
-             "ob" '(org-roam-buffer-toggle :wk "Open org-roam buffer"))
-  :config
-  (org-roam-db-autosync-mode)
-  (add-to-list 'display-buffer-alist
-               '("\\*org-roam\\*"
-                 (display-buffer-in-direction)
-                 (direction . right)
-                 (window-width . 0.33)
-                 (window-height . fit-window-to-buffer)))
   :after org
   :ensure t)
 
-;; Insert a node without needing to edit it
-(defun org-roam-node-insert-immediate (arg &rest args)
-  (interactive "P")
-  (let ((args (cons arg args))
-        (org-roam-capture-templates (list (append (car org-roam-capture-templates)
-                                                  '(:immediate-finish t)))))
-    (apply #'org-roam-node-insert args)))
+;; ;; Insert a node without needing to edit it
+;; (defun org-roam-node-insert-immediate (arg &rest args)
+;;   (interactive "P")
+;;   (let ((args (cons arg args))
+;;         (org-roam-capture-templates (list (append (car org-roam-capture-templates)
+;;                                                   '(:immediate-finish t)))))
+;;     (apply #'org-roam-node-insert args)))
 
 ;; Set up org-roam-ui
 (use-package org-roam-ui
@@ -334,6 +296,50 @@
 (use-package websocket
   :after org-roam
   :ensure t)
+
+(setq org-roam-directory (file-truename "~/notes"))
+(setq org-roam-db-location (file-truename "~/notes/org-roam.db"))
+(org-roam-db-autosync-mode)
+(add-to-list 'display-buffer-alist
+             '("\\*org-roam\\*"
+               (display-buffer-in-direction)
+               (direction . right)
+               (window-width . 0.33)
+               (window-height . fit-window-to-buffer)))
+
+(setq org-roam-capture-templates
+      '(("m" "main note" plain "%?"
+         :if-new (file+head "main/${slug}.org" "#+title: ${title}\n")
+         :immediate-finish t
+         :unnarrowed t)
+        ("r" "reference note" plain "%?"
+         :if-new (file+head "references/${title}.org" "#+title: ${title}\n")
+         :immediate-finish t
+         :unnarrowed t)
+        ("n" "literature note" plain "%?"
+         :target
+         (file+head
+          "references/${citar-citekey}.org"
+          "#+title: ${citar-citekey} (${citar-date}). ${note-title}\n")
+         :immediate-finish t
+         :unnarrowed t)
+        ("a" "article" plain "%?"
+         :if-new
+         (file+head "articles/${title}.org" "#+title: ${title}\n#+filetags: :document:\n")
+         :immediate-finish t
+         :unnarrowed t)))
+
+(<leader>
+  "of" '(org-roam-node-find :wk "Find node")
+  "oi" '(org-roam-node-insert-immediate :wk "Insert node")
+  "oo" '(org-roam-capture :wk "Capture node")
+  "ob" '(org-roam-buffer-toggle :wk "Open org-roam buffer"))
+
+(<leader>
+  "oa" '(:ignore t :wk "Add metadata (tags, aliases, id)")
+  "oat" '(org-roam-tag-add :wk "Add tags")
+  "oaa" '(org-roam-alias-add :wk "Add aliases")
+  "oai" '(org-id-get-create :wk "Create ID for file/headline"))
 
 ;; Replace text with cool symbols
 (use-package org-modern

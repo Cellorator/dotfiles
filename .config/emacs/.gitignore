@@ -6,3 +6,5 @@ transient/*
 .org-id-locations
 bookmarks
 history
+cache/*
+tree-sitter/*
