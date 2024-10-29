@@ -272,6 +272,62 @@
 
 (plist-put org-format-latex-options :scale 1.5) ; Make latex preview bigger
 
+;; Replace text with cool symbols
+(use-package org-modern
+  :custom
+  (org-modern-star 'replace)
+  (org-modern-keyword nil)
+  :hook org-mode
+  :ensure t)
+
+;; Make stuff dissapear and stuff
+(use-package org-appear
+  :custom
+  (org-hide-emphasis-markers t) ; Hide bold and italic markup
+  :hook org-mode
+  :after org
+  :ensure t)
+
+;; Preview latex in editor
+(use-package org-fragtog
+  :custom (org-startup-with-latex-preview t)
+  :hook org-mode
+  :after org
+  :ensure t)
+
+;; Center text
+(use-package olivetti
+  :custom (olivetti-body-width 0.5)
+  :hook org-mode
+  :ensure t)
+
+;; Nice org keybindings for evil
+(use-package evil-org
+  :hook org-mode
+  :config
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys)
+  :after org
+  :ensure t)
+
+;; Integration with citar
+(use-package citar-org-roam
+  :custom
+  (org-cite-global-bibliography citar-bibliography)
+  (org-cite-insert-processor 'citar)
+  (org-cite-follow-processor 'citar)
+  (org-cite-activate-processor 'citar)
+  :config (citar-org-roam-mode)
+  :after (citar org-roam)
+  :ensure t)
+
+;; For tangling configuration file on save
+(use-package org-auto-tangle
+  :defer t
+  :hook org-mode
+  :after org
+  :ensure t)
+
 (use-package org-roam
   :after org
   :ensure t)
@@ -347,59 +403,3 @@
   "oat" '(org-roam-tag-add :wk "Add tags")
   "oaa" '(org-roam-alias-add :wk "Add aliases")
   "oai" '(org-id-get-create :wk "Create ID for file/headline"))
-
-;; Replace text with cool symbols
-(use-package org-modern
-  :custom
-  (org-modern-star 'replace)
-  (org-modern-keyword nil)
-  :hook org-mode
-  :ensure t)
-
-;; Make stuff dissapear and stuff
-(use-package org-appear
-  :custom
-  (org-hide-emphasis-markers t) ; Hide bold and italic markup
-  :hook org-mode
-  :after org
-  :ensure t)
-
-;; Preview latex in editor
-(use-package org-fragtog
-  :custom (org-startup-with-latex-preview t)
-  :hook org-mode
-  :after org
-  :ensure t)
-
-;; Center text
-(use-package olivetti
-  :custom (olivetti-body-width 0.5)
-  :hook org-mode
-  :ensure t)
-
-;; Nice org keybindings for evil
-(use-package evil-org
-  :hook org-mode
-  :config
-  (require 'evil-org-agenda)
-  (evil-org-agenda-set-keys)
-  :after org
-  :ensure t)
-
-;; Integration with citar
-(use-package citar-org-roam
-  :custom
-  (org-cite-global-bibliography citar-bibliography)
-  (org-cite-insert-processor 'citar)
-  (org-cite-follow-processor 'citar)
-  (org-cite-activate-processor 'citar)
-  :config (citar-org-roam-mode)
-  :after (citar org-roam)
-  :ensure t)
-
-;; For tangling configuration file on save
-(use-package org-auto-tangle
-  :defer t
-  :hook org-mode
-  :after org
-  :ensure t)
