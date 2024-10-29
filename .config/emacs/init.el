@@ -108,7 +108,7 @@
 ;; Buffers
 (<leader>
   "b" '(:ignore t :wk "Buffers")
-  "bb" '(switch-to-buffer :wk "Switch to buffer")
+  "bb" '(consult-buffer :wk "Switch to buffer")
   "bj" '(next-buffer :wk "Next buffer")
   "bk" '(previous-buffer :wk "Previous buffer")
   "br" '(revert-buffer :wk "Reload changes to buffer")
