@@ -309,23 +309,30 @@
 
 (setq org-roam-capture-templates
       '(("i" "main note" plain "%?"
-         :if-new (file+head "main/${slug}.org" "#+title: ${title}\n")
+         :target (file+head
+                  "main/$%<%Y%m%dT%H%M%S>--${title}.org"
+                  "#+title: ${title}\n#+date: [%<%Y-%m-%d %a %H:%S>]\n\n")
          :immediate-finish t
          :unnarrowed t)
+
         ("r" "reference note" plain "%?"
-         :if-new (file+head "references/${title}.org" "#+title: ${title}\n")
+         :target (file+head
+                  "references/%<%Y%m%dT%H%M%S>--${title}.org"
+                  "#+title: ${title}\n#+date: [%<%Y-%m-%d %a %H:%S>]\n\n")
          :immediate-finish t
          :unnarrowed t)
-        ("n" "literature note" plain "%?"
-         :target
-         (file+head
-          "references/${citar-citekey}.org"
-          "#+title: ${citar-citekey} (${citar-date}). ${note-title}\n")
+
+        ("l" "literature note" plain "%?"
+         :target (file+head
+                  "references/%<%Y%m%dT%H%M%S>--${citar-citekey}.org"
+                  "#+title: ${citar-citekey} ${title}\n#+date: [%<%Y-%m-%d %a %H:%S>]\n\n")
          :immediate-finish t
          :unnarrowed t)
+
         ("a" "article" plain "%?"
-         :if-new
-         (file+head "articles/${title}.org" "#+title: ${title}\n#+filetags: :document:\n")
+         :target (file+head
+                  "articles/%<%Y%m%dT%H%M%S>--${title}.org"
+                  "#+title: ${title}\n#+date: [%<%Y-%m-%d %a %H:%S>]\n\n\n")
          :immediate-finish t
          :unnarrowed t)))
 
