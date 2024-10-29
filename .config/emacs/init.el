@@ -331,7 +331,7 @@
 
 (<leader>
   "of" '(org-roam-node-find :wk "Find node")
-  "oi" '(org-roam-node-insert-immediate :wk "Insert node")
+  "oi" '(org-roam-node-insert :wk "Insert node")
   "oo" '(org-roam-capture :wk "Capture node")
   "ob" '(org-roam-buffer-toggle :wk "Open org-roam buffer"))
 
