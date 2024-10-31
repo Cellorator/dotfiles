@@ -172,16 +172,6 @@
   (add-hook 'completion-at-point-functions #'cape-tex)
   :ensure t)
 
-;; Completion for annotations
-(use-package citar
-  :custom
-  (citar-bibliography '("~/notes/references/bibliography.bib"))
-  (citar-notes-paths '("~/notes/references"))
-  :hook
-  (LaTeX-mode . citar-capf-setup)
-  (org-mode . citar-capf-setup)
-  :ensure t)
-
 (use-package embark
   :general
   (<leader>
@@ -193,17 +183,11 @@
   :hook
   (embark-collect-mode . consult-preview-at-point-mode)
   :ensure t)
-(use-package citar-embark
-  :no-require
-  :config (citar-embark-mode)
-  :after citar embark
-  :ensure t)
 
 ;; Annotations in completion UI
 (use-package marginalia
   :init (marginalia-mode)
   :ensure t)
-
 
 ;; Cool git front-end
 (use-package magit
@@ -326,17 +310,6 @@
   :hook org-mode
   :ensure t)
 
-;; Integration with citar
-(use-package citar-org-roam
-  :custom
-  (org-cite-global-bibliography citar-bibliography)
-  (org-cite-insert-processor 'citar)
-  (org-cite-follow-processor 'citar)
-  (org-cite-activate-processor 'citar)
-  :config (citar-org-roam-mode)
-  :after (citar org-roam)
-  :ensure t)
-
 ;; For tangling configuration file on save
 (use-package org-auto-tangle
   :defer t
@@ -376,28 +349,21 @@
       '(("i" "main note" plain "%?"
          :target (file+head
                   "main/$%<%Y%m%dT%H%M%S>--${title}.org"
-                  "#+title: ${title}\n#+date: [%<%Y-%m-%d %a %H:%S>]\n")
-         :immediate-finish t
-         :unnarrowed t)
-
-        ("r" "reference note" plain "%?"
-         :target (file+head
-                  "references/%<%Y%m%dT%H%M%S>--${title}.org"
-                  "#+title: ${title}\n#+date: [%<%Y-%m-%d %a %H:%S>]\n")
+                  "#+title: ${title}\n#+date: [%<%Y-%m-%d %a %H:%M>]\n")
          :immediate-finish t
          :unnarrowed t)
 
         ("l" "literature note" plain "%?"
          :target (file+head
-                  "references/%<%Y%m%dT%H%M%S>--${citar-citekey}.org"
-                  "#+title: ${citar-citekey} ${title}\n#+date: [%<%Y-%m-%d %a %H:%S>]\n")
+                  "references/${citar-citekey}.org"
+                  "#+title: ${title}\n#+date: [%<%Y-%m-%d %a %H:%M>]\n")
          :immediate-finish t
          :unnarrowed t)
 
         ("a" "article" plain "%?"
          :target (file+head
                   "articles/${title}.org"
-                  "#+title: ${title}\n#+date: [%<%Y-%m-%d %a %H:%S>]\n")
+                  "#+title: ${title}\n#+date: [%<%Y-%m-%d %a %H:%M>]\n")
          :immediate-finish t
          :unnarrowed t)))
 
@@ -461,6 +427,34 @@
         "#+title: %1$s
 #+date: %2$s
 #+filetags: %3$s\n")
+  :ensure t)
+
+;; Completion for annotations
+(use-package citar
+  :custom
+  (citar-bibliography '("~/notes/references/bibliography.bib"))
+  (citar-notes-paths '("~/notes/references"))
+  (citar-library-paths '("~/notes/references/documents"))
+  (org-cite-global-bibliography citar-bibliography)
+  (org-cite-insert-processor 'citar)
+  (org-cite-follow-processor 'citar)
+  (org-cite-activate-processor 'citar)
+  :hook
+  (LaTeX-mode . citar-capf-setup)
+  (org-mode . citar-capf-setup)
+  :ensure t)
+;; Integration with org-roam
+(use-package citar-org-roam
+  :custom
+  (citar-org-roam-capture-template-key "l")
+  (citar-org-roam-note-title-template "${title} (${author} ${date})")
+  :config (citar-org-roam-mode)
+  :after (citar org-roam)
+  :ensure t)
+(use-package citar-embark
+  :no-require
+  :config (citar-embark-mode)
+  :after (citar embark)
   :ensure t)
 
 (<leader>
