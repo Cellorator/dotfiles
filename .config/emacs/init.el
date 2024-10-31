@@ -223,6 +223,7 @@
 (require 'org)
 (setq org-src-tab-acts-natively t) ; Make tab work in code blocks
 (setq org-src-preserve-indentation t) ; Stop annoying indentation when making a new line in code blocks
+(setq org-startup-folded 'show3levels)
 (setq org-preview-latex-image-directory (concat user-emacs-directory "cache/org-latex"))
 
 (add-hook 'org-mode-hook (lambda () (display-line-numbers-mode -1))) ; Display line numbers
@@ -348,12 +349,13 @@
 (setq org-roam-directory (file-truename "~/notes"))
 (setq org-roam-db-location (file-truename "~/notes/org-roam.db"))
 (org-roam-db-autosync-mode)
-(add-to-list 'display-buffer-alist
-             '("\\*org-roam\\*"
-               (display-buffer-in-direction)
-               (direction . right)
-               (window-width . 0.33)
-               (window-height . fit-window-to-buffer)))
+;; (add-to-list 'display-buffer-alist
+;;              '("\\*org-roam\\*"
+;;                (display-buffer-in-direction)
+;;                (direction . right)
+;;                (window-width . 0.33)
+;;                (window-height . fit-window-to-buffer)))
+(setq org-roam-node-display-template "${hierarchy:*}")
 
 (setq org-roam-capture-templates
       '(("i" "main note" plain "%?"
@@ -425,17 +427,39 @@
              (slug (-reduce-from #'cl-replace (strip-nonspacing-marks title) pairs)))
         (downcase slug)))))
 
+(cl-defmethod org-roam-node-hierarchy ((node org-roam-node))
+  (let ((level (org-roam-node-level node)))
+    (concat
+     (when (> level 0) (concat (org-roam-node-file-title node) " > "))
+     (when (> level 1) (concat (string-join (org-roam-node-olp node) " > ") " > "))
+     (org-roam-node-title node))))
+
 (use-package denote
+  :custom
+  (denote-directory (file-truename "~/notes/"))
+  (denote-rename-confirmations nil)
+  (denote-known-keywords '(math linearalgebra calculus physics history))
+  (denote-date-prompt-use-org-read-date t) ; Use cool org calendar for setting dates
+  :config
+  ;; Remove denote id in front matter, set here because doesn't work in :custom
+  (setq denote-org-front-matter
+        "#+title: %1$s
+#+date: %2$s
+#+filetags: %3$s\n")
   :ensure t)
 
 (<leader>
-  "of" '(org-roam-node-find :wk "Find node")
-  "oi" '(org-roam-node-insert :wk "Insert node")
-  "oo" '(org-roam-capture :wk "Capture node")
-  "ob" '(org-roam-buffer-toggle :wk "Open org-roam buffer"))
+  "n" '(:ignore t :wk "Notes")
+  "nf" '(org-roam-node-find :wk "Find note")
+  "ni" '(org-roam-node-insert :wk "Insert note")
+  "no" '(org-roam-capture :wk "Capture note")
+  "nb" '(org-roam-buffer-toggle :wk "Open backlinks buffer"))
 
 (<leader>
-  "oa" '(:ignore t :wk "Add metadata (tags, aliases, id)")
-  "oat" '(org-roam-tag-add :wk "Add tags")
-  "oaa" '(org-roam-alias-add :wk "Add aliases")
-  "oai" '(org-id-get-create :wk "Create ID for file/headline"))
+  "nm" '(:ignore t :wk "Modify note frontmatter (title, keywords, aliases, id)")
+  "nmt" '(denote-rename-file-title :wk "Change title")
+  "nmk" '(denote-rename-file-keywords :wk "Change keywords/filetags")
+  "nma" '(org-roam-alias-add :wk "Add aliases")
+  "nmi" '(org-id-get-create :wk "Create ID for file/headline")
+  "nmm" '(denote-rename-file-using-front-matter :wk "Update filename from frontmatter")
+  "nmn" '(denote-add-front-matter :wk "Regenerate fronmatter from filename"))
