@@ -76,6 +76,15 @@
   :config (evil-collection-init)
   :after evil
   :ensure t)
+;; Nice org keybindings for evil
+(use-package evil-org
+  :hook org-mode
+  :config
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys)
+  :after org
+  :ensure t)
+
 
 ;; Undo and redo
 (use-package undo-fu :ensure t)
@@ -163,11 +172,6 @@
   (add-hook 'completion-at-point-functions #'cape-tex)
   :ensure t)
 
-;; Annotations in completion UI
-(use-package marginalia
-  :init (marginalia-mode)
-  :ensure t)
-
 ;; Completion for annotations
 (use-package citar
   :custom
@@ -177,6 +181,29 @@
   (LaTeX-mode . citar-capf-setup)
   (org-mode . citar-capf-setup)
   :ensure t)
+
+(use-package embark
+  :general
+  (<leader>
+    :states '(normal visual)
+    "RET" 'embark-act)
+  :ensure t)
+(use-package embark-consult
+  :ensure t ; only need to install it, embark loads it after consult if found
+  :hook
+  (embark-collect-mode . consult-preview-at-point-mode)
+  :ensure t)
+(use-package citar-embark
+  :no-require
+  :config (citar-embark-mode)
+  :after citar embark
+  :ensure t)
+
+;; Annotations in completion UI
+(use-package marginalia
+  :init (marginalia-mode)
+  :ensure t)
+
 
 ;; Cool git front-end
 (use-package magit
@@ -220,20 +247,17 @@
   (load-theme 'doom-old-hope t)
   :ensure t)
 
-(require 'org)
-(setq org-src-tab-acts-natively t) ; Make tab work in code blocks
-(setq org-src-preserve-indentation t) ; Stop annoying indentation when making a new line in code blocks
-(setq org-startup-folded 'show3levels)
-(setq org-preview-latex-image-directory (concat user-emacs-directory "cache/org-latex"))
-
-(add-hook 'org-mode-hook (lambda () (display-line-numbers-mode -1))) ; Display line numbers
-
-;; Bindings
-(<leader>
-  "o" '(:ignore t :wk "org-mode"))
-
-(general-def 'normal org-mode-map
-  "RET" 'org-open-at-point)
+(use-package org
+  :custom
+  (org-src-tab-acts-natively t) ; Make tab work in code blocks
+  (org-src-preserve-indentation t) ; Stop annoying indentation when making a new line in code blocks
+  (org-startup-folded 'show3levels)
+  (org-preview-latex-image-directory (concat user-emacs-directory "cache/org-latex"))
+  :hook
+  (org-mode . (lambda () (display-line-numbers-mode -1))) ;; Remove line numbers
+  :general
+  (<leader>
+    "o" '(:ignore t :wk "org-mode")))
 
 ;; Font theming
 ;; (set-face-attribute 'org-code nil :inherit '(shadow fixed-pitch))
@@ -302,15 +326,6 @@
   :hook org-mode
   :ensure t)
 
-;; Nice org keybindings for evil
-(use-package evil-org
-  :hook org-mode
-  :config
-  (require 'evil-org-agenda)
-  (evil-org-agenda-set-keys)
-  :after org
-  :ensure t)
-
 ;; Integration with citar
 (use-package citar-org-roam
   :custom
@@ -349,12 +364,12 @@
 (setq org-roam-directory (file-truename "~/notes"))
 (setq org-roam-db-location (file-truename "~/notes/org-roam.db"))
 (org-roam-db-autosync-mode)
-;; (add-to-list 'display-buffer-alist
-;;              '("\\*org-roam\\*"
-;;                (display-buffer-in-direction)
-;;                (direction . right)
-;;                (window-width . 0.33)
-;;                (window-height . fit-window-to-buffer)))
+(add-to-list 'display-buffer-alist
+             '("\\*org-roam\\*"
+               (display-buffer-in-direction)
+               (direction . right)
+               (window-width . 0.33)
+               (window-height . fit-window-to-buffer)))
 (setq org-roam-node-display-template "${hierarchy:*}")
 
 (setq org-roam-capture-templates
