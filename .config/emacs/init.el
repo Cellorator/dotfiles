@@ -457,6 +457,19 @@
   :after (citar embark)
   :ensure t)
 
+(use-package org-noter
+  :custom
+  (org-noter-auto-save-last-location t)
+  (org-noter-always-create-frame nil) ; Use current frame instead of making new one
+  (org-noter-swap-window t) ; Move pdf to left side
+  (org-noter-notes-search-path '("~/notes/references"))
+  :general
+  (general-nmap
+    :keymaps '(org-noter-mode-map pdf-view-mode-map)
+    "I" 'org-noter-insert-note-toggle-no-questions
+    "i" 'org-noter-insert-note)
+  :ensure t)
+
 (<leader>
   "n" '(:ignore t :wk "Notes")
   "nf" '(org-roam-node-find :wk "Find note")
