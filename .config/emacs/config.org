@@ -293,7 +293,7 @@ Some small quality of life stuff
   :custom
   (org-src-tab-acts-natively t) ; Make tab work in code blocks
   (org-src-preserve-indentation t) ; Stop annoying indentation when making a new line in code blocks
-  (org-startup-folded 'show3levels)
+  (org-startup-folded 'show2levels)
   (org-preview-latex-image-directory (concat user-emacs-directory "cache/org-latex"))
   :hook
   (org-mode . (lambda () (display-line-numbers-mode -1))) ;; Remove line numbers
