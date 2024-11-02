@@ -257,6 +257,12 @@ Useful thingies
   :ensure t)
 #+end_src
 
+*** Snippets
+#+begin_src emacs-lisp
+(use-package yasnippet
+  :config (yas-global-mode 1)
+  :ensure t)
+#+end_src
 ** QOL
 Some small quality of life stuff
 
@@ -293,7 +299,7 @@ Some small quality of life stuff
   :custom
   (org-src-tab-acts-natively t) ; Make tab work in code blocks
   (org-src-preserve-indentation t) ; Stop annoying indentation when making a new line in code blocks
-  (org-startup-folded nofold)
+  (org-startup-folded 'nofold)
   (org-preview-latex-image-directory (concat user-emacs-directory "cache/org-latex"))
   :hook
   (org-mode . (lambda () (display-line-numbers-mode -1))) ;; Remove line numbers

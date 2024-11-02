@@ -210,6 +210,10 @@
   (global-treesit-auto-mode)
   :ensure t)
 
+(use-package yasnippet
+  :config (yas-global-mode 1)
+  :ensure t)
+
 (use-package smartparens
   :config
   (smartparens-global-mode)
@@ -235,7 +239,7 @@
   :custom
   (org-src-tab-acts-natively t) ; Make tab work in code blocks
   (org-src-preserve-indentation t) ; Stop annoying indentation when making a new line in code blocks
-  (org-startup-folded nofold)
+  (org-startup-folded 'nofold)
   (org-preview-latex-image-directory (concat user-emacs-directory "cache/org-latex"))
   :hook
   (org-mode . (lambda () (display-line-numbers-mode -1))) ;; Remove line numbers
