@@ -235,13 +235,14 @@
   :custom
   (org-src-tab-acts-natively t) ; Make tab work in code blocks
   (org-src-preserve-indentation t) ; Stop annoying indentation when making a new line in code blocks
-  (org-startup-folded 'show2levels)
+  (org-startup-folded nofold)
   (org-preview-latex-image-directory (concat user-emacs-directory "cache/org-latex"))
   :hook
   (org-mode . (lambda () (display-line-numbers-mode -1))) ;; Remove line numbers
   :general
-  (<leader>
-    "o" '(:ignore t :wk "org-mode")))
+  (<leader> "o" '(:ignore t :wk "org-mode"))
+  (:keymaps 'override
+            (general-nmap "RET" 'org-open-at-point)))
 
 ;; Font theming
 ;; (set-face-attribute 'org-code nil :inherit '(shadow fixed-pitch))
