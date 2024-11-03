@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: LaTeX Environment
+# key: \b
+# --
+\begin{${1:enumerate}}
+$0
+\end{$1}
