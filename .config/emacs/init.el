@@ -241,6 +241,8 @@
   (org-src-preserve-indentation t) ; Stop annoying indentation when making a new line in code blocks
   (org-startup-folded 'nofold)
   (org-preview-latex-image-directory (concat user-emacs-directory "cache/org-latex"))
+  ;; Latex stuff
+  (org-latex-packages-alist '(("" "esvect")))
   :hook
   (org-mode . (lambda () (display-line-numbers-mode -1))) ;; Remove line numbers
   :general
