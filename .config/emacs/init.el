@@ -238,12 +238,22 @@
 
 (use-package org
   :custom
+  (org-startup-folded 'show2levels)
   (org-src-tab-acts-natively t) ; Make tab work in code blocks
   (org-src-preserve-indentation t) ; Stop annoying indentation when making a new line in code blocks
-  (org-startup-folded 'nofold)
-  (org-preview-latex-image-directory (concat user-emacs-directory "cache/org-latex"))
+  (org-export-babel-evaluate 'inline-only)
   ;; Latex stuff
-  (org-latex-packages-alist '(("" "esvect")))
+  (org-latex-packages-alist
+   '(("" "esvect" t)
+     ("" "tikz" t)))
+  (org-latex-create-formula-image-program 'dvisvgm) ; Makes tikz preview work
+  (org-preview-latex-image-directory (concat user-emacs-directory "cache/org-latex/"))
+  :config
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((emacs-lisp . t)
+     (org . t)
+     (latex . t)))
   :hook
   (org-mode . (lambda () (display-line-numbers-mode -1))) ;; Remove line numbers
   :general
@@ -356,7 +366,7 @@
 (setq org-roam-capture-templates
       '(("i" "main note" plain "%?"
          :target (file+head
-                  "main/$%<%Y%m%dT%H%M%S>--${title}.org"
+                  "main/%<%Y%m%dT%H%M%S>--${slug}.org"
                   "#+title: ${title}\n#+date: [%<%Y-%m-%d %a %H:%M>]\n")
          :immediate-finish t
          :unnarrowed t)

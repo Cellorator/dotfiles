@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
 # name: Property Drawer
-# key: <p
+# key: :p
 # --
 :PROPERTIES:
 $0
