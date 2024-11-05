@@ -23,8 +23,8 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 #+end_src
-
 * Options
+** Main
 #+begin_src emacs-lisp
 (setq inhibit-startup-message t) ; Don't show splash screen
 (setq warning-minimum-level :emergency)
@@ -58,20 +58,15 @@
 
 (setq-default show-trailing-whitespace t) ;; Highligh trailing spaces
 #+end_src
-
 ** Android
-
 *** Use Termux binaries
-
 #+begin_src emacs-lisp :tangle ./early-init.el
 (when (eq system-type 'android)
   (setenv "PATH" (format "%s:%s" "/data/data/com.termux/files/usr/bin"
 			 (getenv "PATH")))
   (push "/data/data/com.termux/files/usr/bin" exec-path))
 #+end_src
-
 *** Specific configuration
-
 #+begin_src emacs-lisp
 (when (string-equal system-type "android")
   ;; Enable bars
@@ -84,10 +79,8 @@
   ;; Make keybinds work with on-screen keyboard
   (setq overriding-text-conversion-style nil))
 #+end_src
-
 * Keybinds
 My keybinds powered by general.el and evil
-
 ** Setup
 #+begin_src emacs-lisp
 ;; More convenient keybind setting
@@ -129,7 +122,6 @@ My keybinds powered by general.el and evil
   (which-key-add-column-padding 3)
   :config (which-key-mode))
 #+end_src
-
 ** Basics
 Setting the leader key and some basic commands for navigating emacs and the filesystem
 
@@ -171,7 +163,6 @@ Setting the leader key and some basic commands for navigating emacs and the file
   "rr" '(reload-config :wk "Reload configuration")
   "re" '(restart-emacs :wk "Restart Emacs"))
 #+end_src
-
 * Packages
 ** Tools
 Useful thingies
@@ -216,7 +207,12 @@ Useful thingies
   (add-hook 'completion-at-point-functions #'cape-tex)
   :ensure t)
 #+end_src
-
+*** Snippets
+#+begin_src emacs-lisp
+(use-package yasnippet
+  :config (yas-global-mode 1)
+  :ensure t)
+#+end_src
 *** Misc
 #+begin_src emacs-lisp
 (use-package embark
@@ -258,13 +254,6 @@ Useful thingies
   (global-treesit-auto-mode)
   :ensure t)
 #+end_src
-
-*** Snippets
-#+begin_src emacs-lisp
-(use-package yasnippet
-  :config (yas-global-mode 1)
-  :ensure t)
-#+end_src
 ** QOL
 Some small quality of life stuff
 
@@ -281,7 +270,6 @@ Some small quality of life stuff
 
 (use-package restart-emacs :ensure t)
 #+end_src
-
 ** Theme
  #+begin_src emacs-lisp
 (use-package kanagawa-themes
@@ -293,7 +281,6 @@ Some small quality of life stuff
   (load-theme 'doom-old-hope t)
   :ensure t)
 #+end_src
-
 ** org-mode
 *** Options
 #+begin_src emacs-lisp
@@ -323,7 +310,6 @@ Some small quality of life stuff
   (:keymaps 'override
             (general-nmap "RET" 'org-open-at-point)))
 #+end_src
-
 *** Theming
 #+begin_src emacs-lisp
 ;; Font theming
@@ -364,7 +350,6 @@ Some small quality of life stuff
 
 (plist-put org-format-latex-options :scale 1.3) ; Make latex preview bigger
 #+end_src
-
 *** Visuals
 #+begin_src emacs-lisp
 ;; Replace text with cool symbols
@@ -397,7 +382,6 @@ Some small quality of life stuff
   :ensure t)
 
 #+end_src
-
 *** Extra Packages
 #+begin_src emacs-lisp
 ;; For tangling configuration file on save
@@ -407,7 +391,6 @@ Some small quality of life stuff
   :after org
   :ensure t)
 #+end_src
-
 ** Note-Taking
 *** org-roam
 Knowledge management system for taking notes
@@ -431,7 +414,6 @@ Knowledge management system for taking notes
   :after org-roam
   :ensure t)
 #+end_src
-
 **** Options
 #+begin_src emacs-lisp
 (setq org-roam-directory (file-truename "~/notes"))
@@ -445,7 +427,6 @@ Knowledge management system for taking notes
                (window-height . fit-window-to-buffer)))
 (setq org-roam-node-display-template "${hierarchy:*}")
 #+end_src
-
 **** Templates
 #+begin_src emacs-lisp
 (setq org-roam-capture-templates
@@ -470,7 +451,6 @@ Knowledge management system for taking notes
          :immediate-finish t
          :unnarrowed t)))
 #+end_src
-
 **** Override Sluggification Function
 Use "-" instead of "_"
 
@@ -517,7 +497,6 @@ Use "-" instead of "_"
         (downcase slug)))))
 
 #+end_src
-
 **** Show Node Hierarchy in Search
 #+begin_src emacs-lisp
 (cl-defmethod org-roam-node-hierarchy ((node org-roam-node))
@@ -544,7 +523,6 @@ Another knowledge management system, mostly used for its renaming functions
 ,#+filetags: %3$s\n")
   :ensure t)
 #+end_src
-
 *** citar
 #+begin_src emacs-lisp
 ;; Completion for annotations
@@ -575,7 +553,6 @@ Another knowledge management system, mostly used for its renaming functions
   :after (citar embark)
   :ensure t)
 #+end_src
-
 *** org-noter
 #+begin_src emacs-lisp
 (use-package org-noter
@@ -596,7 +573,6 @@ Another knowledge management system, mostly used for its renaming functions
   :after org
   :ensure t)
 #+end_src
-
 *** Keybinds
 #+begin_src emacs-lisp
 (<leader>

@@ -173,6 +173,10 @@
   (add-hook 'completion-at-point-functions #'cape-tex)
   :ensure t)
 
+(use-package yasnippet
+  :config (yas-global-mode 1)
+  :ensure t)
+
 (use-package embark
   :general
   (<leader>
@@ -210,10 +214,6 @@
   :config
   (treesit-auto-add-to-auto-mode-alist 'all)
   (global-treesit-auto-mode)
-  :ensure t)
-
-(use-package yasnippet
-  :config (yas-global-mode 1)
   :ensure t)
 
 (use-package smartparens
