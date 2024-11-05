@@ -201,6 +201,7 @@
 (use-package pdf-tools
   :unless (eq system-type 'android)
   :config (pdf-loader-install)
+  :hook (pdf-view-mode . (lambda () (display-line-numbers-mode -1))) ;; Remove line numbers
   :ensure t)
 
 ;; Treesitter
@@ -479,16 +480,19 @@
 (use-package org-noter
   :custom
   (org-noter-auto-save-last-location t)
-  (org-noter-always-create-frame nil) ; Use current frame instead of making new one
-  (org-noter-swap-window t) ; Move pdf to left side
-  (org-noter-doc-split-fraction '(0.33 . 0.33)) ; Use a third of screen
   (org-noter-notes-search-path '("~/notes/references"))
   (org-noter-default-heading-title "$p$")
+  (org-noter-always-create-frame nil) ; Use current frame instead of making new one
+  ;; (org-noter-notes-window-location 'other-frame)
+  (org-noter-swap-window t) ; Move pdf to left side
+  (org-noter-doc-split-fraction '(0.33 . 0.33)) ; Use a third of screen
+  (org-noter-use-indirect-buffer nil)
   :general
   (general-nmap
     :keymaps '(org-noter-mode-map pdf-view-mode-map)
     "I" 'org-noter-insert-note-toggle-no-questions
     "i" 'org-noter-insert-note)
+  :after org
   :ensure t)
 
 (<leader>
@@ -506,3 +510,7 @@
   "nmi" '(org-id-get-create :wk "Create ID for file/headline")
   "nmm" '(denote-rename-file-using-front-matter :wk "Update filename from frontmatter")
   "nmn" '(denote-add-front-matter :wk "Regenerate fronmatter from filename"))
+
+(<leader>
+  "on" '(:ignore t :wk "org-noter")
+  "onn" '(org-noter :wk "Open document"))
