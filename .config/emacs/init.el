@@ -244,8 +244,9 @@
   (org-export-babel-evaluate 'inline-only)
   ;; Latex stuff
   (org-latex-packages-alist
-   '(("" "esvect" t)
-     ("" "tikz" t)))
+   '(("" "esvect")
+     ("" "tikz")
+     ("" "tikz-cd")))
   (org-latex-create-formula-image-program 'dvisvgm) ; Makes tikz preview work
   (org-preview-latex-image-directory (concat user-emacs-directory "cache/org-latex/"))
   :config
@@ -277,14 +278,14 @@
 ;; (set-face-attribute 'org-meta-line nil :inherit 'fixed-pitch)
 
 ;; Resize Org headings
-(dolist (face '((org-level-1 . 1.4)
-                (org-level-2 . 1.3)
-                (org-level-3 . 1.2)
-                (org-level-4 . 1.1)
-                (org-level-5 . 1.1)
-                (org-level-6 . 1.1)
-                (org-level-7 . 1.1)
-                (org-level-8 . 1.1)))
+(dolist (face '((org-level-1 . 1.5)
+                (org-level-2 . 1.35)
+                (org-level-3 . 1.25)
+                (org-level-4 . 1.2)
+                (org-level-5 . 1.2)
+                (org-level-6 . 1.2)
+                (org-level-7 . 1.2)
+                (org-level-8 . 1.2)))
   (set-face-attribute (car face) nil :font monospace-font :weight 'bold :height (cdr face)))
 
 ;; Make the document title a bit bigger
@@ -297,7 +298,7 @@
 
 ;; (add-hook 'org-mode-hook 'variable-pitch-mode) ; Use variable-width font in org-mode
 
-(plist-put org-format-latex-options :scale 1.5) ; Make latex preview bigger
+(plist-put org-format-latex-options :scale 1.3) ; Make latex preview bigger
 
 ;; Replace text with cool symbols
 (use-package org-modern
@@ -324,7 +325,7 @@
 
 ;; Center text
 (use-package olivetti
-  :custom (olivetti-body-width 0.5)
+  :custom (olivetti-body-width 0.70)
   :hook org-mode
   :ensure t)
 
@@ -367,7 +368,7 @@
       '(("i" "main note" plain "%?"
          :target (file+head
                   "main/%<%Y%m%dT%H%M%S>--${slug}.org"
-                  "#+title: ${title}\n#+date: [%<%Y-%m-%d %a %H:%M>]\n")
+                  "#+title: ${title}\n#+date: [%<%Y-%m-%d %a %H:%M>]\n#+filetags:")
          :immediate-finish t
          :unnarrowed t)
 
@@ -480,7 +481,9 @@
   (org-noter-auto-save-last-location t)
   (org-noter-always-create-frame nil) ; Use current frame instead of making new one
   (org-noter-swap-window t) ; Move pdf to left side
+  (org-noter-doc-split-fraction '(0.33 . 0.33)) ; Use a third of screen
   (org-noter-notes-search-path '("~/notes/references"))
+  (org-noter-default-heading-title "$p$")
   :general
   (general-nmap
     :keymaps '(org-noter-mode-map pdf-view-mode-map)
