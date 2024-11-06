@@ -152,6 +152,10 @@ Setting the leader key and some basic commands for navigating emacs and the file
   "br" '(revert-buffer :wk "Reload changes to buffer")
   "bw" '(kill-this-buffer :wk "Kill current buffer"))
 
+;; Windows
+(<leader> "j" '(next-multiframe-window :wk "Next window"))
+(<leader> "k" '(next-multiframe-window :wk "Previous window"))
+
 (<leader>
   "ole" '(org-latex-export-to-pdf :wk "Export to latex pdf"))
 
@@ -377,10 +381,9 @@ Some small quality of life stuff
 
 ;; Center text
 (use-package olivetti
-  :custom (olivetti-body-width 0.70)
+  :custom (olivetti-body-width 0.65)
   :hook org-mode
   :ensure t)
-
 #+end_src
 *** Extra Packages
 #+begin_src emacs-lisp

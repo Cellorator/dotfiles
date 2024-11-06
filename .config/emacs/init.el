@@ -124,6 +124,10 @@
   "br" '(revert-buffer :wk "Reload changes to buffer")
   "bw" '(kill-this-buffer :wk "Kill current buffer"))
 
+;; Windows
+(<leader> "j" '(next-multiframe-window :wk "Next window"))
+(<leader> "k" '(next-multiframe-window :wk "Previous window"))
+
 (<leader>
   "ole" '(org-latex-export-to-pdf :wk "Export to latex pdf"))
 
@@ -326,7 +330,7 @@
 
 ;; Center text
 (use-package olivetti
-  :custom (olivetti-body-width 0.70)
+  :custom (olivetti-body-width 0.65)
   :hook org-mode
   :ensure t)
 
