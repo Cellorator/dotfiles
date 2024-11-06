@@ -483,19 +483,18 @@
 
 (use-package org-noter
   :custom
-  (org-noter-auto-save-last-location t)
   (org-noter-notes-search-path '("~/notes/references"))
   (org-noter-default-heading-title "$p$")
+  (org-noter-disable-narrowing t) ; Disable only looking at one note when activating
   (org-noter-always-create-frame nil) ; Use current frame instead of making new one
-  ;; (org-noter-notes-window-location 'other-frame)
-  (org-noter-swap-window t) ; Move pdf to left side
-  (org-noter-doc-split-fraction '(0.33 . 0.33)) ; Use a third of screen
-  (org-noter-use-indirect-buffer nil)
+  (org-noter-swap-window t) ; Move doc to rightside
+  (org-noter-doc-split-fraction '(0.33 . 0.33)) ; Set doc view size
+  (org-noter-use-indirect-buffer nil) ; Use actual buffers
   :general
   (general-nmap
     :keymaps '(org-noter-mode-map pdf-view-mode-map)
-    "I" 'org-noter-insert-note-toggle-no-questions
-    "i" 'org-noter-insert-note)
+    "I" 'org-noter-insert-note
+    "i" 'org-noter-insert-precise-note)
   :after org
   :ensure t)
 
@@ -517,4 +516,12 @@
 
 (<leader>
   "on" '(:ignore t :wk "org-noter")
-  "onn" '(org-noter :wk "Open document"))
+  "ono" '(org-noter :wk "Open document")
+  "onn" '(org-noter-sync-current-note :wk "Open page"))
+
+;; Get this to work sometime
+;; (defun org-noter-open()
+;;   (interactive)
+;;   (if (eq major-mode 'pdf-view-mode)
+;;       (org-noter-sync-current-note)
+;;     (org-noter)))
