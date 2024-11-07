@@ -459,7 +459,7 @@
   (citar-bibliography '("~/notes/references/bibliography.bib"))
   (citar-notes-paths '("~/notes/references"))
   (citar-library-paths '("~/notes/references/documents"))
-  (org-cite-global-bibliography citar-bibliography)
+  (org-cite-global-bibliography '("~/notes/references/bibliography.bib"))
   (org-cite-insert-processor 'citar)
   (org-cite-follow-processor 'citar)
   (org-cite-activate-processor 'citar)
