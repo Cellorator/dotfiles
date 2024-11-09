@@ -245,6 +245,7 @@
 
 (use-package org
   :custom
+  (org-startup-indented t)
   (org-startup-folded 'show2levels)
   (org-src-tab-acts-natively t) ; Make tab work in code blocks
   (org-src-preserve-indentation t) ; Stop annoying indentation when making a new line in code blocks
@@ -256,7 +257,6 @@
      ("" "tikz-cd")))
   (org-latex-create-formula-image-program 'dvisvgm) ; Makes tikz preview work
   (org-preview-latex-image-directory (concat user-emacs-directory "cache/org-latex/"))
-  org-capture and org-agenda
   (org-agenda-files '("~/notes/inbox.org"))
   (org-capture-templates
    '(("t" "TODO")
@@ -297,7 +297,8 @@
     (set-face-attribute (car face) nil :font monospace-font :weight 'bold :height (cdr face)))
   ;; Make the document title a bit bigger
   (set-face-attribute 'org-document-title nil :font monospace-font :weight
-                      'bold :height 1.5))
+                      'bold :height 1.5)
+  (plist-put org-format-latex-options :scale 1.3)) ; Make latex preview bigger
 
 ;; Replace text with cool symbols
 (use-package org-modern
@@ -495,6 +496,7 @@
 (<leader>
   "nc" '(org-capture :wk "org-capture")
   "na" '(org-agenda :wk "org-agenda"))
+
 (<leader>
   "n" '(:ignore t :wk "Notes")
   "nf" '(org-roam-node-find :wk "Find note")
