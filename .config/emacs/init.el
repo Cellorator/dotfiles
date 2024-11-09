@@ -102,16 +102,13 @@
 (general-create-definer <leader>
   :states '(normal insert visual emacs)
   :keymaps 'override
-  :prefix "SPC") ; Use Ctrl + Space as leader in insert mode
+  :prefix "SPC"
+  :global-prefix "M-SPC")
 
 ;; Copy paste
 (<leader>
   "y" '(clipboard-kill-ring-save :wk "Copy to clipboard")
   "p" '(clipboard-yank :wk "Paste from clipboard"))
-
-;; Macros
-(<leader>
-  "SPC" (general-key "C-c C-c"))
 
 ;; Filesystem
 (<leader>
@@ -131,9 +128,6 @@
 ;; Windows
 (<leader> "j" '(next-multiframe-window :wk "Next window"))
 (<leader> "k" '(next-multiframe-window :wk "Previous window"))
-
-(<leader>
-  "ole" '(org-latex-export-to-pdf :wk "Export to latex pdf"))
 
 ;; Reload
 (defun reload-config()
@@ -267,47 +261,50 @@
   :hook
   (org-mode . (lambda () (display-line-numbers-mode -1))) ;; Remove line numbers
   :general
-  (<leader> "o" '(:ignore t :wk "org-mode"))
-  (:keymaps 'override
-            (general-nmap "RET" 'org-open-at-point)))
+  (<leader>
+    "o" '(:ignore t :wk "org-mode")
+    "ole" '(org-latex-export-to-pdf :wk "Export to latex pdf"))
+  (:keymaps 'override (general-nmap "RET" 'org-open-at-point)))
 
-;; Font theming
-;; (set-face-attribute 'org-code nil :inherit '(shadow fixed-pitch))
-;; (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
+(use-package org
+  :config
+  ;; Font theming
+  ;; (set-face-attribute 'org-code nil :inherit '(shadow fixed-pitch))
+  ;; (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
 
-;; (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
-;; (set-face-attribute 'org-block-begin-line nil :inherit 'fixed-pitch)
-;; (set-face-attribute 'org-block-end-line nil :inherit 'fixed-pitch)
+  ;; (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
+  ;; (set-face-attribute 'org-block-begin-line nil :inherit 'fixed-pitch)
+  ;; (set-face-attribute 'org-block-end-line nil :inherit 'fixed-pitch)
 
-;; (set-face-attribute 'org-drawer nil :inherit 'fixed-pitch)
-;; (set-face-attribute 'org-special-keyword nil :inherit 'fixed-pitch)
-;; (set-face-attribute 'org-property-value nil :inherit 'fixed-pitch)
-;; (set-face-attribute 'org-meta-line nil :inherit 'fixed-pitch)
-(set-face-attribute 'org-document-info-keyword nil :inherit 'fixed-pitch)
-;; (set-face-attribute 'org-meta-line nil :inherit 'fixed-pitch)
+  ;; (set-face-attribute 'org-drawer nil :inherit 'fixed-pitch)
+  ;; (set-face-attribute 'org-special-keyword nil :inherit 'fixed-pitch)
+  ;; (set-face-attribute 'org-property-value nil :inherit 'fixed-pitch)
+  ;; (set-face-attribute 'org-meta-line nil :inherit 'fixed-pitch)
+  ;; (set-face-attribute 'org-document-info-keyword nil :inherit 'fixed-pitch)
+  ;; (set-face-attribute 'org-meta-line nil :inherit 'fixed-pitch)
 
-;; Resize Org headings
-(dolist (face '((org-level-1 . 1.5)
-                (org-level-2 . 1.35)
-                (org-level-3 . 1.25)
-                (org-level-4 . 1.2)
-                (org-level-5 . 1.2)
-                (org-level-6 . 1.2)
-                (org-level-7 . 1.2)
-                (org-level-8 . 1.2)))
-  (set-face-attribute (car face) nil :font monospace-font :weight 'bold :height (cdr face)))
+  ;; Resize Org headings
+  (dolist (face '((org-level-1 . 1.5)
+                  (org-level-2 . 1.35)
+                  (org-level-3 . 1.25)
+                  (org-level-4 . 1.2)
+                  (org-level-5 . 1.2)
+                  (org-level-6 . 1.2)
+                  (org-level-7 . 1.2)
+                  (org-level-8 . 1.2)))
+    (set-face-attribute (car face) nil :font monospace-font :weight 'bold :height (cdr face)))
 
-;; Make the document title a bit bigger
-(set-face-attribute 'org-document-title nil :font monospace-font :weight
-'bold :height 1.8)
+  ;; Make the document title a bit bigger
+  (set-face-attribute 'org-document-title nil :font monospace-font :weight
+                      'bold :height 1.8)
 
-;; Fix indentation to fixed-pitch
-;; (require 'org-indent)
-;; (set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
+  ;; Fix indentation to fixed-pitch
+  ;; (require 'org-indent)
+  ;; (set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
 
-;; (add-hook 'org-mode-hook 'variable-pitch-mode) ; Use variable-width font in org-mode
+  ;; (add-hook 'org-mode-hook 'variable-pitch-mode) ; Use variable-width font in org-mode
 
-(plist-put org-format-latex-options :scale 1.3) ; Make latex preview bigger
+  (plist-put org-format-latex-options :scale 1.3)) ; Make latex preview bigger
 
 ;; Replace text with cool symbols
 (use-package org-modern
