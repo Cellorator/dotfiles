@@ -105,6 +105,10 @@
   :prefix "SPC"
   :global-prefix "M-SPC")
 
+;; Macros
+(general-def
+  "C-SPC" (general-simulate-key "C-c"))
+
 ;; Copy paste
 (<leader>
   "y" '(clipboard-kill-ring-save :wk "Copy to clipboard")
@@ -252,6 +256,19 @@
      ("" "tikz-cd")))
   (org-latex-create-formula-image-program 'dvisvgm) ; Makes tikz preview work
   (org-preview-latex-image-directory (concat user-emacs-directory "cache/org-latex/"))
+  org-capture and org-agenda
+  (org-agenda-files '("~/notes/inbox.org"))
+  (org-capture-templates
+   '(("t" "TODO")
+     ("tt" "Unscheduled" entry
+      (file+headline "~/notes/inbox.org" "Unscheduled")
+      "* TODO %?")
+     ("ts" "Scheduled" entry
+      (file+headline "~/notes/inbox.org" "Scheduled")
+      "* TODO %?\nSCHEDULED: %^T")
+     ("n" "Note" entry
+      (file+headline "~/notes/inbox.org" "Notes")
+      "* %?")))
   :config
   (org-babel-do-load-languages
    'org-babel-load-languages
@@ -268,21 +285,6 @@
 
 (use-package org
   :config
-  ;; Font theming
-  ;; (set-face-attribute 'org-code nil :inherit '(shadow fixed-pitch))
-  ;; (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
-
-  ;; (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
-  ;; (set-face-attribute 'org-block-begin-line nil :inherit 'fixed-pitch)
-  ;; (set-face-attribute 'org-block-end-line nil :inherit 'fixed-pitch)
-
-  ;; (set-face-attribute 'org-drawer nil :inherit 'fixed-pitch)
-  ;; (set-face-attribute 'org-special-keyword nil :inherit 'fixed-pitch)
-  ;; (set-face-attribute 'org-property-value nil :inherit 'fixed-pitch)
-  ;; (set-face-attribute 'org-meta-line nil :inherit 'fixed-pitch)
-  ;; (set-face-attribute 'org-document-info-keyword nil :inherit 'fixed-pitch)
-  ;; (set-face-attribute 'org-meta-line nil :inherit 'fixed-pitch)
-
   ;; Resize Org headings
   (dolist (face '((org-level-1 . 1.5)
                   (org-level-2 . 1.35)
@@ -293,18 +295,9 @@
                   (org-level-7 . 1.2)
                   (org-level-8 . 1.2)))
     (set-face-attribute (car face) nil :font monospace-font :weight 'bold :height (cdr face)))
-
   ;; Make the document title a bit bigger
   (set-face-attribute 'org-document-title nil :font monospace-font :weight
-                      'bold :height 1.8)
-
-  ;; Fix indentation to fixed-pitch
-  ;; (require 'org-indent)
-  ;; (set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
-
-  ;; (add-hook 'org-mode-hook 'variable-pitch-mode) ; Use variable-width font in org-mode
-
-  (plist-put org-format-latex-options :scale 1.3)) ; Make latex preview bigger
+                      'bold :height 1.5))
 
 ;; Replace text with cool symbols
 (use-package org-modern
@@ -500,10 +493,12 @@
   :ensure t)
 
 (<leader>
+  "nc" '(org-capture :wk "org-capture")
+  "na" '(org-agenda :wk "org-agenda"))
+(<leader>
   "n" '(:ignore t :wk "Notes")
   "nf" '(org-roam-node-find :wk "Find note")
   "ni" '(org-roam-node-insert :wk "Insert note")
-  "no" '(org-roam-capture :wk "Capture note")
   "nb" '(org-roam-buffer-toggle :wk "Open backlinks buffer"))
 
 (<leader>
