@@ -102,8 +102,12 @@
 (general-create-definer <leader>
   :states '(normal insert visual emacs)
   :keymaps 'override
-  :prefix "SPC"
-  :global-prefix "C-SPC") ; Use Ctrl + Space as leader in insert mode
+  :prefix "SPC") ; Use Ctrl + Space as leader in insert mode
+
+;; Copy paste
+(<leader>
+  "y" '(clipboard-kill-ring-save :wk "Copy to clipboard")
+  "p" '(clipboard-yank :wk "Paste from clipboard"))
 
 ;; Macros
 (<leader>
