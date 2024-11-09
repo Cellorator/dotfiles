@@ -363,6 +363,7 @@
                (window-width . 0.33)
                (window-height . fit-window-to-buffer)))
 (setq org-roam-node-display-template "${hierarchy:*}")
+(setq org-roam-completion-everywhere t)
 
 (setq org-roam-capture-templates
       '(("i" "main note" plain "%?"

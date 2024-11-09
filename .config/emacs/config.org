@@ -424,6 +424,7 @@ Knowledge management system for taking notes
                (window-width . 0.33)
                (window-height . fit-window-to-buffer)))
 (setq org-roam-node-display-template "${hierarchy:*}")
+(setq org-roam-completion-everywhere t)
 #+end_src
 **** Templates
 #+begin_src emacs-lisp
