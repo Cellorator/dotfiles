@@ -145,7 +145,10 @@
 (use-package orderless
   :ensure t
   :custom
-  (completion-styles '(orderless basic))
+  (completion-styles '(orderless partial-completion basic))
+  (orderless-matching-styles '(orderless-literal
+                               orderless-regxp
+                               orderless-flex))
   (completion-category-defaults nil)
   (completion-category-overrides '((file (styles partial-completion)))))
 
