@@ -39,6 +39,7 @@
 (global-visual-line-mode) ; Enable line wrap
 
 (savehist-mode) ; Save minibuffer history
+(global-auto-revert-mode) ; Automatically update chaged buffers
 
 ;; Disable backups and autosaves
 (setq make-backup-files nil)
@@ -147,7 +148,7 @@
   :custom
   (completion-styles '(orderless partial-completion basic))
   (orderless-matching-styles '(orderless-literal
-                               orderless-regxp
+                               orderless-regexp
                                orderless-flex))
   (completion-category-defaults nil)
   (completion-category-overrides '((file (styles partial-completion)))))
