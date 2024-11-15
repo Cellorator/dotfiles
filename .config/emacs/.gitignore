@@ -8,3 +8,5 @@ bookmarks
 history
 cache/*
 tree-sitter/*
+.cache/*
+.lsp-session-v1

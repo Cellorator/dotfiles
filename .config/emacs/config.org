@@ -181,7 +181,8 @@ Useful thingies
   :ensure t
   :custom
   (completion-styles '(orderless partial-completion basic))
-  (orderless-matching-styles '(orderless-literal
+  (orderless-matching-styles '(orderless-initialism
+                               orderless-literal
                                orderless-regexp
                                orderless-flex))
   (completion-category-defaults nil)
@@ -227,6 +228,16 @@ Useful thingies
 **** Lsp
 #+begin_src emacs-lisp
 (use-package lsp-mode
+  :custom
+  (lsp-completion-provider :none) ;; we use Corfu!
+  :init
+  (defun my/lsp-mode-setup-completion ()
+    (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
+          '(orderless))) ;; Configure orderless
+  :hook
+  (lsp-completion-mode . my/lsp-mode-setup-completion)
+  :ensure t)
+(use-package csharp-mode
   :ensure t)
 #+end_src
 *** Misc
