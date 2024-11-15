@@ -223,6 +223,12 @@ Useful thingies
   :config (yas-global-mode 1)
   :ensure t)
 #+end_src
+*** Languages
+**** Lsp
+#+begin_src emacs-lisp
+(use-package lsp-mode
+  :ensure t)
+#+end_src
 *** Misc
 #+begin_src emacs-lisp
 (use-package embark

@@ -187,6 +187,9 @@
   :config (yas-global-mode 1)
   :ensure t)
 
+(use-package lsp-mode
+  :ensure t)
+
 (use-package embark
   :general
   (<leader>
@@ -528,3 +531,18 @@
 ;;   (if (eq major-mode 'pdf-view-mode)
 ;;       (org-noter-sync-current-note)
 ;;     (org-noter)))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(org-export-use-babel 'inline-only nil nil "Customized with use-package org")
+ '(org-preview-latex-default-process 'dvisvgm nil nil "Customized with use-package org")
+ '(package-selected-packages
+   '(lsp-mode yasnippet which-key vertico undo-fu-session undo-fu treesit-auto smartparens restart-emacs pdf-tools org-superstar org-roam-ui org-roam-bibtex org-ref org-noter org-modern org-fragtog org-auto-tangle org-appear orderless olivetti nov marginalia magit kanagawa-themes ivy highlight-indent-guides helm-bibtex general evil-org evil-commentary evil-collection embark-consult doom-themes denote corfu company citar-org-roam citar-embark cape ace-window)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
