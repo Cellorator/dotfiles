@@ -191,14 +191,27 @@
 (use-package lsp-mode
   :custom
   (lsp-completion-provider :none) ;; we use Corfu!
+  ;; Performance optimizations
+  (gc-cons-threshold 1000000000)
+  (read-process-output-max (* 1024 1024))
   :init
   (defun my/lsp-mode-setup-completion ()
     (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
           '(orderless))) ;; Configure orderless
   :hook
-  (lsp-completion-mode . my/lsp-mode-setup-completion)
+  ((lsp-completion-mode . my/lsp-mode-setup-completion)
+   (csharp-mode . lsp))
   :ensure t)
+
+(use-package treesit-auto
+  :custom (treesit-auto-install t)
+  :config
+  (treesit-auto-add-to-auto-mode-alist 'all)
+  (global-treesit-auto-mode)
+  :ensure t)
+
 (use-package csharp-mode
+  ;; :config (add-to-list 'auto-mode-alist '("\\.cs\\'" . csharp-mode))
   :ensure t)
 
 (use-package embark
@@ -230,14 +243,6 @@
   :unless (eq system-type 'android)
   :config (pdf-loader-install)
   :hook (pdf-view-mode . (lambda () (display-line-numbers-mode -1))) ;; Remove line numbers
-  :ensure t)
-
-;; Treesitter
-(use-package treesit-auto
-  :custom (treesit-auto-install t)
-  :config
-  (treesit-auto-add-to-auto-mode-alist 'all)
-  (global-treesit-auto-mode)
   :ensure t)
 
 (use-package smartparens
