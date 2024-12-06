@@ -6,7 +6,7 @@
 @define-color tertiary-color #8992a7;
 
 .bar-box {
-    font-family: "Hurmit Nerd Font";
+    font-family: "0xProto Nerd Font";
     font-size: 14px;
     background-color: @bg-color;
     border-radius: 12px;

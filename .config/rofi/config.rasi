@@ -1,6 +1,6 @@
 @theme "~/.config/rofi/themes/kanagawa-dragon.rasi"
 configuration {
 	modes: "drun";
-	font: "Hurmit Nerd Font 10.5";
+	font: "0xProto Nerd Font 10.5";
 	show-icons: true;
 }

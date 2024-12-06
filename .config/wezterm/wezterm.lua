@@ -2,7 +2,7 @@ local wezterm = require("wezterm")
 
 local config = {}
 
-config.font = wezterm.font("Hurmit Nerd Font")
+config.font = wezterm.font("0xProto Nerd Font")
 config.font_size = 10.5
 config.custom_block_glyphs = false
 

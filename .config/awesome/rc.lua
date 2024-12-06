@@ -444,18 +444,18 @@ awful.rules.rules = {
 
 -- {{{ Signals
 -- No borders when rearranging only 1 non-floating or maximized client
-screen.connect_signal("arrange", function (s)
-    local only_one = #s.tiled_clients == 1
-    for _, c in pairs(s.clients) do
-        if only_one and not c.floating or c.maximized then
-            c.border_width = 0
-            c.useless_gap = 0
-        else
-            c.border_width = beautiful.border_width -- your border width
-            c.uselessd_gap = beautiful.useless_gap -- your gap width
-        end
-    end
-end)
+-- screen.connect_signal("arrange", function (s)
+--     local only_one = #s.tiled_clients == 1
+--     for _, c in pairs(s.clients) do
+--         if only_one and not c.floating or c.maximized then
+--             c.border_width = 0
+--             c.useless_gap = 0
+--         else
+--             c.border_width = beautiful.border_width -- your border width
+--             c.uselessd_gap = beautiful.useless_gap -- your gap width
+--         end
+--     end
+-- end)
 
 -- Signal function to execute when a new client appears.
 client.connect_signal("manage", function (c)
