@@ -23,8 +23,9 @@ function RightHardCircleSeparator() {
 }
 
 function Separator(str) {
-    return Widget.Label({
-        label: str,
-        class_name: 'separators'
-    })
+    return <label label={str} />
+    // return Widget.Label({
+    //     label: str,
+    //     class_name: 'separators'
+    // })
 }
