@@ -1,4 +1,4 @@
-import { Variable, bind } from 'astal'
+import { Variable, bind, Binding } from 'astal'
 import {
     Separator,
     ForwardSlashSeparator,
@@ -17,29 +17,48 @@ export default function Workspaces() {
          </box>
 }
 
+// export default function Workspaces() {
+//     const hypr = Hyprland.get_default()
+
+//     return <box className="Workspaces">
+//         {bind(hypr, "workspaces").as(wss => wss
+//             .sort((a, b) => a.id - b.id)
+//             .map(ws => (
+//                 <button
+//                     className={bind(hypr, "focusedWorkspace").as(fw =>
+//                         ws === fw ? "focused" : "")}
+//                     onClicked={() => ws.focus()}>
+//                     {ws.id}
+//                 </button>
+//             ))
+//         )}
+//     </box>
+// }
 
 const hyprland = Hyprland.get_default()
 
-// Id of active workspace
-const activeId = bind(hyprland.focusedWorkspace, 'id')
+const focusedId = bind(hyprland, 'focusedWorkspace').as(fws => fws.id)
 
-function Workspace(id) {
+function Workspace(id: Number) {
+  const hyprland = Hyprland.get_default()
+  // Id of active workspace
+  // const activeId = bind(hyprland.focusedWorkspace, 'id')
   // Array that keeps track of workspace status for theming
-  let s = []
+  // let s = []
 
-  if (activeId == id) {
-    s.push('active')
-  } else if (activeId == id + 1) {
-    s.push('nextToActive')
-  }
+  // if (activeId == id) {
+  //   s.push('active')
+  // } else if (activeId == id + 1) {
+  //   s.push('nextToActive')
+  // }
 
-  const hasClients = bind(hyprland, 'workspaces')
-    .as(workspaces => workspaces[id].windows != 0)
-  if (hasClients) {
-    s.push('hasClients')
-  }
+  // const hasClients = bind(hyprland, 'workspaces')
+  //   .as(workspaces => workspaces[id].windows != 0)
+  // if (hasClients) {
+  //   s.push('hasClients')
+  // }
 
-  const status = s.join(' ')
+  // const status = s.join(' ')
 
     // const Content = Widget.Box({
     //     children: status.as(s => {
@@ -77,17 +96,18 @@ function Workspace(id) {
     //     })
     // })
 
-  return <button className='workspace'>
+  return <button
+           className={`workspace ws${id}`}
+           onClicked={() => hyprland.dispatch('workspace', `${id}`)}>
            <box
-             className={bind(hyprland.focusedWorkspace, 'id')
-               .as(fid => {
-                 let arr = []
-                 if (fid == id) {
-                   arr.push('active')
-                 }
-                 return arr.join('')
-               })}>
-             <label className='label' label={id.toString()} />
+             className={focusedId.as(fid => {
+               let arr = []
+               if (fid == id) {
+                 arr.push('focused')
+               }
+               return arr.join(' ')
+             })}>
+             <label className='label' label={`${id}`} />
            </box>
          </button>
     // return Widget.Button({

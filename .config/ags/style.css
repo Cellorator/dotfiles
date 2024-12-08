@@ -39,7 +39,7 @@
     text-decoration-line: underline;
 }
 
-.workspace .active .label {
+.workspace .focused .label {
     background-color: @primary-color;
     color: @secondary-fg-color;
 }
