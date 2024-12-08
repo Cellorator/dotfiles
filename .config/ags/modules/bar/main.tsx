@@ -19,7 +19,7 @@ export default function Bar(gdkmonitor: Gdk.Monitor) {
                <Workspaces />
              </box>
 
-             <box className-'middle'>
+             <box className='middle'>
              </box>
 
              <box className='right' halign={Gtk.Align.END}>
