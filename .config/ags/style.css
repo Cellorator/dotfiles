@@ -35,11 +35,11 @@
     padding: 0 8px;
 }
 
-.workspace.hasClients .label {
+.workspace .hasClients .label {
     text-decoration-line: underline;
 }
 
-.workspace.active .label {
+.workspace .active .label {
     background-color: @primary-color;
     color: @secondary-fg-color;
 }
