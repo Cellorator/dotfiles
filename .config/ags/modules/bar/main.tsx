@@ -1,10 +1,9 @@
 import { Astal, Gtk, Gdk } from "astal/gtk3"
 import Workspaces from "./workspaces"
 import Clock from "./clock"
+import SysTray from "./sysTray"
 
-// import SysTray from "./sysTray.js"
 // import Audio from "./audio.js"
-// import Clock from "./clock.js"
 
 // export default function Bar() {
 //     const widgets = Widget.CenterBox({
@@ -44,6 +43,7 @@ export default function Bar(gdkmonitor: Gdk.Monitor) {
              </box>
 
              <box className='right' halign={Gtk.Align.END}>
+               <SysTray />
                <Clock />
              </box>
            </centerbox>
