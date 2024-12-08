@@ -74,6 +74,10 @@
     padding: 0 8px;
 }
 
+.notifications-window {
+    background-color: transparent;
+}
+
 .notifications {
     min-width: 1px;
     min-height: 1px;
