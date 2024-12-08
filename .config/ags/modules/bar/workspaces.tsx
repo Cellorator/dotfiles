@@ -1,10 +1,10 @@
-import { Variable, bind, Binding } from 'astal'
+import { Variable, bind } from 'astal'
 import {
     Separator,
     ForwardSlashSeparator,
     LeftHardCircleSeparator,
     RightHardCircleSeparator
-} from '../widgets/separator.js'
+} from '../widgets/separator'
 import Hyprland from 'gi://AstalHyprland'
 
 export default function Workspaces() {
@@ -17,103 +17,79 @@ export default function Workspaces() {
          </box>
 }
 
-// export default function Workspaces() {
-//     const hypr = Hyprland.get_default()
-
-//     return <box className="Workspaces">
-//         {bind(hypr, "workspaces").as(wss => wss
-//             .sort((a, b) => a.id - b.id)
-//             .map(ws => (
-//                 <button
-//                     className={bind(hypr, "focusedWorkspace").as(fw =>
-//                         ws === fw ? "focused" : "")}
-//                     onClicked={() => ws.focus()}>
-//                     {ws.id}
-//                 </button>
-//             ))
-//         )}
-//     </box>
-// }
-
 const hyprland = Hyprland.get_default()
 
+// Id of focused workspace
 const focusedId = bind(hyprland, 'focusedWorkspace').as(fws => fws.id)
 
-function Workspace(id: Number) {
-  const hyprland = Hyprland.get_default()
-  // Id of active workspace
-  // const activeId = bind(hyprland.focusedWorkspace, 'id')
-  // Array that keeps track of workspace status for theming
-  // let s = []
+// Ids of workspaces with clients
+// Done this way because other methods don't update right
+const idsWithClients = bind(hyprland, 'clients').as(c => c
+  .map(c => c.workspace.id)
+  .sort()
+  .filter((id, index, ids) => ids.indexOf(id) == index))
 
-  // if (activeId == id) {
-  //   s.push('active')
-  // } else if (activeId == id + 1) {
-  //   s.push('nextToActive')
-  // }
+function Workspace(id: number) {
+  // Determine status to set as className
+  const status = Variable.derive(
+    [focusedId, idsWithClients],
+    (focusedId, idsWithClients) => {
+      let arr = []
 
-  // const hasClients = bind(hyprland, 'workspaces')
-  //   .as(workspaces => workspaces[id].windows != 0)
-  // if (hasClients) {
-  //   s.push('hasClients')
-  // }
+      if (focusedId == id) {
+        arr.push('focused')
+      } else if (focusedId == id + 1) {
+        arr.push('nextToFocused')
+      }
 
-  // const status = s.join(' ')
+      if (idsWithClients.includes(id)) {
+        arr.push('hasClients')
+      }
 
-    // const Content = Widget.Box({
-    //     children: status.as(s => {
-    //         const arr = [
-    //             Widget.Label({
-    //                 label: `${id}`,
-    //                 class_name: 'label'
-    //             })
-    //         ]
+      return arr
+    })
 
+  // Determine separators for each workspace box
+  const content = status(s => {
+    const arr = [
+      <label className='label' label={`${id}`} />
+    ]
 
-    //         if (s.includes('nextToActive')) {
-    //             if (id == 1) {
-    //                 arr.unshift(Separator(' '))
-    //             }
-    //             return arr
-    //         }
+    // Skip putting separators on workspace before the focused one
+    if (s.includes('nextToFocused')) {
+      if (id == 1) { // leave left of 1 empty
+        arr.unshift(Separator(' '))
+      }
+      return arr
+    }
 
-    //         if (!s.includes('active')) {
-    //             if (id == 9) {
-    //                 arr.push(Separator(' '))
-    //                 return arr
-    //             }
+    // Set slash separators in between (right of each widget)
+    if (!s.includes('focused')) {
+      if (id == 9) { // leave right of 9 empty
+        arr.push(Separator(' '))
+        return arr
+      }
 
-    //             if (id == 1) {
-    //                 arr.unshift(Separator(' '))
-    //             }
-    //             arr.push(ForwardSlashSeparator())
-    //             return arr
-    //         }
+      if (id == 1) { // leave left of 1 empty
+        arr.unshift(Separator(' '))
+      }
 
-    //         arr.unshift(LeftHardCircleSeparator())
-    //         arr.push(RightHardCircleSeparator())
-    //         return arr
-    //     })
-    // })
+      arr.push(ForwardSlashSeparator())
+      return arr
+    }
+
+    // Put right and left separators for focused workspace
+    arr.unshift(LeftHardCircleSeparator())
+    arr.push(RightHardCircleSeparator())
+
+    return arr
+  })
 
   return <button
            className={`workspace ws${id}`}
            onClicked={() => hyprland.dispatch('workspace', `${id}`)}>
-           <box
-             className={focusedId.as(fid => {
-               let arr = []
-               if (fid == id) {
-                 arr.push('focused')
-               }
-               return arr.join(' ')
-             })}>
-             <label className='label' label={`${id}`} />
+           <box className={status(s => s.join(' '))}>
+             {content}
            </box>
          </button>
-    // return Widget.Button({
-    //     name: `workspace${id}`,
-    //     class_names: status.as(s => ['workspace', ...s]),
-    //     on_clicked: () => hyprland.messageAsync(`dispatch workspace ${id}`),
-    //     child: content,
-    // })
 }
