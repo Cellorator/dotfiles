@@ -3,26 +3,6 @@ import Workspaces from "./workspaces"
 import Clock from "./clock"
 import SysTray from "./sysTray"
 
-// import Audio from "./audio.js"
-
-// export default function Bar() {
-//     const widgets = Widget.CenterBox({
-//         className: 'bar-box',
-//         startWidget: Left(),
-//         endWidget: Right()
-//     })
-
-//     return Widget.Window({
-//         name: 'bar',
-//         className: 'bar-window',
-//         anchor: ['top', 'left', 'right'],
-//         layer: 'top',
-//         exclusivity: "exclusive",
-//         margins: [4, 4, 0, 4],
-//         child: widgets
-//     })
-// }
-
 export default function Bar(gdkmonitor: Gdk.Monitor) {
   return <window
            className='bar-window'
@@ -39,7 +19,7 @@ export default function Bar(gdkmonitor: Gdk.Monitor) {
                <Workspaces />
              </box>
 
-             <box>
+             <box className-'middle'>
              </box>
 
              <box className='right' halign={Gtk.Align.END}>
