@@ -1,59 +1,43 @@
-if status is-interactive
+status is-login; and begin
+    # Login shell initialisation
 end
 
-fish_add_path ~/bin
-fish_add_path ~/.cargo/bin
+status is-interactive; and begin
+    set fish_greeting # Disable greeting
+    echo
+    pfetch
 
-set -gx EDITOR nvim
-set -gx BAT_THEME "base16-256"
+    # Abbreviations
+    abbr --add -- cd z
+    abbr --add -- ga 'git add'
+    abbr --add -- ga. 'git add .'
+    abbr --add --set-cursor -- gc 'git commit -m  "%"'
+    abbr --add -- gco 'git checkout'
+    abbr --add -- gd 'git diff'
+    abbr --add -- gd. 'git diff .'
+    abbr --add -- gi 'git init'
+    abbr --add -- gl 'git log --oneline'
+    abbr --add -- gp 'git push'
+    abbr --add -- gpl 'git pull'
+    abbr --add -- gr 'git reset'
+    abbr --add -- gs 'git status'
+    abbr --add -- mk make
+    abbr --add -- nhh 'nh home switch'
+    abbr --add -- nho 'nh os switch'
+    abbr --add -- vi nvim
 
-# Startup
-echo
-set -gx PF_INFO "ascii title os kernel pkgs memory uptime "
-pfetch
+    # Aliases
+    alias bat 'bat -n'
+    alias cat 'bat -n'
+    alias fzf 'fzf --preview "bat -n --color=always {}"'
+    alias la 'eza -la --group-directories-first --icons'
+    alias ll 'eza -l'
+    alias lla 'eza -la'
+    alias ls 'eza -1 --group-directories-first --icons'
+    alias lt 'eza --tree'
+    alias tree 'eza -T --group-directories-first --icons'
+    alias vif 'fzf --preview "bat -n --color=always {}" | xargs nvim'
 
-# Useful abbreviations and aliases
-abbr -a cl clear
-abbr -a vi nvim
-abbr -a cd z
-
-alias ls="eza -1 --group-directories-first --icons"
-alias la="eza -la --group-directories-first --icons"
-alias tree="eza -T --group-directories-first --icons"
-alias bat="bat -n"
-alias cat="bat -n"
-
-alias fzf="fzf --preview 'bat -n --color=always {}'"
-alias vif "fzf --preview 'bat -n --color=always {}' | xargs nvim"
-
-# Zellij abbreviations
-abbr -a zl zellij
-abbr -a zla zellij attach
-abbr -a zll zellij list-sessions
-
-# Git abbreviations
-abbr -a gi git init
-abbr -a gcl git clone
-abbr -a ga git add
-abbr -a ga. git add .
-abbr -a --set-cursor gc git commit -m \"%\"
-abbr -a gs git status
-abbr -a gd git diff
-abbr -a gl git log --oneline
-abbr -a gp git push
-abbr -a gpl git pull
-
-# Yadm abbreviations
-abbr -a ya yadm add
-abbr -a ya. yadm add .
-abbr -a --set-cursor yc yadm commit -m \"%\"
-abbr -a ys yadm status
-abbr -a yd yadm diff
-abbr -a yl yadm log --oneline
-abbr -a yp yadm push
-
-starship init fish | source
-zoxide init fish | source
-fzf --fish | source
-
-set -q GHCUP_INSTALL_BASE_PREFIX[1]; or set GHCUP_INSTALL_BASE_PREFIX $HOME ; set -gx PATH $HOME/.cabal/bin /home/admin/.ghcup/bin $PATH # ghcup-env
+    zoxide init fish | source
+    starship init fish | source
+end
