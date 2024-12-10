@@ -1,0 +1,2 @@
+[hyprland.files]
+ags = {target = "~/.config/ags", type = "symbolic", recurse = false}
