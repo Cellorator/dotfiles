@@ -3,3 +3,4 @@ packages = ["hyprland", "fish"]
 [variables]
 monitor_name = "eDP-1"
 monitor_scale = "1.2"
+sensitivity = "0.2"
