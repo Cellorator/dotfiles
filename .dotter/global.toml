@@ -1,2 +1,5 @@
 [hyprland.files]
 ags = {target = "~/.config/ags", type = "symbolic", recurse = false}
+
+[fish.files]
+"fish/config.fish" = "~/.config/fish/config.fish"

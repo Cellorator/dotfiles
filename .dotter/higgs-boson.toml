@@ -1,1 +1,1 @@
-packages = ["hyprland"]
+packages = ["hyprland", "fish"]
