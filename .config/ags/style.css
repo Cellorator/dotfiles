@@ -1,0 +1,107 @@
+@define-color fg-color @theme_fg_color;
+@define-color bg-color @theme_bg_color;
+@define-color secondary-fg-color #0d0d0c;
+@define-color primary-color #8ba4b0;
+@define-color secondary-color #252535;
+@define-color tertiary-color #8992a7;
+
+.bar-box {
+    font-family: "0xProto Nerd Font";
+    font-size: 14px;
+    background-color: @bg-color;
+    border-radius: 12px;
+    padding: 4px;
+}
+
+.bar-box button {
+    background-color: transparent;
+    min-height: 0px;
+    min-width: 0px;
+    padding: 0px;
+    margin: 0px;
+    border-width: 0px;
+}
+
+.left {
+    border-radius: 12px;
+    background-color: @secondary-color;
+}
+
+.workspace {
+    color: @primary-color;
+}
+
+.workspace .label {
+    padding: 0 8px;
+}
+
+.workspace .hasClients .label {
+    text-decoration-line: underline;
+}
+
+.workspace .focused .label {
+    background-color: @primary-color;
+    color: @secondary-fg-color;
+}
+
+.right {
+    border-radius: 12px;
+    background-color: @secondary-color;
+    color: @primary-color;
+}
+
+.systray {
+    padding-left: 8px;
+}
+
+.systray .icon {
+    font-size: 20px;
+    padding: 0 8px;
+}
+
+.audio icon {
+    padding: 0 8px;
+}
+
+.clock {
+    padding: 0 8px;
+    border-radius: 12px;
+    background-color: @primary-color;
+    color: @secondary-fg-color;
+}
+
+.day,.date,.time {
+    padding: 0 8px;
+}
+
+.notifications-window {
+    background-color: transparent;
+}
+
+.notifications {
+    min-width: 1px;
+    min-height: 1px;
+}
+
+.notification {
+    background-color: @secondary-color;
+    border: 4px solid @bg-color;
+    border-radius: 12px;
+    margin: 4px 0;
+    min-width: 200px;
+    min-height: 100px;
+}
+
+.notification .title label:not(.separators){
+    background-color: @primary-color;
+    color: @secondary-fg-color;
+}
+
+.notification .title .separators {
+    color: @primary-color;
+    background-color: @transparent;
+}
+
+.notification .body {
+    padding: 8px;
+}
