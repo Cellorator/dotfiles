@@ -1,1 +1,5 @@
 packages = ["hyprland", "fish"]
+
+[variables]
+monitor_name = "eDP-1"
+display_scale = "1.2"

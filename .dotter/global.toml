@@ -1,11 +1,29 @@
-[hyprland.files."hypr/hyprland.conf"]
-target = "~/.config/hypr/hyprland.conf"
-type = "template"
+[hyprland]
+depends = ["graphics"]
+
+[hyprland.files]
+"hypr/hyprland.conf" = "~/.config/hypr/hyprland.conf"
 
 [hyprland.files.ags]
 target = "~/.config/ags"
 type = "symbolic"
 recurse = false
 
+[hyprland.variables]
+monitor_name = "DP-1"
+
+
+[fish]
+depends = ["shell"]
+
 [fish.files]
 "fish/config.fish" = "~/.config/fish/config.fish"
+
+[shell.variables]
+terminal = "kitty"
+
+[graphics.variables]
+width = "1920"
+height = "1080"
+refresh_rate = "60"
+display_scale = "1"
