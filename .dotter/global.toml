@@ -4,10 +4,10 @@ depends = ["graphics"]
 [hyprland.files]
 "hypr/hyprland.conf" = "~/.config/hypr/hyprland.conf"
 
-[hyprland.files.ags]
-target = "~/.config/ags"
-type = "symbolic"
-recurse = false
+"ags/app.ts" = "~/.config/ags/app.ts"
+"ags/style.css" = "~/.config/ags/style.css"
+"ags/modules" = {target = "~/.config/ags/modules", type = "symbolic", recurse = false}
+"ags/Makefile" = "~/.config/ags/Makefile"
 
 [hyprland.variables]
 monitor_name = "DP-1"
