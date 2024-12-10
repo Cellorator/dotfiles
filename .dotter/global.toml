@@ -1,5 +1,5 @@
 [hyprland]
-depends = ["graphics"]
+depends = ["graphics", "rofi"]
 
 [hyprland.files]
 "hypr/hyprland.conf" = "~/.config/hypr/hyprland.conf"
@@ -13,17 +13,26 @@ depends = ["graphics"]
 monitor_name = "DP-1"
 
 
+[rofi]
+depends = ["graphics"]
+
+[rofi.files]
+"rofi" = {target = "~/.config/rofi", type = "symbolic", recurse = false}
+
+
 [fish]
 depends = ["shell"]
 
 [fish.files]
 "fish/config.fish" = "~/.config/fish/config.fish"
 
+
 [shell.variables]
-terminal = "kitty"
+
 
 [graphics.variables]
 width = "1920"
 height = "1080"
 refresh_rate = "60"
 display_scale = "1"
+terminal = "kitty"
