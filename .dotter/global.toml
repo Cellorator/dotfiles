@@ -1,5 +1,11 @@
-[hyprland.files]
-ags = {target = "~/.config/ags", type = "symbolic", recurse = false}
+[hyprland.files."hypr/hyprland.conf"]
+target = "~/.config/hypr/hyprland.conf"
+type = "template"
+
+[hyprland.files.ags]
+target = "~/.config/ags"
+type = "symbolic"
+recurse = false
 
 [fish.files]
 "fish/config.fish" = "~/.config/fish/config.fish"
