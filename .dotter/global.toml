@@ -44,5 +44,5 @@ height = "1080"
 refresh_rate = "60"
 
 [graphics.variables.font]
-monospace = "0xProto Nerd Font"
+monospace = "Hurmit Nerd Font"
 size = "10.5"

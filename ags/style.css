@@ -6,8 +6,8 @@
 @define-color tertiary-color #8992a7;
 
 .bar-box {
-    font-family: "0xProto Nerd Font";
-    font-size: 14px;
+    font-family: {{font.monospace}};
+    font-size: {{font.size}}pt;
     background-color: @bg-color;
     border-radius: 12px;
     padding: 4px;
