@@ -23,7 +23,7 @@ theme.colors = {
     gray = "#7a8382",
 }
 
-theme.font = "0xProto Nerd Font 10.5"
+theme.font = "Hurmit Nerd Font 10.5"
 
 theme.bg_normal = theme.colors.dark_blue
 theme.bg_focus  = theme.colors.blue
