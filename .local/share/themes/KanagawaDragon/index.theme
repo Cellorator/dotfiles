@@ -5,5 +5,9 @@ Comment=A Material Design theme
 Encoding=UTF-8
 
 [X-GNOME-Metatheme]
-GtkTheme=KanagawaDragon
-MetacityTheme=KanagawaDragon
+GtkTheme=Materia-dark
+MetacityTheme=Materia-dark
+IconTheme=Adwaita
+CursorTheme=Adwaita
+CursorSize=24
+
