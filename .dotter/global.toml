@@ -16,7 +16,7 @@ size = "10.5"
 
 
 [hyprland]
-depends = ["graphics", "rofi", "kitty", "backgrounds"]
+depends = ["graphics", "rofi", "kitty", "emacs", "backgrounds"]
 
 [hyprland.files]
 "hypr/hyprland.conf" = "~/.config/hypr/hyprland.conf"
@@ -60,3 +60,7 @@ depends = ["nvim"]
 
 [nvim.files]
 nvim = {target = "~/.config/nvim", type = "symbolic", recurse = false}
+
+
+[emacs.files]
+emacs = "~/.config/emacs"
