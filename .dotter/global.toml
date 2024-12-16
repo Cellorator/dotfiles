@@ -1,5 +1,5 @@
 [default]
-depends = ["gtk", "hyprland", "fish", "nvim"]
+depends = ["gtk", "hyprland", "bin", "fish", "nvim"]
 
 
 [graphics.variables]
@@ -46,14 +46,18 @@ sensitivity = "0"
 depends = ["graphics"]
 
 [rofi.files]
-"rofi" = "~/.config/rofi"
+rofi = "~/.config/rofi"
 
 
 [kitty]
 depends = ["graphics"]
 
 [kitty.files]
-"kitty" = "~/.config/kitty"
+kitty = "~/.config/kitty"
+
+
+[bin.files]
+bin = {target = "~/bin", type = "symbolic", recurse = false}
 
 
 [fish]
