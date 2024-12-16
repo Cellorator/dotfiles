@@ -547,3 +547,16 @@
 ;;   (if (eq major-mode 'pdf-view-mode)
 ;;       (org-noter-sync-current-note)
 ;;     (org-noter)))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(org-noter citar-embark citar-org-roam citar denote org-roam-ui org-roam org-auto-tangle olivetti org-fragtog org-appear org-modern doom-themes kanagawa-themes restart-emacs evil-commentary smartparens pdf-tools magit marginalia embark-consult embark treesit-auto lsp-mode yasnippet cape corfu consult vertico orderless which-key undo-fu-session undo-fu evil-org evil-collection evil general)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
