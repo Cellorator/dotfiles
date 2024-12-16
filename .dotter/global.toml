@@ -1,3 +1,7 @@
+[default]
+depends = ["hyprland", "fish", "nvim"]
+
+
 [graphics.variables]
 background = "~/Pictures/backgrounds/blue-black-hole_3840x2160.png"
 
@@ -9,6 +13,7 @@ refresh_rate = "60"
 [graphics.variables.font]
 monospace = "Hurmit Nerd Font"
 size = "10.5"
+
 
 [hyprland]
 depends = ["graphics", "rofi", "kitty", "backgrounds"]
@@ -46,5 +51,12 @@ depends = ["graphics"]
 "kitty" = "~/.config/kitty"
 
 
+[fish]
+depends = ["nvim"]
+
 [fish.files]
 "fish/config.fish" = "~/.config/fish/config.fish"
+
+
+[nvim.files]
+nvim = {target = "~/.config/nvim", type = "symbolic", recurse = false}

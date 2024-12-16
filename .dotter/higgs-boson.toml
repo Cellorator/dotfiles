@@ -1,4 +1,4 @@
-packages = ["hyprland", "fish"]
+packages = ["default"]
 
 [variables]
 monitor_name = "eDP-1"
