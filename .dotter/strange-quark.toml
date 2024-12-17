@@ -1,1 +1,5 @@
 packages = ["default"]
+
+[variables]
+monitor_name = "HDMI-A-1"
+display.refresh_rate = "74.97"
