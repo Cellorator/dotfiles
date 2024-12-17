@@ -5,6 +5,10 @@
 @define-color secondary-color #252535;
 @define-color tertiary-color #8992a7;
 
+button {
+    box-shadow: none;
+}
+
 .bar-box {
     font-family: {{font.monospace}};
     font-size: {{font.size}}pt;
