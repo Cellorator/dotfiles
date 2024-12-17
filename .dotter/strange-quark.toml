@@ -1,4 +1,4 @@
-packages = ["default"]
+packages = ["default", "gaming"]
 
 [variables]
 monitor_name = "HDMI-A-1"

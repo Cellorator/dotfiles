@@ -73,3 +73,6 @@ nvim = {target = "~/.config/nvim", type = "symbolic", recurse = false}
 
 [emacs.files]
 emacs = "~/.config/emacs"
+
+[gaming.files]
+mangohud = "~/.config/MangoHud/MangoHud.conf"
