@@ -1,5 +1,6 @@
 import { bind, Variable } from 'astal'
 import { Astal, Gtk, Gdk } from 'astal/gtk3'
+import { timeout } from 'astal/time'
 import Notifd from 'gi://AstalNotifd'
 import {
     LeftHardCircleSeparator,
@@ -13,6 +14,9 @@ export default function Notifications(gdkmonitor: Gdk.Monitor) {
            className='notifications-window'
            gdkmonitor={gdkmonitor}
            anchor={Astal.WindowAnchor.TOP | Astal.WindowAnchor.RIGHT}
+           marginTop={32}
+           marginLeft={4}
+           marginRight={4}
            exclusivity={Astal.Exclusivity.IGNORE}>
            <box vertical>
              {
@@ -29,8 +33,13 @@ export default function Notifications(gdkmonitor: Gdk.Monitor) {
 function Notification(id: number) {
   const n = notifd.get_notification(id)
   return <eventbox
-           onClick={() => {
+           onClick={(self) => {
              n.dismiss()
+           }}
+           setup={(self) => {
+             timeout(15000, () => {
+               n.dismiss()
+             })
            }}>
            <box className={`notification ${n.id}`} vertical>
              <centerbox className='title' halign={Gtk.Align.CENTER}>
