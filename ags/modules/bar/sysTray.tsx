@@ -14,33 +14,26 @@ export default function SysTray() {
 }
 
 function SysTrayItem(item: Tray.TrayItem) {
-  const content = <box>
-                    {bind(tray, 'items').as(items => {
-                      let arr = [
-                        <icon className='icon' gIcon={bind(item, 'gicon')}></icon>,
-                        BackwardSlashSeparator()
-                      ]
+  const button = <menubutton
+                   tooltipMarkup={bind(item, "tooltipMarkup")}
+                   usePopover={false}
+                   actionGroup={bind(item, "action-group").as(ag => ["dbusmenu", ag])}
+                   menuModel={bind(item, "menu-model")}>
+                   <icon className='icon' gIcon={bind(item, "gicon")} />
+                 </menubutton>
 
-                      if (items.at(-1) === item) {
-                        arr.pop()
-                      }
-                      return arr
-                    })}
-                  </box>
+  return <box>
+           {bind(tray, 'items').as(items => {
+             let arr = [
+               button,
+               BackwardSlashSeparator()
+             ]
 
-  const menu = item.create_menu()
-
-  return <button
-           tooltipMarkup={bind(item, 'tooltipMarkup')}
-           onDestroy={() => menu?.destroy()}
-           onClick={(self, event) => {
-             if (event.button == Astal.MouseButton.PRIMARY) {
-               item.activate(100, 100)
-             } else if (event.button == Astal.MouseButton.SECONDARY) {
-               menu?.popup_at_widget(self, Gdk.Gravity.SOUTH, Gdk.Gravity.NORTH, null)
+             if (items.at(-1) === item) {
+               arr.pop()
              }
-           }}>
-           {content}
-         </button>
+             return arr
+           })}
+         </box>
 };
 
