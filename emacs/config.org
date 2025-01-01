@@ -40,11 +40,11 @@
 
 (setq default-font "Hurmit Nerd Font")
 (setq monospace-font default-font)
-(setq variable-width-font "Metropolis")
-(set-face-attribute 'default nil :family default-font :height 120)
-(set-face-attribute 'fixed-pitch nil :family monospace-font :height 120)
+;; (setq variable-width-font "Metropolis")
+(set-face-attribute 'default nil :family default-font :height 105)
+(set-face-attribute 'fixed-pitch nil :family monospace-font :height 105)
 
-(set-face-attribute 'variable-pitch nil :family variable-width-font :height 1.2)
+;; (set-face-attribute 'variable-pitch nil :family variable-width-font :height 1.2)
 
 (global-visual-line-mode) ; Enable line wrap
 
