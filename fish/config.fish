@@ -16,7 +16,7 @@ status is-interactive; and begin
     abbr --add -- gd 'git diff'
     abbr --add -- gd. 'git diff .'
     abbr --add -- gi 'git init'
-    abbr --add -- gl 'git log --oneline'
+    abbr --add -- gl 'git log -10 --oneline'
     abbr --add -- gp 'git push'
     abbr --add -- gpl 'git pull'
     abbr --add -- gr 'git reset'
