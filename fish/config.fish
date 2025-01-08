@@ -8,23 +8,28 @@ status is-interactive; and begin
     pfetch
 
     # Abbreviations
-    abbr --add -- cd z
-    abbr --add -- ga 'git add'
-    abbr --add -- ga. 'git add .'
-    abbr --add --set-cursor -- gc 'git commit -m  "%"'
-    abbr --add -- gco 'git checkout'
-    abbr --add -- gd 'git diff'
-    abbr --add -- gd. 'git diff .'
-    abbr --add -- gi 'git init'
-    abbr --add -- gl 'git log -10 --oneline'
-    abbr --add -- gp 'git push'
-    abbr --add -- gpl 'git pull'
-    abbr --add -- gr 'git reset'
-    abbr --add -- gs 'git status'
-    abbr --add -- mk make
-    abbr --add -- nhh 'nh home switch'
-    abbr --add -- nho 'nh os switch'
-    abbr --add -- vi nvim
+    abbr -a cd z
+
+    abbr -a ga 'git add'
+    abbr -a ga. 'git add .'
+    abbr -a --set-cursor gc 'git commit -m  "%"'
+    abbr -a gco 'git checkout'
+    abbr -a gd 'git diff'
+    abbr -a gd. 'git diff .'
+    abbr -a gi 'git init'
+    abbr -a gl 'git log -10 --oneline'
+    abbr -a gp 'git push'
+    abbr -a gpl 'git pull'
+    abbr -a gr 'git reset'
+    abbr -a gs 'git status'
+
+    abbr -a mk make
+
+    abbr -a vi nvim
+
+    abbr -a cl clear
+
+    abbr -a py python
 
     # Aliases
     alias bat 'bat -n'
