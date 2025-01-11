@@ -1,4 +1,4 @@
-+title: My Emacs Config
+#+title: My Emacs Config
 #+author: Cellorator
 #+property: header-args :tangle "./init.el"
 #+auto_tangle: t
@@ -55,6 +55,7 @@
 (setq make-backup-files nil)
 (setq auto-save-default nil)
 
+(setq tab-width 4)
 (setq-default indent-tabs-mode nil) ;; Use spaces instead of tabs
 
 (setq-default show-trailing-whitespace t) ;; Highligh trailing spaces
@@ -224,8 +225,7 @@ Useful thingies
   :config (yas-global-mode 1)
   :ensure t)
 #+end_src
-*** Languages
-**** Lsp
+*** Lsp
 #+begin_src emacs-lisp
 (use-package lsp-mode
   :custom
@@ -242,21 +242,22 @@ Useful thingies
    (csharp-mode . lsp))
   :ensure t)
 #+end_src
-**** Treesittter
+*** Treesittter
 #+begin_src emacs-lisp
 (use-package treesit-auto
-  :custom (treesit-auto-install t)
+  :custom
+  (treesit-auto-install 'prompt)
+  (treesit-font-lock-level 4)
   :config
   (treesit-auto-add-to-auto-mode-alist 'all)
   (global-treesit-auto-mode)
   :ensure t)
 #+end_src
-
-**** C#
+*** Languages
 #+begin_src emacs-lisp
-(use-package csharp-mode
-  ;; :config (add-to-list 'auto-mode-alist '("\\.cs\\'" . csharp-mode))
-  :ensure t)
+;; (use-package csharp-mode :ensure t)
+;; (use-package python-mode :ensure t)
+;; (use-package lua-mode :ensure t)
 #+end_src
 
 *** Misc
@@ -296,6 +297,10 @@ Useful thingies
 Some small quality of life stuff
 
 #+begin_src emacs-lisp
+(use-package dtrt-indent
+  :config (dtrt-indent-global-mode)
+  :ensure t)
+
 (use-package smartparens
   :config
   (smartparens-global-mode)
@@ -320,11 +325,11 @@ Some small quality of life stuff
   (kanagawa-themes-org-height t)
   (kanagawa-themes-org-highlight t)
   :ensure t)
-;; (use-package doom-themes
-;;   :config
-;;   (doom-themes-org-config)
-;;   (load-theme 'doom-old-hope t)
-;;   :ensure t)
+(use-package doom-themes
+  ;; :config
+  (doom-themes-org-config)
+  ;; (load-theme 'doom-monokai-spectrum t)
+  :ensure t)
 #+end_src
 ** Note-Taking
 *** org-mode

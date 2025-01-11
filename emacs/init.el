@@ -45,6 +45,7 @@
 (setq make-backup-files nil)
 (setq auto-save-default nil)
 
+(setq tab-width 4)
 (setq-default indent-tabs-mode nil) ;; Use spaces instead of tabs
 
 (setq-default show-trailing-whitespace t) ;; Highligh trailing spaces
@@ -204,15 +205,17 @@
   :ensure t)
 
 (use-package treesit-auto
-  :custom (treesit-auto-install t)
+  :custom
+  (treesit-auto-install 'prompt)
+  (treesit-font-lock-level 4)
   :config
   (treesit-auto-add-to-auto-mode-alist 'all)
   (global-treesit-auto-mode)
   :ensure t)
 
-(use-package csharp-mode
-  ;; :config (add-to-list 'auto-mode-alist '("\\.cs\\'" . csharp-mode))
-  :ensure t)
+;; (use-package csharp-mode :ensure t)
+;; (use-package python-mode :ensure t)
+;; (use-package lua-mode :ensure t)
 
 (use-package embark
   :general
@@ -245,6 +248,10 @@
   :hook (pdf-view-mode . (lambda () (display-line-numbers-mode -1))) ;; Remove line numbers
   :ensure t)
 
+(use-package dtrt-indent
+  :config (dtrt-indent-global-mode)
+  :ensure t)
+
 (use-package smartparens
   :config
   (smartparens-global-mode)
@@ -267,11 +274,11 @@
   (kanagawa-themes-org-height t)
   (kanagawa-themes-org-highlight t)
   :ensure t)
-;; (use-package doom-themes
-;;   :config
-;;   (doom-themes-org-config)
-;;   (load-theme 'doom-old-hope t)
-;;   :ensure t)
+(use-package doom-themes
+  ;; :config
+  (doom-themes-org-config)
+  ;; (load-theme 'doom-monokai-spectrum t)
+  :ensure t)
 
 (use-package org
   :custom
