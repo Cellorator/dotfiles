@@ -561,3 +561,18 @@
 ;;   (if (eq major-mode 'pdf-view-mode)
 ;;       (org-noter-sync-current-note)
 ;;     (org-noter)))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(org-export-use-babel 'inline-only nil nil "Customized with use-package org")
+ '(org-preview-latex-default-process 'dvisvgm nil nil "Customized with use-package org")
+ '(package-selected-packages
+   '(dtrt-indent yasnippet which-key vertico undo-fu-session undo-fu treesit-auto smartparens restart-emacs pdf-tools org-roam-ui org-noter org-modern org-fragtog org-auto-tangle org-appear orderless olivetti marginalia magit lsp-mode kanagawa-themes general evil-org evil-commentary evil-collection embark-consult doom-themes denote corfu citar-org-roam citar-embark cape)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
