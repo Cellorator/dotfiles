@@ -308,18 +308,23 @@
      ("n" "Note" entry
       (file+headline "~/notes/inbox.org" "Notes")
       "* %?")))
+  ;; Org babel stuff
+  (org-babel-no-eval-on-ctrl-c-ctrl-c nil)
+  (org-confirm-babel-evaluate nil)
   :config
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((emacs-lisp . t)
      (org . t)
-     (latex . t)))
+     (latex . t)
+     (python . t)))
   :hook
   (org-mode . (lambda () (display-line-numbers-mode -1))) ;; Remove line numbers
   :general
   (<leader>
     "o" '(:ignore t :wk "org-mode")
-    "ole" '(org-latex-export-to-pdf :wk "Export to latex pdf"))
+    "ole" '(org-latex-export-to-pdf :wk "Export to latex pdf")
+    "or" '(org-babel-execute-src-block :wk "Execute code block"))
   (:keymaps 'override (general-nmap "RET" 'org-open-at-point)))
 
 (use-package org

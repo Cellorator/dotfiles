@@ -297,7 +297,8 @@
    'org-babel-load-languages
    '((emacs-lisp . t)
      (org . t)
-     (latex . t)))
+     (latex . t)
+     (python . t)))
   :hook
   (org-mode . (lambda () (display-line-numbers-mode -1))) ;; Remove line numbers
   :general
