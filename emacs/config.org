@@ -336,11 +336,11 @@ Some small quality of life stuff
 #+begin_src emacs-lisp
 (use-package org
   :custom
-  (org-startup-indented t)
+  (org-startup-indented t) ; Indent heading  levels
   (org-startup-folded 'show2levels)
   (org-src-tab-acts-natively t) ; Make tab work in code blocks
   (org-src-preserve-indentation t) ; Stop annoying indentation when making a new line in code blocks
-  (org-export-babel-evaluate 'inline-only)
+  (org-cycle-separator-lines -1) ; Don't fold empty lines between headings
   ;; Latex stuff
   (org-latex-packages-alist
    '(("" "esvect")
@@ -364,6 +364,7 @@ Some small quality of life stuff
       (file+headline "~/notes/inbox.org" "Notes")
       "* %?")))
   ;; Org babel stuff
+  (org-export-babel-evaluate 'inline-only)
   (org-babel-no-eval-on-ctrl-c-ctrl-c nil)
   (org-confirm-babel-evaluate nil)
   :config
