@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: Property Drawer
-# key: :p
-# --
-:PROPERTIES:
-$0
-:END:
