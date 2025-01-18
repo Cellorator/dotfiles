@@ -105,7 +105,7 @@
   :states '(normal insert visual emacs)
   :keymaps 'override
   :prefix "SPC"
-  :global-prefix "M-SPC")
+  :global-prefix "C-SPC")
 
 ;; Copy paste
 (<leader>
@@ -280,7 +280,7 @@
   (org-cycle-separator-lines -1) ; Don't fold empty lines between headings
   ;; Latex stuff
   (org-latex-packages-alist
-   '(("" "esvect")
+   '(("" "physics")
      ("" "tikz")
      ("" "tikz-cd")))
   (org-latex-create-formula-image-program 'dvisvgm) ; Makes tikz preview work

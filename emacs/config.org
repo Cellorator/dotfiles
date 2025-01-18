@@ -133,7 +133,7 @@ Setting the leader key and some basic commands for navigating emacs and the file
   :states '(normal insert visual emacs)
   :keymaps 'override
   :prefix "SPC"
-  :global-prefix "M-SPC")
+  :global-prefix "C-SPC")
 
 ;; Copy paste
 (<leader>
@@ -335,7 +335,7 @@ Some small quality of life stuff
   (org-cycle-separator-lines -1) ; Don't fold empty lines between headings
   ;; Latex stuff
   (org-latex-packages-alist
-   '(("" "esvect")
+   '(("" "physics")
      ("" "tikz")
      ("" "tikz-cd")))
   (org-latex-create-formula-image-program 'dvisvgm) ; Makes tikz preview work
