@@ -199,7 +199,8 @@
           '(orderless))) ;; Configure orderless
   :hook
   ((lsp-completion-mode . my/lsp-mode-setup-completion)
-   (csharp-mode . lsp))
+   (csharp-ts-mode . lsp-deferred)
+   (python-ts-mode . lsp-deferred))
   :ensure t)
 
 (use-package treesit-auto
@@ -211,9 +212,7 @@
   (global-treesit-auto-mode)
   :ensure t)
 
-;; (use-package csharp-mode :ensure t)
-;; (use-package python-mode :ensure t)
-;; (use-package lua-mode :ensure t)
+(use-package lua-mode :ensure t)
 
 ;; Annotations in completion UI
 (use-package marginalia
@@ -251,19 +250,19 @@
 (use-package restart-emacs :ensure t)
 
 (use-package kanagawa-themes
-  :config (load-theme 'kanagawa-dragon t)
-  :custom
-  (kanagawa-themes-comment-italic t)
-  (kanagawa-themes-org-agenda-height t)
-  (kanagawa-themes-org-agenda-priority-bold t)
-  (kanagawa-themes-org-bold t)
-  (kanagawa-themes-org-height t)
-  (kanagawa-themes-org-highlight t)
+  ;; :config (load-theme 'kanagawa-dragon t)
+  ;; :custom
+  ;; (kanagawa-themes-comment-italic t)
+  ;; (kanagawa-themes-org-agenda-height t)
+  ;; (kanagawa-themes-org-agenda-priority-bold t)
+  ;; (kanagawa-themes-org-bold t)
+  ;; (kanagawa-themes-org-height t)
+  ;; (kanagawa-themes-org-highlight t)
   :ensure t)
 (use-package doom-themes
-  ;; :config
+  :config
   (doom-themes-org-config)
-  ;; (load-theme 'doom-monokai-spectrum t)
+  (load-theme 'doom-monokai-spectrum t)
   :ensure t)
 
 (use-package org
