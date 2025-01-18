@@ -10,7 +10,8 @@
 
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
                          ("org" . "https://orgmode.org/elpa/")
-                         ("elpa" . "https://elpa.gnu.org/packages/")))
+                         ("elpa" . "https://elpa.gnu.org/packages/")
+                         ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
 
 (package-initialize)
 (unless package-archive-contents
@@ -170,6 +171,15 @@ Setting the leader key and some basic commands for navigating emacs and the file
 * Packages
 ** Tools
 Useful thingies
+
+*** Eat
+#+begin_src emacs-lisp
+(use-package eat
+  :general
+  (<leader>
+    "RET" '(eat :wk "Open eat"))
+  :ensure t)
+#+end_src
 
 *** Completion
 #+begin_src emacs-lisp

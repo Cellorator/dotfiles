@@ -3,7 +3,8 @@
 
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
                          ("org" . "https://orgmode.org/elpa/")
-                         ("elpa" . "https://elpa.gnu.org/packages/")))
+                         ("elpa" . "https://elpa.gnu.org/packages/")
+                         ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
 
 (package-initialize)
 (unless package-archive-contents
@@ -138,6 +139,12 @@
 (<leader>
   "rr" '(reload-config :wk "Reload configuration")
   "re" '(restart-emacs :wk "Restart Emacs"))
+
+(use-package eat
+  :general
+  (<leader>
+    "RET" '(eat :wk "Open eat"))
+  :ensure t)
 
 ;; A completion-style for space separated completion
 (use-package orderless
