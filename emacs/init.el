@@ -107,10 +107,6 @@
   :prefix "SPC"
   :global-prefix "M-SPC")
 
-;; Macros
-(general-def
-  "C-SPC" (general-simulate-key "C-c"))
-
 ;; Copy paste
 (<leader>
   "y" '(clipboard-kill-ring-save :wk "Copy to clipboard")
@@ -148,10 +144,6 @@
   :ensure t
   :custom
   (completion-styles '(orderless partial-completion basic))
-  (orderless-matching-styles '(orderless-initialism
-                               orderless-literal
-                               orderless-regexp
-                               orderless-flex))
   (completion-category-defaults nil)
   (completion-category-overrides '((file (styles partial-completion)))))
 

@@ -135,10 +135,6 @@ Setting the leader key and some basic commands for navigating emacs and the file
   :prefix "SPC"
   :global-prefix "M-SPC")
 
-;; Macros
-(general-def
-  "C-SPC" (general-simulate-key "C-c"))
-
 ;; Copy paste
 (<leader>
   "y" '(clipboard-kill-ring-save :wk "Copy to clipboard")
@@ -182,10 +178,6 @@ Useful thingies
   :ensure t
   :custom
   (completion-styles '(orderless partial-completion basic))
-  (orderless-matching-styles '(orderless-initialism
-                               orderless-literal
-                               orderless-regexp
-                               orderless-flex))
   (completion-category-defaults nil)
   (completion-category-overrides '((file (styles partial-completion)))))
 
