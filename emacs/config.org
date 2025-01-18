@@ -263,18 +263,6 @@ Useful thingies
 
 *** Misc
 #+begin_src emacs-lisp
-(use-package embark
-  :general
-  (<leader>
-    :states '(normal visual)
-    "RET" 'embark-act)
-  :ensure t)
-(use-package embark-consult
-  :ensure t ; only need to install it, embark loads it after consult if found
-  :hook
-  (embark-collect-mode . consult-preview-at-point-mode)
-  :ensure t)
-
 ;; Annotations in completion UI
 (use-package marginalia
   :init (marginalia-mode)
