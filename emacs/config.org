@@ -24,6 +24,7 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 #+end_src
+
 * Options
 ** Main
 #+begin_src emacs-lisp
@@ -61,6 +62,7 @@
 
 (setq-default show-trailing-whitespace t) ;; Highligh trailing spaces
 #+end_src
+
 ** Android
 *** Use Termux binaries
 #+begin_src emacs-lisp :tangle ./early-init.el
@@ -82,6 +84,7 @@
   ;; Make keybinds work with on-screen keyboard
   (setq overriding-text-conversion-style nil))
 #+end_src
+
 * Keybinds
 My keybinds powered by general.el and evil
 ** Setup
@@ -125,6 +128,7 @@ My keybinds powered by general.el and evil
   (which-key-add-column-padding 3)
   :config (which-key-mode))
 #+end_src
+
 ** Basics
 Setting the leader key and some basic commands for navigating emacs and the filesystem
 
@@ -168,10 +172,10 @@ Setting the leader key and some basic commands for navigating emacs and the file
   "rr" '(reload-config :wk "Reload configuration")
   "re" '(restart-emacs :wk "Restart Emacs"))
 #+end_src
+
 * Packages
 ** Tools
 Useful thingies
-
 *** Eat
 #+begin_src emacs-lisp
 (use-package eat
@@ -180,7 +184,6 @@ Useful thingies
     "RET" '(eat :wk "Open eat"))
   :ensure t)
 #+end_src
-
 *** Completion
 #+begin_src emacs-lisp
 ;; A completion-style for space separated completion
@@ -260,7 +263,6 @@ Useful thingies
 ;; (use-package python-mode :ensure t)
 ;; (use-package lua-mode :ensure t)
 #+end_src
-
 *** Misc
 #+begin_src emacs-lisp
 ;; Annotations in completion UI
@@ -282,6 +284,7 @@ Useful thingies
   :hook (pdf-view-mode . (lambda () (display-line-numbers-mode -1))) ;; Remove line numbers
   :ensure t)
 #+end_src
+
 ** QOL
 Some small quality of life stuff
 
@@ -302,6 +305,7 @@ Some small quality of life stuff
 
 (use-package restart-emacs :ensure t)
 #+end_src
+
 ** Theme
  #+begin_src emacs-lisp
 (use-package kanagawa-themes
@@ -320,6 +324,7 @@ Some small quality of life stuff
   ;; (load-theme 'doom-monokai-spectrum t)
   :ensure t)
 #+end_src
+
 ** Note-Taking
 *** org-mode
 **** Options
