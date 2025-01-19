@@ -255,21 +255,45 @@
 
 (use-package restart-emacs :ensure t)
 
-(use-package kanagawa-themes
-  ;; :config (load-theme 'kanagawa-dragon t)
-  ;; :custom
-  ;; (kanagawa-themes-comment-italic t)
-  ;; (kanagawa-themes-org-agenda-height t)
-  ;; (kanagawa-themes-org-agenda-priority-bold t)
-  ;; (kanagawa-themes-org-bold t)
-  ;; (kanagawa-themes-org-height t)
-  ;; (kanagawa-themes-org-highlight t)
-  :ensure t)
-(use-package doom-themes
-  :config
-  (doom-themes-org-config)
-  (load-theme 'doom-monokai-spectrum t)
-  :ensure t)
+   (use-package kanagawa-themes
+     ;; :config (load-theme 'kanagawa-dragon t)
+     ;; :custom
+     ;; (kanagawa-themes-comment-italic t)
+     ;; (kanagawa-themes-org-agenda-height t)
+     ;; (kanagawa-themes-org-agenda-priority-bold t)
+     ;; (kanagawa-themes-org-bold t)
+     ;; (kanagawa-themes-org-height t)
+     ;; (kanagawa-themes-org-highlight t)
+     :ensure t)
+
+   (use-package doom-themes
+     :config
+     (doom-themes-org-config)
+     (load-theme 'doom-monokai-spectrum t)
+     :ensure t)
+
+   (use-package telephone-line
+     :init
+     (telephone-line-mode 1)
+     :config
+     (defvar telephone-line-circle-right
+       (make-instance 'telephone-line-unicode-separator
+                      :char #xe0b6
+                      :inverse-video nil))
+     (defvar telephone-line-circle-left
+       (make-instance 'telephone-line-unicode-separator
+                      :char #xe0b4))
+     (defvar telephone-line-slash-right
+       (make-instance 'telephone-line-unicode-separator
+                      :char #xe0bd
+                      :inverse-video nil))
+     (defvar telephone-line-slash-left
+       (make-instance 'telephone-line-unicode-separator
+                      :char #xe0b9))
+     :custom
+     (telephone-line-primary-right-separator 'telephone-line-circle-right)
+     (telephone-line-primary-left-separator 'telephone-line-circle-left)
+     :ensure t)
 
 (use-package org
   :custom
