@@ -143,7 +143,9 @@
 (use-package eat
   :general
   (<leader>
-    "RET" '(eat :wk "Open eat"))
+    "RET" '(eat-other-window :wk "Open eat"))
+  :hook
+  (eat-mode . (lambda () (setq show-trailing-whitespace nil)))
   :ensure t)
 
 ;; A completion-style for space separated completion
@@ -231,6 +233,10 @@
   :unless (eq system-type 'android)
   :config (pdf-loader-install)
   :hook (pdf-view-mode . (lambda () (display-line-numbers-mode -1))) ;; Remove line numbers
+  :ensure t)
+
+(use-package frames-only-mode
+  :init (frames-only-mode)
   :ensure t)
 
 (use-package dtrt-indent
@@ -329,7 +335,8 @@
   ;; Make the document title a bit bigger
   (set-face-attribute 'org-document-title nil :font monospace-font :weight
                       'bold :height 1.5)
-  (plist-put org-format-latex-options :scale 1.3)) ; Make latex preview bigger
+  (plist-put org-format-latex-options :scale 0.45) ; Make latex preview bigger
+  (setf (cdr (assoc 'file org-link-frame-setup)) 'find-file)) ; Open files in same window
 
 ;; Replace text with cool symbols
 (use-package org-modern
