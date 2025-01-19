@@ -281,6 +281,7 @@
   ;; Latex stuff
   (org-latex-packages-alist
    '(("" "physics")
+     ("" "esvect")
      ("" "tikz")
      ("" "tikz-cd")))
   (org-latex-create-formula-image-program 'dvisvgm) ; Makes tikz preview work
