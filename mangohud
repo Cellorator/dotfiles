@@ -100,7 +100,7 @@ engine_version
 # vulkan_driver
 wine
 exec_name
-# winesync
+winesync
 # present_mode
 
 ### Display loaded MangoHud architecture
