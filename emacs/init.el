@@ -180,6 +180,7 @@
   :custom
   (corfu-auto t)
   (corfu-cycle t)
+  (global-corfu-minibuffer nil)
   (corfu-on-exact-match nil)
   :init (global-corfu-mode)
   :ensure t)
