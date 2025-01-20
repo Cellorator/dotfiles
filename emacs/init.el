@@ -179,7 +179,8 @@
 (use-package corfu
   :custom
   (corfu-auto t)
-  (global-corfu-minibuffer nil)
+  (corfu-cycle t)
+  (corfu-on-exact-match nil)
   :init (global-corfu-mode)
   :ensure t)
 
@@ -189,7 +190,6 @@
   (add-hook 'completion-at-point-functions #'cape-dabbrev)
   (add-hook 'completion-at-point-functions #'cape-file)
   (add-hook 'completion-at-point-functions #'cape-elisp-block)
-  (add-hook 'completion-at-point-functions #'cape-tex)
   :ensure t)
 
 (use-package yasnippet
