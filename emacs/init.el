@@ -145,7 +145,9 @@
   (<leader>
     "RET" '(eat-other-window :wk "Open eat"))
   :hook
-  (eat-mode . (lambda () (setq show-trailing-whitespace nil)))
+  (eat-mode . (lambda ()
+                (setq show-trailing-whitespace nil)
+                (display-line-numbers-mode -1)))
   :ensure t)
 
 ;; A completion-style for space separated completion
