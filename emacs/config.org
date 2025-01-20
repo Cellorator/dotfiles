@@ -29,7 +29,6 @@
 ** Main
 #+begin_src emacs-lisp
 (setq inhibit-startup-message t) ; Don't show splash screen
-(setq warning-minimum-level :emergency)
 
 (setq frame-resize-pixelwise t) ; Remove weird gaps at bottom and right edges
 
@@ -186,6 +185,12 @@ Useful thingies
                 (setq show-trailing-whitespace nil)
                 (display-line-numbers-mode -1)))
   :ensure t)
+
+(defun new-eat ()
+  (interactive)
+  (when (string-match "\*eat\*" (buffer-name))
+    (rename-uniquely))
+  (eat))
 #+end_src
 
 #+RESULTS:
@@ -317,16 +322,11 @@ Some small quality of life stuff
 
 ** Theme
  #+begin_src emacs-lisp
-(use-package kanagawa-themes
-  ;; :config (load-theme 'kanagawa-dragon t)
-  ;; :custom
-  ;; (kanagawa-themes-comment-italic t)
-  ;; (kanagawa-themes-org-agenda-height t)
-  ;; (kanagawa-themes-org-agenda-priority-bold t)
-  ;; (kanagawa-themes-org-bold t)
-  ;; (kanagawa-themes-org-height t)
-  ;; (kanagawa-themes-org-highlight t)
-  :ensure t)
+;; (use-package kanagawa-themes
+;;   :config (load-theme 'kanagawa-dragon t)
+;;   :custom
+;;   (kanagawa-themes-org-height nil)
+;;   :ensure t)
 
 (use-package doom-themes
   :config
@@ -389,7 +389,7 @@ Some small quality of life stuff
   (org-cycle-separator-lines -1) ; Don't fold empty lines between headings
   ;; Latex stuff
   (org-latex-packages-alist
-   '(("" "physics")
+   '(("" "esdiff")
      ("" "esvect")
      ("" "tikz")
      ("" "tikz-cd")))

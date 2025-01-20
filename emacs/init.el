@@ -18,7 +18,6 @@
 (setq use-package-always-ensure t)
 
 (setq inhibit-startup-message t) ; Don't show splash screen
-(setq warning-minimum-level :emergency)
 
 (setq frame-resize-pixelwise t) ; Remove weird gaps at bottom and right edges
 
@@ -150,6 +149,12 @@
                 (display-line-numbers-mode -1)))
   :ensure t)
 
+(defun new-eat ()
+  (interactive)
+  (when (string-match "\*eat\*" (buffer-name))
+    (rename-uniquely))
+  (eat))
+
 ;; A completion-style for space separated completion
 (use-package orderless
   :ensure t
@@ -257,16 +262,11 @@
 
 (use-package restart-emacs :ensure t)
 
-(use-package kanagawa-themes
-  ;; :config (load-theme 'kanagawa-dragon t)
-  ;; :custom
-  ;; (kanagawa-themes-comment-italic t)
-  ;; (kanagawa-themes-org-agenda-height t)
-  ;; (kanagawa-themes-org-agenda-priority-bold t)
-  ;; (kanagawa-themes-org-bold t)
-  ;; (kanagawa-themes-org-height t)
-  ;; (kanagawa-themes-org-highlight t)
-  :ensure t)
+;; (use-package kanagawa-themes
+;;   :config (load-theme 'kanagawa-dragon t)
+;;   :custom
+;;   (kanagawa-themes-org-height nil)
+;;   :ensure t)
 
 (use-package doom-themes
   :config
@@ -324,7 +324,7 @@
   (org-cycle-separator-lines -1) ; Don't fold empty lines between headings
   ;; Latex stuff
   (org-latex-packages-alist
-   '(("" "physics")
+   '(("" "esdiff")
      ("" "esvect")
      ("" "tikz")
      ("" "tikz-cd")))
