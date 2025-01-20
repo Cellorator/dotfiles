@@ -408,7 +408,7 @@
 
 ;; Center text
 (use-package olivetti
-  :custom (olivetti-body-width 0.65)
+  :custom (olivetti-body-width 0.50)
   :hook org-mode
   :ensure t)
 
