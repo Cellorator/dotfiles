@@ -63,7 +63,7 @@
 #+end_src
 
 ** Android
-*** Use Termux binaries
+** Use Termux binaries
 #+begin_src emacs-lisp :tangle ./early-init.el
 (when (eq system-type 'android)
   (setenv "PATH" (format "%s:%s" "/data/data/com.termux/files/usr/bin"
@@ -177,7 +177,7 @@ Useful thingies
 *** Eat Terminal Emulator
 #+begin_src emacs-lisp
 (use-package eat
-  :general
+ :general
   (<leader>
     "RET" '(eat-other-window :wk "Open eat"))
   :hook
@@ -192,8 +192,6 @@ Useful thingies
     (rename-uniquely))
   (eat))
 #+end_src
-
-#+RESULTS:
 
 *** Completion
 #+begin_src emacs-lisp
@@ -297,7 +295,6 @@ Useful thingies
       orig-result)))
 (advice-add 'lsp-resolve-final-command :around #'lsp-booster--advice-final-command)
 #+end_src
-
 *** Treesittter
 #+begin_src emacs-lisp
 (use-package treesit-auto
@@ -343,6 +340,7 @@ Some small quality of life stuff
   :init (frames-only-mode)
   :ensure t)
 
+;; Automatically set indentation per filetype
 (use-package dtrt-indent
   :config (dtrt-indent-global-mode)
   :ensure t)
@@ -362,16 +360,9 @@ Some small quality of life stuff
 
 ** Theme
  #+begin_src emacs-lisp
-;; (use-package kanagawa-themes
-;;   :config (load-theme 'kanagawa-dragon t)
-;;   :custom
-;;   (kanagawa-themes-org-height nil)
-;;   :ensure t)
-
-(use-package doom-themes
+(use-package color-theme-sanityinc-tomorrow=
   :config
-  (doom-themes-org-config)
-  (load-theme 'doom-monokai-spectrum t)
+  (load-theme 'sanityinc-tomorrow-night t)
   :ensure t)
 
 (use-package telephone-line

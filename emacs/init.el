@@ -140,7 +140,7 @@
   "re" '(restart-emacs :wk "Restart Emacs"))
 
 (use-package eat
-  :general
+ :general
   (<leader>
     "RET" '(eat-other-window :wk "Open eat"))
   :hook
@@ -278,6 +278,7 @@
   :init (frames-only-mode)
   :ensure t)
 
+;; Automatically set indentation per filetype
 (use-package dtrt-indent
   :config (dtrt-indent-global-mode)
   :ensure t)
@@ -294,16 +295,9 @@
 
 (use-package restart-emacs :ensure t)
 
-;; (use-package kanagawa-themes
-;;   :config (load-theme 'kanagawa-dragon t)
-;;   :custom
-;;   (kanagawa-themes-org-height nil)
-;;   :ensure t)
-
-(use-package doom-themes
+(use-package color-theme-sanityinc-tomorrow=
   :config
-  (doom-themes-org-config)
-  (load-theme 'doom-monokai-spectrum t)
+  (load-theme 'sanityinc-tomorrow-night t)
   :ensure t)
 
 (use-package telephone-line
@@ -639,18 +633,3 @@
 ;;   (if (eq major-mode 'pdf-view-mode)
 ;;       (org-noter-sync-current-note)
 ;;     (org-noter)))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(org-export-use-babel 'inline-only nil nil "Customized with use-package org")
- '(org-preview-latex-default-process 'dvisvgm nil nil "Customized with use-package org")
- '(package-selected-packages
-   '(yasnippet which-key vertico undo-fu-session undo-fu treesit-auto telephone-line smartparens restart-emacs pdf-tools org-roam-ui org-noter org-modern org-fragtog org-auto-tangle org-appear orderless olivetti marginalia magit lua-mode kanagawa-themes general frames-only-mode evil-org evil-commentary evil-collection embark-consult eat dtrt-indent doom-themes denote corfu citar-org-roam citar-embark cape)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
