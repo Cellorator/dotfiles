@@ -295,7 +295,7 @@
 
 (use-package restart-emacs :ensure t)
 
-(use-package color-theme-sanityinc-tomorrow=
+(use-package color-theme-sanityinc-tomorrow
   :config
   (load-theme 'sanityinc-tomorrow-night t)
   :ensure t)

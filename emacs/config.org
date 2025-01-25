@@ -360,7 +360,7 @@ Some small quality of life stuff
 
 ** Theme
  #+begin_src emacs-lisp
-(use-package color-theme-sanityinc-tomorrow=
+(use-package color-theme-sanityinc-tomorrow
   :config
   (load-theme 'sanityinc-tomorrow-night t)
   :ensure t)
