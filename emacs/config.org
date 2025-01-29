@@ -459,7 +459,14 @@ Some small quality of life stuff
     "o" '(:ignore t :wk "org-mode")
     "ole" '(org-latex-export-to-pdf :wk "Export to latex pdf")
     "or" '(org-babel-execute-src-block :wk "Execute code block"))
-  (:keymaps 'override (general-nmap "RET" 'org-open-at-point)))
+  (:keymaps 'override
+            (general-nmap "RET" 'org-open-at-point)
+            (general-def :states '(normal insert)
+                     "C-M-<return>" '(lambda ()
+                                       (interactive)
+                                       (org-insert-heading-respect-content)
+                                       (org-do-demote)
+                                       (evil-append 1)))))
 #+end_src
 **** Theming
 #+begin_src emacs-lisp
@@ -482,6 +489,7 @@ Some small quality of life stuff
   (plist-put org-format-latex-options :scale 0.45) ; Make latex preview bigger
   (setf (cdr (assoc 'file org-link-frame-setup)) 'find-file)) ; Open files in same window
 #+end_src
+***** 
 **** Visuals
 #+begin_src emacs-lisp
 ;; Replace text with cool symbols

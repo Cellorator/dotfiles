@@ -389,7 +389,14 @@
     "o" '(:ignore t :wk "org-mode")
     "ole" '(org-latex-export-to-pdf :wk "Export to latex pdf")
     "or" '(org-babel-execute-src-block :wk "Execute code block"))
-  (:keymaps 'override (general-nmap "RET" 'org-open-at-point)))
+  (:keymaps 'override
+            (general-nmap "RET" 'org-open-at-point)
+            (general-def :states '(normal insert)
+                     "C-M-<return>" '(lambda ()
+                                       (interactive)
+                                       (org-insert-heading-respect-content)
+                                       (org-do-demote)
+                                       (evil-append 1)))))
 
 (use-package org
   :custom (org-startup-with-latex-preview t)
