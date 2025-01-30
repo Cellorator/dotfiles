@@ -359,7 +359,7 @@
   (org-latex-create-formula-image-program 'dvisvgm) ; Makes tikz preview work
   (org-preview-latex-image-directory (concat user-emacs-directory "cache/org-latex/"))
   ;; Org agenda
-  (org-agenda-files '("~/notes/inbox.org"))
+  (org-agenda-files '("~/notes/inbox/"))
   (org-agenda-todo-ignore-scheduled 'future)
   ;; Org captures
   (org-capture-templates
