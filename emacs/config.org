@@ -415,9 +415,11 @@ Some small quality of life stuff
   :custom
   (org-startup-indented t) ; Indent heading  levels
   (org-startup-folded 'show2levels)
+  (org-ellipsis "")
   (org-src-tab-acts-natively t) ; Make tab work in code blocks
   (org-src-preserve-indentation t) ; Stop annoying indentation when making a new line in code blocks
   (org-cycle-separator-lines -1) ; Don't fold empty lines between headings
+  (org-log-into-drawer "LOGBOOK") ; Put logging into drawer instead of plain text
   ;; Latex stuff
   (org-latex-packages-alist
    '(("" "esdiff")
