@@ -309,6 +309,13 @@ Useful thingies
 *** Languages
 #+begin_src emacs-lisp
 (use-package lua-mode :ensure t)
+(use-package lsp-pyright
+  :ensure t
+  :custom (lsp-pyright-langserver-command "pyright") ;; or basedpyright
+  :hook (python-mode . (lambda ()
+                          (require 'lsp-pyright)
+                          (lsp-deferred))))  ; or lsp-deferred
+
 #+end_src
 *** Misc
 #+begin_src emacs-lisp

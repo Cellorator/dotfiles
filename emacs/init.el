@@ -254,6 +254,12 @@
   :ensure t)
 
 (use-package lua-mode :ensure t)
+(use-package lsp-pyright
+  :ensure t
+  :custom (lsp-pyright-langserver-command "pyright") ;; or basedpyright
+  :hook (python-mode . (lambda ()
+                          (require 'lsp-pyright)
+                          (lsp-deferred))))  ; or lsp-deferred
 
 ;; Annotations in completion UI
 (use-package marginalia
