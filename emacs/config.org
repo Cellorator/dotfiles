@@ -177,7 +177,8 @@ Useful thingies
 *** Eat Terminal Emulator
 #+begin_src emacs-lisp
 (use-package eat
- :general
+  :custom (eat-buffer-name "terminal")
+  :general
   (<leader>
     "RET" '(eat-other-window :wk "Open eat"))
   :hook
@@ -746,3 +747,5 @@ Another knowledge management system, mostly used for its renaming functions
 ;;       (org-noter-sync-current-note)
 ;;     (org-noter)))
 #+end_src
+
+#+RESULTS:

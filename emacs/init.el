@@ -140,7 +140,8 @@
   "re" '(restart-emacs :wk "Restart Emacs"))
 
 (use-package eat
- :general
+  :custom (eat-buffer-name "terminal")
+  :general
   (<leader>
     "RET" '(eat-other-window :wk "Open eat"))
   :hook
