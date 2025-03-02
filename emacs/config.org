@@ -522,12 +522,6 @@ Some small quality of life stuff
   :hook (org-mode org-roam-mode)
   :after org
   :ensure t)
-
-;; Center text
-(use-package olivetti
-  :custom (olivetti-body-width 0.50)
-  :hook org-mode
-  :ensure t)
 #+end_src
 **** Extra Packages
 #+begin_src emacs-lisp

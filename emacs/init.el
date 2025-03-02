@@ -447,12 +447,6 @@
   :after org
   :ensure t)
 
-;; Center text
-(use-package olivetti
-  :custom (olivetti-body-width 0.50)
-  :hook org-mode
-  :ensure t)
-
 ;; For tangling configuration file on save
 (use-package org-auto-tangle
   :defer t
