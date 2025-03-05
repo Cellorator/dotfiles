@@ -201,6 +201,7 @@
 (use-package lsp-mode
   :custom
   (lsp-completion-provider :none) ;; we use Corfu!
+  (lsp-response-timeout 1) ;; Hopefully stops random hanging
   ;; Performance optimizations
   (gc-cons-threshold 1000000000)
   (read-process-output-max (* 1024 1024))
@@ -211,7 +212,9 @@
   :hook
   ((lsp-completion-mode . my/lsp-mode-setup-completion)
    (csharp-ts-mode . lsp-deferred)
-   (python-ts-mode . lsp-deferred))
+   (python-ts-mode . (lambda ()
+                       (require 'lsp-pyright)
+                       (lsp-deferred)))) ; or lsp-deferred
   :ensure t)
 
 (defun lsp-booster--advice-json-parse (old-fn &rest args)
@@ -257,10 +260,7 @@
 (use-package lua-mode :ensure t)
 (use-package lsp-pyright
   :ensure t
-  :custom (lsp-pyright-langserver-command "pyright") ;; or basedpyright
-  :hook (python-mode . (lambda ()
-                          (require 'lsp-pyright)
-                          (lsp-deferred))))  ; or lsp-deferred
+  :custom (lsp-pyright-langserver-command "basedpyright")) ;; or basedpyright
 
 ;; Annotations in completion UI
 (use-package marginalia
