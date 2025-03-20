@@ -747,5 +747,3 @@ Another knowledge management system, mostly used for its renaming functions
 ;;       (org-noter-sync-current-note)
 ;;     (org-noter)))
 #+end_src
-
-#+RESULTS:
