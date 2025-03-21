@@ -131,6 +131,11 @@
 (<leader> "j" '(next-multiframe-window :wk "Next window"))
 (<leader> "k" '(next-multiframe-window :wk "Previous window"))
 
+;; LSP
+(<leader>
+  "l" '(:ignore t :wk "LSP")
+  "lr" '(lsp-rename :wk "Rename symbol"))
+
 ;; Reload
 (defun reload-config()
   (interactive)
