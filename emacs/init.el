@@ -312,6 +312,9 @@
   (load-theme 'sanityinc-tomorrow-night t)
   :ensure t)
 
+(use-package doom-themes
+  :ensure t)
+
 (use-package telephone-line
   :init
   (telephone-line-mode 1)
@@ -386,7 +389,6 @@
       (file+headline "~/notes/inbox.org" "Notes")
       "* %?")))
   ;; Org babel stuff
-  (org-export-babel-evaluate 'inline-only)
   (org-babel-no-eval-on-ctrl-c-ctrl-c nil)
   (org-confirm-babel-evaluate nil)
   :config
