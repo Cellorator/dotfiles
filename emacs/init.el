@@ -188,8 +188,16 @@
   (corfu-cycle t)
   (global-corfu-minibuffer nil)
   (corfu-on-exact-match nil)
-  :init (global-corfu-mode)
+  :init
+  (global-corfu-mode)
   :ensure t)
+
+;; Hopefully fixes error when trying to autocomplete in text-mode
+(setopt text-mode-ispell-word-completion nil)
+(defun my-dabbrev-in-text()
+      (add-to-list 'completion-at-point-functions #'cape-dabbrev))
+(add-hook 'text-mode-hook #'my-dabbrev-in-text)
+
 
 (use-package cape
   :init
