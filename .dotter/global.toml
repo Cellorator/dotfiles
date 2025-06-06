@@ -1,5 +1,5 @@
 [default]
-depends = ["gtk", "hyprland", "bin", "fish", "nvim"]
+depends = ["gtk", "hyprland", "awesome", "bin", "fish", "nvim"]
 
 
 [graphics.variables]
@@ -40,6 +40,13 @@ depends = ["graphics", "rofi", "kitty", "emacs", "backgrounds"]
 monitor_name = "DP-1"
 monitor_scale = "1"
 sensitivity = "0"
+
+
+[awesome]
+depends = ["graphics", "rofi", "kitty", "emacs", "backgrounds"]
+
+[awesome.files]
+awesome = {target = "~/.config/awesome", type = "symbolic", recurse = false}
 
 
 [rofi]
