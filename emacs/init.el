@@ -50,17 +50,6 @@
 
 (setq-default show-trailing-whitespace t) ;; Highligh trailing spaces
 
-(when (string-equal system-type "android")
-  ;; Enable bars
-  (menu-bar-mode 1)
-  (tool-bar-mode 1)
-  ;; Set font
-  (set-face-attribute 'default nil :family "monospace")
-  ;; Open keyboard
-  (setq touch-screen-display-keyboard t)
-  ;; Make keybinds work with on-screen keyboard
-  (setq overriding-text-conversion-style nil))
-
 ;; More convenient keybind setting
 (use-package general
   :config (general-evil-setup t)
