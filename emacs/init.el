@@ -133,23 +133,6 @@
   "rr" '(reload-config :wk "Reload configuration")
   "re" '(restart-emacs :wk "Restart Emacs"))
 
-(use-package eat
-  :custom (eat-buffer-name "terminal")
-  :general
-  (<leader>
-    "RET" '(eat-other-window :wk "Open eat"))
-  :hook
-  (eat-mode . (lambda ()
-                (setq show-trailing-whitespace nil)
-                (display-line-numbers-mode -1)))
-  :ensure t)
-
-(defun new-eat ()
-  (interactive)
-  (when (string-match "\*eat\*" (buffer-name))
-    (rename-uniquely))
-  (eat))
-
 ;; A completion-style for space separated completion
 (use-package orderless
   :ensure t

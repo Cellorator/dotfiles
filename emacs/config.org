@@ -159,25 +159,6 @@ Setting the leader key and some basic commands for navigating emacs and the file
 * Packages
 ** Tools
 Useful thingies
-*** Eat Terminal Emulator
-#+begin_src emacs-lisp
-(use-package eat
-  :custom (eat-buffer-name "terminal")
-  :general
-  (<leader>
-    "RET" '(eat-other-window :wk "Open eat"))
-  :hook
-  (eat-mode . (lambda ()
-                (setq show-trailing-whitespace nil)
-                (display-line-numbers-mode -1)))
-  :ensure t)
-
-(defun new-eat ()
-  (interactive)
-  (when (string-match "\*eat\*" (buffer-name))
-    (rename-uniquely))
-  (eat))
-#+end_src
 
 *** Completion
 #+begin_src emacs-lisp
