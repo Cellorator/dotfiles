@@ -170,7 +170,6 @@
       (add-to-list 'completion-at-point-functions #'cape-dabbrev))
 (add-hook 'text-mode-hook #'my-dabbrev-in-text)
 
-
 (use-package cape
   :init
   (add-hook 'completion-at-point-functions #'cape-keyword)
@@ -257,13 +256,6 @@
   :general
   (<leader>
     "g" '(magit :wk "Open Magit"))
-  :ensure t)
-
-;; Pdf-tools
-(use-package pdf-tools
-  :unless (eq system-type 'android)
-  :config (pdf-loader-install)
-  :hook (pdf-view-mode . (lambda () (display-line-numbers-mode -1))) ;; Remove line numbers
   :ensure t)
 
 (use-package frames-only-mode
