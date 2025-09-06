@@ -287,6 +287,9 @@
 (use-package doom-themes
   :ensure t)
 
+(use-package kanagawa-themes
+  :ensure t)
+
 (use-package telephone-line
   :init
   (telephone-line-mode 1)
@@ -547,50 +550,6 @@
 #+filetags: %3$s\n")
   :ensure t)
 
-;; Completion for annotations
-(use-package citar
-  :custom
-  (citar-bibliography '("~/notes/references/bibliography.bib"))
-  (citar-notes-paths '("~/notes/references"))
-  (citar-library-paths '("~/notes/references/documents"))
-  (org-cite-insert-processor 'citar)
-  (org-cite-follow-processor 'citar)
-  (org-cite-activate-processor 'citar)
-  :hook
-  (LaTeX-mode . citar-capf-setup)
-  (org-mode . citar-capf-setup)
-  :ensure t)
-;; Integration with org-roam
-(use-package citar-org-roam
-  :custom
-  (citar-org-roam-capture-template-key "l")
-  (citar-org-roam-note-title-template "${title} (${author} ${date})")
-  :config (citar-org-roam-mode)
-  :after (citar org-roam)
-  :ensure t)
-(use-package citar-embark
-  :no-require
-  :config (citar-embark-mode)
-  :after (citar embark)
-  :ensure t)
-
-(use-package org-noter
-  :custom
-  (org-noter-notes-search-path '("~/notes/references"))
-  (org-noter-default-heading-title "$p$")
-  (org-noter-disable-narrowing t) ; Disable only looking at one note when activating
-  (org-noter-always-create-frame nil) ; Use current frame instead of making new one
-  (org-noter-swap-window t) ; Move doc to rightside
-  (org-noter-doc-split-fraction '(0.33 . 0.33)) ; Set doc view size
-  (org-noter-use-indirect-buffer nil) ; Use actual buffers
-  :general
-  (general-nmap
-    :keymaps '(org-noter-mode-map pdf-view-mode-map)
-    "I" 'org-noter-insert-note
-    "i" 'org-noter-insert-precise-note)
-  :after org
-  :ensure t)
-
 (<leader>
   "nc" '(org-capture :wk "org-capture")
   "na" '(org-agenda :wk "org-agenda"))
@@ -609,15 +568,3 @@
   "nmi" '(org-id-get-create :wk "Create ID for file/headline")
   "nmm" '(denote-rename-file-using-front-matter :wk "Update filename from frontmatter")
   "nmn" '(denote-add-front-matter :wk "Regenerate fronmatter from filename"))
-
-(<leader>
-  "on" '(:ignore t :wk "org-noter")
-  "ono" '(org-noter :wk "Open document")
-  "onn" '(org-noter-sync-current-note :wk "Open page"))
-
-;; Get this to work sometime
-;; (defun org-noter-open()
-;;   (interactive)
-;;   (if (eq major-mode 'pdf-view-mode)
-;;       (org-noter-sync-current-note)
-;;     (org-noter)))

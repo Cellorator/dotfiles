@@ -342,6 +342,9 @@ Some small quality of life stuff
 (use-package doom-themes
   :ensure t)
 
+(use-package kanagawa-themes
+  :ensure t)
+
 (use-package telephone-line
   :init
   (telephone-line-mode 1)
@@ -446,6 +449,7 @@ Some small quality of life stuff
                                        (org-do-demote)
                                        (evil-append 1)))))
 #+end_src
+
 **** Theming
 #+begin_src emacs-lisp
 (use-package org
@@ -467,7 +471,7 @@ Some small quality of life stuff
   (plist-put org-format-latex-options :scale 0.45) ; Make latex preview bigger
   (setf (cdr (assoc 'file org-link-frame-setup)) 'find-file)) ; Open files in same window
 #+end_src
-***** 
+
 **** Visuals
 #+begin_src emacs-lisp
 ;; Replace text with cool symbols
@@ -492,6 +496,7 @@ Some small quality of life stuff
   :after org
   :ensure t)
 #+end_src
+
 **** Extra Packages
 #+begin_src emacs-lisp
 ;; For tangling configuration file on save
@@ -501,6 +506,7 @@ Some small quality of life stuff
   :after org
   :ensure t)
 #+end_src
+
 *** org-roam
 Knowledge management system for taking notes
 
@@ -633,54 +639,6 @@ Another knowledge management system, mostly used for its renaming functions
 ,#+filetags: %3$s\n")
   :ensure t)
 #+end_src
-*** citar
-#+begin_src emacs-lisp
-;; Completion for annotations
-(use-package citar
-  :custom
-  (citar-bibliography '("~/notes/references/bibliography.bib"))
-  (citar-notes-paths '("~/notes/references"))
-  (citar-library-paths '("~/notes/references/documents"))
-  (org-cite-insert-processor 'citar)
-  (org-cite-follow-processor 'citar)
-  (org-cite-activate-processor 'citar)
-  :hook
-  (LaTeX-mode . citar-capf-setup)
-  (org-mode . citar-capf-setup)
-  :ensure t)
-;; Integration with org-roam
-(use-package citar-org-roam
-  :custom
-  (citar-org-roam-capture-template-key "l")
-  (citar-org-roam-note-title-template "${title} (${author} ${date})")
-  :config (citar-org-roam-mode)
-  :after (citar org-roam)
-  :ensure t)
-(use-package citar-embark
-  :no-require
-  :config (citar-embark-mode)
-  :after (citar embark)
-  :ensure t)
-#+end_src
-*** org-noter
-#+begin_src emacs-lisp
-(use-package org-noter
-  :custom
-  (org-noter-notes-search-path '("~/notes/references"))
-  (org-noter-default-heading-title "$p$")
-  (org-noter-disable-narrowing t) ; Disable only looking at one note when activating
-  (org-noter-always-create-frame nil) ; Use current frame instead of making new one
-  (org-noter-swap-window t) ; Move doc to rightside
-  (org-noter-doc-split-fraction '(0.33 . 0.33)) ; Set doc view size
-  (org-noter-use-indirect-buffer nil) ; Use actual buffers
-  :general
-  (general-nmap
-    :keymaps '(org-noter-mode-map pdf-view-mode-map)
-    "I" 'org-noter-insert-note
-    "i" 'org-noter-insert-precise-note)
-  :after org
-  :ensure t)
-#+end_src
 *** Keybinds
 #+begin_src emacs-lisp
 (<leader>
@@ -701,16 +659,4 @@ Another knowledge management system, mostly used for its renaming functions
   "nmi" '(org-id-get-create :wk "Create ID for file/headline")
   "nmm" '(denote-rename-file-using-front-matter :wk "Update filename from frontmatter")
   "nmn" '(denote-add-front-matter :wk "Regenerate fronmatter from filename"))
-
-(<leader>
-  "on" '(:ignore t :wk "org-noter")
-  "ono" '(org-noter :wk "Open document")
-  "onn" '(org-noter-sync-current-note :wk "Open page"))
-
-;; Get this to work sometime
-;; (defun org-noter-open()
-;;   (interactive)
-;;   (if (eq major-mode 'pdf-view-mode)
-;;       (org-noter-sync-current-note)
-;;     (org-noter)))
 #+end_src
