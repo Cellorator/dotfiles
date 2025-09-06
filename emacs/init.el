@@ -441,19 +441,6 @@
   :after org
   :ensure t)
 
-(use-package org-roam-ui
-  :custom
-  (org-roam-ui-sync-theme t)
-  (org-roam-ui-follow t)
-  (org-roam-ui-update-on-save t)
-  (org-roam-ui-open-on-start t)
-  :after org-roam
-  :ensure t)
-
-(use-package websocket
-  :after org-roam
-  :ensure t)
-
 (setq org-roam-directory (file-truename "~/notes"))
 (setq org-roam-db-location (file-truename "~/notes/org-roam.db"))
 (org-roam-db-autosync-mode)

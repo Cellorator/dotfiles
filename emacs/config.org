@@ -515,19 +515,6 @@ Knowledge management system for taking notes
 (use-package org-roam
   :after org
   :ensure t)
-
-(use-package org-roam-ui
-  :custom
-  (org-roam-ui-sync-theme t)
-  (org-roam-ui-follow t)
-  (org-roam-ui-update-on-save t)
-  (org-roam-ui-open-on-start t)
-  :after org-roam
-  :ensure t)
-
-(use-package websocket
-  :after org-roam
-  :ensure t)
 #+end_src
 **** Options
 #+begin_src emacs-lisp
