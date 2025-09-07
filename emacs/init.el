@@ -411,7 +411,6 @@
   :after org)
 
 (setq org-roam-directory (file-truename "~/notes"))
-(setq org-roam-db-location (file-truename "~/notes/org-roam.db"))
 (org-roam-db-autosync-mode)
 (add-to-list 'display-buffer-alist
              '("\\*org-roam\\*"
