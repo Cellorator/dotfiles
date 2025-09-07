@@ -382,54 +382,68 @@ A nice mode-line
   (org-src-preserve-indentation t) ; Stop annoying indentation when making a new line in code blocks
   (org-cycle-separator-lines -1) ; Don't fold empty lines between headings
   (org-log-into-drawer "LOGBOOK") ; Put logging into drawer instead of plain text
-  ;; Latex stuff
-  (org-latex-packages-alist
-   '(("" "esdiff")
-     ("" "esvect")
-     ("" "tikz")
-     ("" "tikz-cd")))
-  (org-latex-create-formula-image-program 'dvisvgm) ; Makes tikz preview work
-  (org-preview-latex-image-directory (concat user-emacs-directory "cache/org-latex/"))
-  ;; Org agenda
-  (org-agenda-files '("~/notes/inbox/"))
-  (org-agenda-todo-ignore-scheduled 'future)
-  ;; Org captures
-  (org-capture-templates
-   '(("t" "TODO")
-     ("tt" "Unscheduled" entry
-      (file+headline "~/notes/inbox.org" "Unscheduled")
-      "* TODO %?")
-     ("ts" "Scheduled" entry
-      (file+headline "~/notes/inbox.org" "Scheduled")
-      "* TODO %?\nSCHEDULED: %^T")
-     ("n" "Note" entry
-      (file+headline "~/notes/inbox.org" "Notes")
-      "* %?")))
-  ;; Org babel stuff
-  (org-babel-no-eval-on-ctrl-c-ctrl-c nil)
-  (org-confirm-babel-evaluate nil)
-  :config
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((emacs-lisp . t)
-     (org . t)
-     (latex . t)
-     (python . t)))
   :hook
-  (org-mode . (lambda () (display-line-numbers-mode -1))) ;; Remove line numbers
-  :general
-  (<leader>
-    "o" '(:ignore t :wk "org-mode")
-    "ole" '(org-latex-export-to-pdf :wk "Export to latex pdf")
-    "or" '(org-babel-execute-src-block :wk "Execute code block"))
-  (:keymaps 'override
-            (general-nmap "RET" 'org-open-at-point)
-            (general-def :states '(normal insert)
-                     "C-M-<return>" '(lambda ()
-                                       (interactive)
-                                       (org-insert-heading-respect-content)
-                                       (org-do-demote)
-                                       (evil-append 1)))))
+  (org-mode . (lambda () (display-line-numbers-mode -1)))) ;; Remove line numbers
+#+end_src
+
+**** org-latex
+#+begin_src emacs-lisp
+(setq org-latex-packages-alist
+      '(("" "esdiff")
+        ("" "esvect")
+        ("" "tikz")
+        ("" "tikz-cd")))
+(setq org-latex-create-formula-image-program 'dvisvgm) ; Makes tikz preview work
+(setq org-preview-latex-image-directory (concat user-emacs-directory "cache/org-latex/"))
+#+end_src
+
+**** org-agenda
+#+begin_src emacs-lisp
+(setq org-agenda-files '("~/notes/inbox/"))
+(setq org-agenda-todo-ignore-scheduled 'future)
+#+end_src
+
+**** org-capture
+#+begin_src emacs-lisp
+(setq org-capture-templates
+      '(("t" "TODO")
+        ("tt" "Unscheduled" entry
+         (file+headline "~/notes/inbox.org" "Unscheduled")
+         "* TODO %?")
+        ("ts" "Scheduled" entry
+         (file+headline "~/notes/inbox.org" "Scheduled")
+         "* TODO %?\nSCHEDULED: %^T")
+        ("n" "Note" entry
+         (file+headline "~/notes/inbox.org" "Notes")
+         "* %?")))
+#+end_src
+
+**** org-babel
+#+begin_src emacs-lisp
+(setq org-babel-no-eval-on-ctrl-c-ctrl-c nil)
+(setq org-confirm-babel-evaluate nil)
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((emacs-lisp . t)
+   (org . t)
+   (latex . t)
+   (python . t)))
+#+end_src
+
+**** Keybinds
+#+begin_src emacs-lisp
+(<leader>
+  "o" '(:ignore t :wk "org-mode")
+  "ole" '(org-latex-export-to-pdf :wk "Export to latex pdf")
+  "or" '(org-babel-execute-src-block :wk "Execute code block"))
+(general-nmap "RET" 'org-open-at-point)
+(general-def :states '(normal insert)
+  "C-M-<return>" '(lambda ()
+                    (interactive)
+                    (org-insert-heading-respect-content)
+                    (org-do-demote)
+                    (evil-append 1)))
 #+end_src
 
 **** Theming
