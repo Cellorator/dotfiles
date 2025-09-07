@@ -265,9 +265,7 @@
 
 (load-theme 'kanagawa-dragon t)
 
-(use-package telephone-line
-  :init
-  (telephone-line-mode 1))
+(use-package telephone-line)
 
 (defvar telephone-line-circle-right
   (make-instance 'telephone-line-unicode-separator
@@ -284,26 +282,28 @@
   (make-instance 'telephone-line-unicode-separator
                  :char #xe0b9))
 
-  (telephone-line-primary-right-separator 'telephone-line-circle-right)
-  (telephone-line-primary-left-separator 'telephone-line-circle-left)
-  (telephone-line-secondary-right-separator 'telephone-line-slash-right)
-  (telephone-line-secondary-left-separator 'telephone-line-slash-left)
+(setq telephone-line-primary-right-separator 'telephone-line-circle-right)
+(setq telephone-line-primary-left-separator 'telephone-line-circle-left)
+(setq telephone-line-secondary-right-separator 'telephone-line-slash-right)
+(setq telephone-line-secondary-left-separator 'telephone-line-slash-left)
 
-  (telephone-line-subseparator-faces
-   '((evil . evil)
-     (accent . accent)
-     (nil . nil)))
+(setq telephone-line-subseparator-faces
+      '((evil . evil)
+        (accent . accent)
+        (nil . nil)))
 
-   (telephone-line-lhs
-    '((evil   . (telephone-line-evil-tag-segment))
-      (accent . (telephone-line-buffer-name-segment
-                 telephone-line-vc-segment
-                 telephone-line-process-segment))
-      (nil    . ())))
-   (telephone-line-rhs
-    '((nil    . (telephone-line-misc-info-segment))
-      (accent . (telephone-line-major-mode-segment))
-      (evil   . (telephone-line-airline-position-segment))))
+(setq telephone-line-lhs
+      '((evil   . (telephone-line-evil-tag-segment))
+        (accent . (telephone-line-buffer-name-segment
+                   telephone-line-vc-segment
+                   telephone-line-process-segment))
+        (nil    . ())))
+(setq telephone-line-rhs
+      '((nil    . (telephone-line-misc-info-segment))
+        (accent . (telephone-line-major-mode-segment))
+        (evil   . (telephone-line-airline-position-segment))))
+
+(telephone-line-mode 1)
 
 (use-package org
   :custom
