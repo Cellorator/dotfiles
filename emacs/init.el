@@ -315,6 +315,12 @@
   :hook
   (org-mode . (lambda () (display-line-numbers-mode -1)))) ;; Remove line numbers
 
+;; Stop org heading tab-folding from opening all subtrees
+(add-hook 'org-cycle-hook
+          (lambda (state)
+            (when (eq state 'children)
+              (setq org-cycle-subtree-status 'subtree))))
+
 (setq org-latex-packages-alist
       '(("" "esdiff")
         ("" "esvect")

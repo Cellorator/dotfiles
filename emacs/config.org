@@ -383,6 +383,12 @@ A nice mode-line
   (org-log-into-drawer "LOGBOOK") ; Put logging into drawer instead of plain text
   :hook
   (org-mode . (lambda () (display-line-numbers-mode -1)))) ;; Remove line numbers
+
+;; Stop org heading tab-folding from opening all subtrees
+(add-hook 'org-cycle-hook
+          (lambda (state)
+            (when (eq state 'children)
+              (setq org-cycle-subtree-status 'subtree))))
 #+end_src
 **** org-latex
 #+begin_src emacs-lisp
