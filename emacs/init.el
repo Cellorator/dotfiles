@@ -67,6 +67,7 @@
   (setq evil-want-C-i-jump nil) ; Make TAB work normally (auto-indent)
   (setq evil-respect-visual-line-mode t)  ; Make j and k move between wrapped lines
   (setq evil-undo-system 'undo-fu)
+  (setq evil-want-fine-undo t)
   :config (evil-mode 1))
 
 (use-package evil-collection
