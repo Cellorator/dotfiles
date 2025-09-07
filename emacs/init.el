@@ -280,15 +280,16 @@
 (use-package restart-emacs :ensure t)
 
 (use-package color-theme-sanityinc-tomorrow
-  :config
-  (load-theme 'sanityinc-tomorrow-night t)
   :ensure t)
 
 (use-package doom-themes
   :ensure t)
 
+
 (use-package kanagawa-themes
   :ensure t)
+
+(load-theme 'kanagawa-dragon t)
 
 (use-package telephone-line
   :init
@@ -522,6 +523,19 @@
      (when (> level 0) (concat (org-roam-node-file-title node) " > "))
      (when (> level 1) (concat (string-join (org-roam-node-olp node) " > ") " > "))
      (org-roam-node-title node))))
+
+(use-package org-mem
+  :defer
+  :config
+  ;; At least one of these two is needed
+  (setq org-mem-do-sync-with-org-id t)
+  (setq org-mem-watch-dirs (list "~/notes/")) ;; Configure me
+  (org-mem-updater-mode))
+
+(use-package org-node
+  :config
+  (org-node-backlink-mode)
+  (org-node-cache-mode))
 
 (use-package denote
   :custom

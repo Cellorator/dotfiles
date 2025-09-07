@@ -335,15 +335,16 @@ Some small quality of life stuff
 ** Theme
  #+begin_src emacs-lisp
 (use-package color-theme-sanityinc-tomorrow
-  :config
-  (load-theme 'sanityinc-tomorrow-night t)
   :ensure t)
 
 (use-package doom-themes
   :ensure t)
 
+
 (use-package kanagawa-themes
   :ensure t)
+
+(load-theme 'kanagawa-dragon t)
 
 (use-package telephone-line
   :init
@@ -609,6 +610,25 @@ Use "-" instead of "_"
      (when (> level 1) (concat (string-join (org-roam-node-olp node) " > ") " > "))
      (org-roam-node-title node))))
 #+end_src
+
+*** org-node
+#+begin_src emacs-lisp
+(use-package org-mem
+  :defer
+  :config
+  ;; At least one of these two is needed
+  (setq org-mem-do-sync-with-org-id t)
+  (setq org-mem-watch-dirs (list "~/notes/")) ;; Configure me
+  (org-mem-updater-mode))
+
+(use-package org-node
+  :config
+  (org-node-backlink-mode)
+  (org-node-cache-mode))
+#+end_src
+
+
+
 *** denote
 Another knowledge management system, mostly used for its renaming functions
 #+begin_src emacs-lisp
