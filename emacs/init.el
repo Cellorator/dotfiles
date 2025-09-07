@@ -15,7 +15,6 @@
   (package-install 'use-package))
 
 (require 'use-package)
-(setq use-package-always-ensure t)
 
 (setq inhibit-startup-message t) ; Don't show splash screen
 
@@ -52,8 +51,7 @@
 
 ;; More convenient keybind setting
 (use-package general
-  :config (general-evil-setup t)
-  :ensure t)
+  :config (general-evil-setup t))
 
 ;; Emulate vim keybindings
 (use-package evil
@@ -62,26 +60,23 @@
   (setq evil-want-C-i-jump nil) ; Make TAB work normally (auto-indent)
   (setq evil-respect-visual-line-mode t)  ; Make j and k move between wrapped lines
   (setq evil-undo-system 'undo-fu)
-  :config (evil-mode 1)
-  :ensure t)
+  :config (evil-mode 1))
+
 (use-package evil-collection
   :config (evil-collection-init)
-  :after evil
-  :ensure t)
+  :after evil)
+
 ;; Nice org keybindings for evil
 (use-package evil-org
   :hook org-mode
   :config
   (require 'evil-org-agenda)
   (evil-org-agenda-set-keys)
-  :after org
-  :ensure t)
-
+  :after org)
 
 ;; Undo and redo
-(use-package undo-fu :ensure t)
+(use-package undo-fu)
 (use-package undo-fu-session
-  :ensure t
   :config (undo-fu-session-global-mode))
 
 (use-package which-key
@@ -135,7 +130,6 @@
 
 ;; A completion-style for space separated completion
 (use-package orderless
-  :ensure t
   :custom
   (completion-styles '(orderless partial-completion basic))
   (completion-category-defaults nil)
@@ -143,15 +137,13 @@
 
 ;; Completion UI
 (use-package vertico
-  :init (vertico-mode)
-  :ensure t)
+  :init (vertico-mode))
 
 (use-package consult
   :hook
   (minibuffer-setup . (lambda ()
                         (setq completion-in-region-function
-                              #'consult-completion-in-region)))
-  :ensure t)
+                              #'consult-completion-in-region))))
 
 ;; Buffer completion
 (use-package corfu
@@ -161,8 +153,7 @@
   (global-corfu-minibuffer nil)
   (corfu-on-exact-match nil)
   :init
-  (global-corfu-mode)
-  :ensure t)
+  (global-corfu-mode))
 
 ;; Hopefully fixes error when trying to autocomplete in text-mode
 (setopt text-mode-ispell-word-completion nil)
@@ -175,12 +166,14 @@
   (add-hook 'completion-at-point-functions #'cape-keyword)
   (add-hook 'completion-at-point-functions #'cape-dabbrev)
   (add-hook 'completion-at-point-functions #'cape-file)
-  (add-hook 'completion-at-point-functions #'cape-elisp-block)
-  :ensure t)
+  (add-hook 'completion-at-point-functions #'cape-elisp-block))
+
+;; Annotations in completion UI
+(use-package marginalia
+  :init (marginalia-mode))
 
 (use-package yasnippet
-  :config (yas-global-mode 1)
-  :ensure t)
+  :config (yas-global-mode 1))
 
 (use-package lsp-mode
   :custom
@@ -198,8 +191,7 @@
    (csharp-ts-mode . lsp-deferred)
    (python-ts-mode . (lambda ()
                        (require 'lsp-pyright)
-                       (lsp-deferred)))) ; or lsp-deferred
-  :ensure t)
+                       (lsp-deferred))))) ; or lsp-deferred
 
 (defun lsp-booster--advice-json-parse (old-fn &rest args)
   "Try to parse bytecode instead of json."
@@ -238,56 +230,38 @@
   (treesit-font-lock-level 4)
   :config
   (treesit-auto-add-to-auto-mode-alist 'all)
-  (global-treesit-auto-mode)
-  :ensure t)
+  (global-treesit-auto-mode))
 
-(use-package lua-mode :ensure t)
+(use-package lua-mode)
 (use-package lsp-pyright
-  :ensure t
   :custom (lsp-pyright-langserver-command "basedpyright")) ;; or basedpyright
-
-;; Annotations in completion UI
-(use-package marginalia
-  :init (marginalia-mode)
-  :ensure t)
 
 ;; Cool git front-end
 (use-package magit
   :general
   (<leader>
-    "g" '(magit :wk "Open Magit"))
-  :ensure t)
+    "g" '(magit :wk "Open Magit")))
 
 (use-package frames-only-mode
-  :init (frames-only-mode)
-  :ensure t)
+  :init (frames-only-mode))
 
 ;; Automatically set indentation per filetype
 (use-package dtrt-indent
-  :config (dtrt-indent-global-mode)
-  :ensure t)
+  :config (dtrt-indent-global-mode))
 
 (use-package smartparens
   :config
   (smartparens-global-mode)
-  (require 'smartparens-config)
-  :ensure t)
+  (require 'smartparens-config))
 
 (use-package evil-commentary
-  :config (evil-commentary-mode)
-  :ensure t)
+  :config (evil-commentary-mode))
 
-(use-package restart-emacs :ensure t)
+(use-package restart-emacs)
 
-(use-package color-theme-sanityinc-tomorrow
-  :ensure t)
-
-(use-package doom-themes
-  :ensure t)
-
-
-(use-package kanagawa-themes
-  :ensure t)
+(use-package color-theme-sanityinc-tomorrow)
+(use-package doom-themes)
+(use-package kanagawa-themes)
 
 (load-theme 'kanagawa-dragon t)
 
@@ -329,8 +303,7 @@
    (telephone-line-rhs
     '((nil    . (telephone-line-misc-info-segment))
       (accent . (telephone-line-major-mode-segment))
-      (evil   . (telephone-line-airline-position-segment))))
-   :ensure t)
+      (evil   . (telephone-line-airline-position-segment)))))
 
 (use-package org
   :custom
@@ -414,33 +387,28 @@
   :custom
   (org-modern-star 'replace)
   (org-modern-keyword nil)
-  :hook (org-mode)
-  :ensure t)
+  :hook (org-mode))
 
 ;; Make stuff dissapear and stuff
 (use-package org-appear
   :custom
   (org-hide-emphasis-markers t) ; Hide bold and italic markup
   :hook org-mode
-  :after org
-  :ensure t)
+  :after org)
 
 ;; Preview latex in editor
 (use-package org-fragtog
   :hook (org-mode org-roam-mode)
-  :after org
-  :ensure t)
+  :after org)
 
 ;; For tangling configuration file on save
 (use-package org-auto-tangle
   :defer t
   :hook org-mode
-  :after org
-  :ensure t)
+  :after org)
 
 (use-package org-roam
-  :after org
-  :ensure t)
+  :after org)
 
 (setq org-roam-directory (file-truename "~/notes"))
 (setq org-roam-db-location (file-truename "~/notes/org-roam.db"))
@@ -548,8 +516,7 @@
   (setq denote-org-front-matter
         "#+title: %1$s
 #+date: %2$s
-#+filetags: %3$s\n")
-  :ensure t)
+#+filetags: %3$s\n"))
 
 (<leader>
   "nc" '(org-capture :wk "org-capture")
@@ -562,7 +529,7 @@
   "nb" '(org-roam-buffer-toggle :wk "Open backlinks buffer"))
 
 (<leader>
-  "nm" '(:ignore t :wk "Modify note frontmatter (title, keywords, aliases, id)")
+  "nm" '(:ignore t :wk "Modify note metadata (title, keywords, aliases, id)")
   "nmt" '(denote-rename-file-title :wk "Change title")
   "nmk" '(denote-rename-file-keywords :wk "Change keywords/filetags")
   "nma" '(org-roam-alias-add :wk "Add aliases")
