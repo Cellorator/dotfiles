@@ -242,9 +242,6 @@
   (<leader>
     "g" '(magit :wk "Open Magit")))
 
-(use-package frames-only-mode
-  :init (frames-only-mode))
-
 ;; Automatically set indentation per filetype
 (use-package dtrt-indent
   :config (dtrt-indent-global-mode))
@@ -258,6 +255,9 @@
   :config (evil-commentary-mode))
 
 (use-package restart-emacs)
+
+(use-package frames-only-mode
+  :init (frames-only-mode))
 
 (use-package color-theme-sanityinc-tomorrow)
 (use-package doom-themes)
@@ -331,13 +331,13 @@
 (setq org-capture-templates
       '(("t" "TODO")
         ("tt" "Unscheduled" entry
-         (file+headline "~/notes/inbox.org" "Unscheduled")
+         (file+headline "~/notes/inbox/inbox.org" "Unscheduled")
          "* TODO %?")
         ("ts" "Scheduled" entry
-         (file+headline "~/notes/inbox.org" "Scheduled")
+         (file+headline "~/notes/inbox/inbox.org" "Scheduled")
          "* TODO %?\nSCHEDULED: %^T")
         ("n" "Note" entry
-         (file+headline "~/notes/inbox.org" "Notes")
+         (file+headline "~/notes/inbox/inbox.org" "Notes")
          "* %?")))
 
 (setq org-babel-no-eval-on-ctrl-c-ctrl-c nil)

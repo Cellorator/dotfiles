@@ -290,9 +290,6 @@ Useful thingies
 Some small quality of life stuff
 
 #+begin_src emacs-lisp
-(use-package frames-only-mode
-  :init (frames-only-mode))
-
 ;; Automatically set indentation per filetype
 (use-package dtrt-indent
   :config (dtrt-indent-global-mode))
@@ -306,6 +303,9 @@ Some small quality of life stuff
   :config (evil-commentary-mode))
 
 (use-package restart-emacs)
+
+(use-package frames-only-mode
+  :init (frames-only-mode))
 #+end_src
 
 ** UI
@@ -408,13 +408,13 @@ A nice mode-line
 (setq org-capture-templates
       '(("t" "TODO")
         ("tt" "Unscheduled" entry
-         (file+headline "~/notes/inbox.org" "Unscheduled")
+         (file+headline "~/notes/inbox/inbox.org" "Unscheduled")
          "* TODO %?")
         ("ts" "Scheduled" entry
-         (file+headline "~/notes/inbox.org" "Scheduled")
+         (file+headline "~/notes/inbox/inbox.org" "Scheduled")
          "* TODO %?\nSCHEDULED: %^T")
         ("n" "Note" entry
-         (file+headline "~/notes/inbox.org" "Notes")
+         (file+headline "~/notes/inbox/inbox.org" "Notes")
          "* %?")))
 #+end_src
 
