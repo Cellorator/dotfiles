@@ -15,6 +15,7 @@
   (package-install 'use-package))
 
 (require 'use-package)
+(setq use-package-always-ensure t)
 
 (setq inhibit-startup-message t) ; Don't show splash screen
 
@@ -255,9 +256,6 @@
   :config (evil-commentary-mode))
 
 (use-package restart-emacs)
-
-(use-package frames-only-mode
-  :init (frames-only-mode))
 
 (use-package color-theme-sanityinc-tomorrow)
 (use-package doom-themes)

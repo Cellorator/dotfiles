@@ -22,6 +22,7 @@
   (package-install 'use-package))
 
 (require 'use-package)
+(setq use-package-always-ensure t)
 #+end_src
 
 * Options
@@ -303,9 +304,6 @@ Some small quality of life stuff
   :config (evil-commentary-mode))
 
 (use-package restart-emacs)
-
-(use-package frames-only-mode
-  :init (frames-only-mode))
 #+end_src
 
 ** UI
@@ -385,7 +383,6 @@ A nice mode-line
   :hook
   (org-mode . (lambda () (display-line-numbers-mode -1)))) ;; Remove line numbers
 #+end_src
-
 **** org-latex
 #+begin_src emacs-lisp
 (setq org-latex-packages-alist
@@ -396,13 +393,11 @@ A nice mode-line
 (setq org-latex-create-formula-image-program 'dvisvgm) ; Makes tikz preview work
 (setq org-preview-latex-image-directory (concat user-emacs-directory "cache/org-latex/"))
 #+end_src
-
 **** org-agenda
 #+begin_src emacs-lisp
 (setq org-agenda-files '("~/notes/inbox/"))
 (setq org-agenda-todo-ignore-scheduled 'future)
 #+end_src
-
 **** org-capture
 #+begin_src emacs-lisp
 (setq org-capture-templates
@@ -417,7 +412,6 @@ A nice mode-line
          (file+headline "~/notes/inbox/inbox.org" "Notes")
          "* %?")))
 #+end_src
-
 **** org-babel
 #+begin_src emacs-lisp
 (setq org-babel-no-eval-on-ctrl-c-ctrl-c nil)
@@ -430,7 +424,6 @@ A nice mode-line
    (latex . t)
    (python . t)))
 #+end_src
-
 **** Keybinds
 #+begin_src emacs-lisp
 (<leader>
@@ -445,7 +438,6 @@ A nice mode-line
                     (org-do-demote)
                     (evil-append 1)))
 #+end_src
-
 **** Theming
 #+begin_src emacs-lisp
 (use-package org
@@ -467,7 +459,6 @@ A nice mode-line
   (plist-put org-format-latex-options :scale 0.45) ; Make latex preview bigger
   (setf (cdr (assoc 'file org-link-frame-setup)) 'find-file)) ; Open files in same window
 #+end_src
-
 **** Visuals
 #+begin_src emacs-lisp
 ;; Replace text with cool symbols
@@ -489,7 +480,6 @@ A nice mode-line
   :hook (org-mode org-roam-mode)
   :after org)
 #+end_src
-
 **** Extra Packages
 #+begin_src emacs-lisp
 ;; For tangling configuration file on save
