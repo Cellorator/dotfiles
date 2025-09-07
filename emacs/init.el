@@ -54,6 +54,12 @@
 (use-package general
   :config (general-evil-setup t))
 
+;; Show custom keybind hints
+(use-package which-key
+  :custom
+  (which-key-add-column-padding 3)
+  :config (which-key-mode))
+
 ;; Emulate vim keybindings
 (use-package evil
   :init
@@ -67,23 +73,17 @@
   :config (evil-collection-init)
   :after evil)
 
-;; Nice org keybindings for evil
 (use-package evil-org
+  :after org
   :hook org-mode
   :config
   (require 'evil-org-agenda)
-  (evil-org-agenda-set-keys)
-  :after org)
+  (evil-org-agenda-set-keys))
 
 ;; Undo and redo
 (use-package undo-fu)
 (use-package undo-fu-session
   :config (undo-fu-session-global-mode))
-
-(use-package which-key
-  :custom
-  (which-key-add-column-padding 3)
-  :config (which-key-mode))
 
 ;; Set leader key
 (general-create-definer <leader>
@@ -92,7 +92,7 @@
   :prefix "SPC"
   :global-prefix "C-SPC")
 
-;; Copy paste
+;; Copy  paste
 (<leader>
   "y" '(clipboard-kill-ring-save :wk "Copy to clipboard")
   "p" '(clipboard-yank :wk "Paste from clipboard"))
@@ -112,14 +112,10 @@
   "br" '(revert-buffer :wk "Reload changes to buffer")
   "bw" '(kill-this-buffer :wk "Kill current buffer"))
 
-;; Windows
-(<leader> "j" '(next-multiframe-window :wk "Next window"))
-(<leader> "k" '(next-multiframe-window :wk "Previous window"))
-
 ;; LSP
 (<leader>
-  "l" '(:ignore t :wk "LSP")
-  "lr" '(lsp-rename :wk "Rename symbol"))
+ "l" '(:ignore t :wk "LSP")
+ "lr" '(lsp-rename :wk "Rename symbol"))
 
 ;; Reload
 (defun reload-config()
@@ -256,6 +252,9 @@
   :config (evil-commentary-mode))
 
 (use-package restart-emacs)
+
+(use-package frames-only-mode
+  :init (frames-only-mode))
 
 (use-package color-theme-sanityinc-tomorrow)
 (use-package doom-themes)

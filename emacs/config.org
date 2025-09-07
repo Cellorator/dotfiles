@@ -69,6 +69,12 @@
 (use-package general
   :config (general-evil-setup t))
 
+;; Show custom keybind hints
+(use-package which-key
+  :custom
+  (which-key-add-column-padding 3)
+  :config (which-key-mode))
+
 ;; Emulate vim keybindings
 (use-package evil
   :init
@@ -82,23 +88,17 @@
   :config (evil-collection-init)
   :after evil)
 
-;; Nice org keybindings for evil
 (use-package evil-org
+  :after org
   :hook org-mode
   :config
   (require 'evil-org-agenda)
-  (evil-org-agenda-set-keys)
-  :after org)
+  (evil-org-agenda-set-keys))
 
 ;; Undo and redo
 (use-package undo-fu)
 (use-package undo-fu-session
   :config (undo-fu-session-global-mode))
-
-(use-package which-key
-  :custom
-  (which-key-add-column-padding 3)
-  :config (which-key-mode))
 #+end_src
 
 ** Basics
@@ -112,7 +112,7 @@ Setting the leader key and some basic commands for navigating emacs and the file
   :prefix "SPC"
   :global-prefix "C-SPC")
 
-;; Copy paste
+;; Copy  paste
 (<leader>
   "y" '(clipboard-kill-ring-save :wk "Copy to clipboard")
   "p" '(clipboard-yank :wk "Paste from clipboard"))
@@ -132,14 +132,10 @@ Setting the leader key and some basic commands for navigating emacs and the file
   "br" '(revert-buffer :wk "Reload changes to buffer")
   "bw" '(kill-this-buffer :wk "Kill current buffer"))
 
-;; Windows
-(<leader> "j" '(next-multiframe-window :wk "Next window"))
-(<leader> "k" '(next-multiframe-window :wk "Previous window"))
-
 ;; LSP
 (<leader>
-  "l" '(:ignore t :wk "LSP")
-  "lr" '(lsp-rename :wk "Rename symbol"))
+ "l" '(:ignore t :wk "LSP")
+ "lr" '(lsp-rename :wk "Rename symbol"))
 
 ;; Reload
 (defun reload-config()
@@ -149,6 +145,7 @@ Setting the leader key and some basic commands for navigating emacs and the file
   "rr" '(reload-config :wk "Reload configuration")
   "re" '(restart-emacs :wk "Restart Emacs"))
 #+end_src
+
 * Packages
 ** Tools
 Useful thingies
@@ -304,6 +301,9 @@ Some small quality of life stuff
   :config (evil-commentary-mode))
 
 (use-package restart-emacs)
+
+(use-package frames-only-mode
+  :init (frames-only-mode))
 #+end_src
 
 ** UI
