@@ -367,15 +367,15 @@
   :custom (org-startup-with-latex-preview t)
   :config
   ;; Resize Org headings
-  ;; (dolist (face '((org-level-1 . 1.5)
-  ;;                 (org-level-2 . 1.35)
-  ;;                 (org-level-3 . 1.25)
-  ;;                 (org-level-4 . 1.2)
-  ;;                 (org-level-5 . 1.2)
-  ;;                 (org-level-6 . 1.2)
-  ;;                 (org-level-7 . 1.2)
-  ;;                 (org-level-8 . 1.2)))
-  ;;   (set-face-attribute (car face) nil :font monospace-font :weight 'bold :height (cdr face)))
+  (dolist (face '((org-level-1 . 1.5)
+                  (org-level-2 . 1.35)
+                  (org-level-3 . 1.25)
+                  (org-level-4 . 1.2)
+                  (org-level-5 . 1.2)
+                  (org-level-6 . 1.2)
+                  (org-level-7 . 1.2)
+                  (org-level-8 . 1.2)))
+    (set-face-attribute (car face) nil :font monospace-font :weight 'bold :height (cdr face)))
   ;; Make the document title a bit bigger
   (set-face-attribute 'org-document-title nil :font monospace-font :weight
                       'bold :height 1.5)
