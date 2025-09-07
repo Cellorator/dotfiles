@@ -267,23 +267,23 @@
 
 (use-package telephone-line
   :init
-  (telephone-line-mode 1)
-  :config
-  (defvar telephone-line-circle-right
-    (make-instance 'telephone-line-unicode-separator
-                   :char #xe0b6
-                   :inverse-video nil))
-  (defvar telephone-line-circle-left
-    (make-instance 'telephone-line-unicode-separator
-                   :char #xe0b4))
-  (defvar telephone-line-slash-right
+  (telephone-line-mode 1))
+
+(defvar telephone-line-circle-right
+  (make-instance 'telephone-line-unicode-separator
+                 :char #xe0b6
+                 :inverse-video nil))
+(defvar telephone-line-circle-left
+  (make-instance 'telephone-line-unicode-separator
+                 :char #xe0b4))
+(defvar telephone-line-slash-right
     (make-instance 'telephone-line-unicode-separator
                    :char #xe0bd
                    :inverse-video nil))
-  (defvar telephone-line-slash-left
-    (make-instance 'telephone-line-unicode-separator
-                   :char #xe0b9))
-  :custom
+(defvar telephone-line-slash-left
+  (make-instance 'telephone-line-unicode-separator
+                 :char #xe0b9))
+
   (telephone-line-primary-right-separator 'telephone-line-circle-right)
   (telephone-line-primary-left-separator 'telephone-line-circle-left)
   (telephone-line-secondary-right-separator 'telephone-line-slash-right)
@@ -303,7 +303,7 @@
    (telephone-line-rhs
     '((nil    . (telephone-line-misc-info-segment))
       (accent . (telephone-line-major-mode-segment))
-      (evil   . (telephone-line-airline-position-segment)))))
+      (evil   . (telephone-line-airline-position-segment))))
 
 (use-package org
   :custom

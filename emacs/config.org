@@ -153,6 +153,7 @@ Setting the leader key and some basic commands for navigating emacs and the file
 Useful thingies
 
 *** Completion
+
 #+begin_src emacs-lisp
 ;; A completion-style for space separated completion
 (use-package orderless
@@ -307,33 +308,45 @@ Some small quality of life stuff
 (use-package restart-emacs)
 #+end_src
 
-** Theme
+** UI
+*** Theme
  #+begin_src emacs-lisp
 (use-package color-theme-sanityinc-tomorrow)
 (use-package doom-themes)
 (use-package kanagawa-themes)
 
 (load-theme 'kanagawa-dragon t)
+#+end_src
 
+*** telephone-line
+A nice mode-line
+**** Install
+#+begin_src emacs-lisp
 (use-package telephone-line
   :init
-  (telephone-line-mode 1)
-  :config
-  (defvar telephone-line-circle-right
-    (make-instance 'telephone-line-unicode-separator
-                   :char #xe0b6
-                   :inverse-video nil))
-  (defvar telephone-line-circle-left
-    (make-instance 'telephone-line-unicode-separator
-                   :char #xe0b4))
-  (defvar telephone-line-slash-right
+  (telephone-line-mode 1))
+#+end_src
+
+**** Custom Symbols
+#+begin_src emacs-lisp
+(defvar telephone-line-circle-right
+  (make-instance 'telephone-line-unicode-separator
+                 :char #xe0b6
+                 :inverse-video nil))
+(defvar telephone-line-circle-left
+  (make-instance 'telephone-line-unicode-separator
+                 :char #xe0b4))
+(defvar telephone-line-slash-right
     (make-instance 'telephone-line-unicode-separator
                    :char #xe0bd
                    :inverse-video nil))
-  (defvar telephone-line-slash-left
-    (make-instance 'telephone-line-unicode-separator
-                   :char #xe0b9))
-  :custom
+(defvar telephone-line-slash-left
+  (make-instance 'telephone-line-unicode-separator
+                 :char #xe0b9))
+#+end_src
+
+**** Configuration
+#+begin_src emacs-lisp
   (telephone-line-primary-right-separator 'telephone-line-circle-right)
   (telephone-line-primary-left-separator 'telephone-line-circle-left)
   (telephone-line-secondary-right-separator 'telephone-line-slash-right)
@@ -353,11 +366,11 @@ Some small quality of life stuff
    (telephone-line-rhs
     '((nil    . (telephone-line-misc-info-segment))
       (accent . (telephone-line-major-mode-segment))
-      (evil   . (telephone-line-airline-position-segment)))))
+      (evil   . (telephone-line-airline-position-segment))))
 #+end_src
 
 ** Note-Taking
-*** org-mode
+*** org
 **** Options
 #+begin_src emacs-lisp
 (use-package org
