@@ -1,21 +1,47 @@
-;; Initialize package sources
-(require 'package)
+(defvar elpaca-installer-version 0.11)
+(defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
+(defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
+(defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
+(defvar elpaca-order '(elpaca :repo "https://github.com/progfolio/elpaca.git"
+                              :ref nil :depth 1 :inherit ignore
+                              :files (:defaults "elpaca-test.el" (:exclude "extensions"))
+                              :build (:not elpaca--activate-package)))
+(let* ((repo  (expand-file-name "elpaca/" elpaca-repos-directory))
+       (build (expand-file-name "elpaca/" elpaca-builds-directory))
+       (order (cdr elpaca-order))
+       (default-directory repo))
+  (add-to-list 'load-path (if (file-exists-p build) build repo))
+  (unless (file-exists-p repo)
+    (make-directory repo t)
+    (when (<= emacs-major-version 28) (require 'subr-x))
+    (condition-case-unless-debug err
+        (if-let* ((buffer (pop-to-buffer-same-window "*elpaca-bootstrap*"))
+                  ((zerop (apply #'call-process `("git" nil ,buffer t "clone"
+                                                  ,@(when-let* ((depth (plist-get order :depth)))
+                                                      (list (format "--depth=%d" depth) "--no-single-branch"))
+                                                  ,(plist-get order :repo) ,repo))))
+                  ((zerop (call-process "git" nil buffer t "checkout"
+                                        (or (plist-get order :ref) "--"))))
+                  (emacs (concat invocation-directory invocation-name))
+                  ((zerop (call-process emacs nil buffer nil "-Q" "-L" "." "--batch"
+                                        "--eval" "(byte-recompile-directory \".\" 0 'force)")))
+                  ((require 'elpaca))
+                  ((elpaca-generate-autoloads "elpaca" repo)))
+            (progn (message "%s" (buffer-string)) (kill-buffer buffer))
+          (error "%s" (with-current-buffer buffer (buffer-string))))
+      ((error) (warn "%s" err) (delete-directory repo 'recursive))))
+  (unless (require 'elpaca-autoloads nil t)
+    (require 'elpaca)
+    (elpaca-generate-autoloads "elpaca" repo)
+    (let ((load-source-file-function nil)) (load "./elpaca-autoloads"))))
+(add-hook 'after-init-hook #'elpaca-process-queues)
+(elpaca `(,@elpaca-order))
 
-(setq package-archives '(("melpa" . "https://melpa.org/packages/")
-                         ("org" . "https://orgmode.org/elpa/")
-                         ("elpa" . "https://elpa.gnu.org/packages/")
-                         ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
-
-(package-initialize)
-(unless package-archive-contents
-  (package-refresh-contents))
-
-;; Initialize use-package on non-Linux platforms
-(unless (package-installed-p 'use-package)
-  (package-install 'use-package))
-
-(require 'use-package)
-(setq use-package-always-ensure t)
+;; Enable integration with use-package function, remove once all converted to elpaca
+(elpaca elpaca-use-package
+  (elpaca-use-package-mode))
+(setq elpaca-use-package-by-default t
+      use-package-always-ensure t))
 
 (setq inhibit-startup-message t) ; Don't show splash screen
 
@@ -50,41 +76,42 @@
 
 (setq-default show-trailing-whitespace t) ;; Highligh trailing spaces
 
-;; More convenient keybind setting
-(use-package general
-  :config (general-evil-setup t))
+  ;; More convenient keybind setting
+  (use-package general
+    :ensure (:wait t)
+    :config (general-evil-setup t))
 
-;; Show custom keybind hints
-(use-package which-key
-  :custom
-  (which-key-add-column-padding 3)
-  :config (which-key-mode))
+  ;; Show custom keybind hints
+  (use-package which-key
+    :custom
+    (which-key-add-column-padding 3)
+    :config (which-key-mode))
 
-;; Emulate vim keybindings
-(use-package evil
-  :init
-  (setq evil-want-keybinding nil) ; So evil-collection doesn't yell at me
-  (setq evil-want-C-i-jump nil) ; Make TAB work normally (auto-indent)
-  (setq evil-respect-visual-line-mode t)  ; Make j and k move between wrapped lines
-  (setq evil-undo-system 'undo-fu)
-  (setq evil-want-fine-undo t)
-  :config (evil-mode 1))
+  ;; Emulate vim keybindings
+  (use-package evil
+    :init
+    (setq evil-want-keybinding nil) ; So evil-collection doesn't yell at me
+    (setq evil-want-C-i-jump nil) ; Make TAB work normally (auto-indent)
+    (setq evil-respect-visual-line-mode t)  ; Make j and k move between wrapped lines
+    (setq evil-undo-system 'undo-fu)
+    (setq evil-want-fine-undo t)
+    :config (evil-mode 1))
 
-(use-package evil-collection
-  :config (evil-collection-init)
-  :after evil)
+  (use-package evil-collection
+    :config (evil-collection-init)
+    :after evil)
 
-(use-package evil-org
-  :after org
-  :hook org-mode
-  :config
-  (require 'evil-org-agenda)
-  (evil-org-agenda-set-keys))
+  (use-package evil-org
+    :after org
+    :hook org-mode
+    :config
+    (require 'evil-org-agenda)
+    (evil-org-agenda-set-keys))
 
-;; Undo and redo
-(use-package undo-fu)
-(use-package undo-fu-session
-  :config (undo-fu-session-global-mode))
+  ;; Undo and redo
+  (use-package undo-fu)
+  (use-package undo-fu-session
+    :config (undo-fu-session-global-mode))
 
 ;; Set leader key
 (general-create-definer <leader>
@@ -126,49 +153,49 @@
   "rr" '(reload-config :wk "Reload configuration")
   "re" '(restart-emacs :wk "Restart Emacs"))
 
-;; A completion-style for space separated completion
-(use-package orderless
-  :custom
-  (completion-styles '(orderless partial-completion basic))
-  (completion-category-defaults nil)
-  (completion-category-overrides '((file (styles partial-completion)))))
+  ;; A completion-style for space separated completion
+  (use-package orderless
+    :custom
+    (completion-styles '(orderless partial-completion basic))
+    (completion-category-defaults nil)
+    (completion-category-overrides '((file (styles partial-completion)))))
 
-;; Completion UI
-(use-package vertico
-  :init (vertico-mode))
+  ;; Completion UI
+  (use-package vertico
+    :init (vertico-mode))
 
-(use-package consult
-  :hook
-  (minibuffer-setup . (lambda ()
-                        (setq completion-in-region-function
-                              #'consult-completion-in-region))))
+  (use-package consult
+    :hook
+    (minibuffer-setup . (lambda ()
+                          (setq completion-in-region-function
+                                #'consult-completion-in-region))))
 
-;; Buffer completion
-(use-package corfu
-  :custom
-  (corfu-auto t)
-  (corfu-cycle t)
-  (global-corfu-minibuffer nil)
-  (corfu-on-exact-match nil)
-  :init
-  (global-corfu-mode))
+  ;; Buffer completion
+  (use-package corfu
+    :custom
+    (corfu-auto t)
+    (corfu-cycle t)
+    (global-corfu-minibuffer nil)
+    (corfu-on-exact-match nil)
+    :init
+    (global-corfu-mode))
 
-;; Hopefully fixes error when trying to autocomplete in text-mode
-(setopt text-mode-ispell-word-completion nil)
-(defun my-dabbrev-in-text()
-      (add-to-list 'completion-at-point-functions #'cape-dabbrev))
-(add-hook 'text-mode-hook #'my-dabbrev-in-text)
+  ;; Hopefully fixes error when trying to autocomplete in text-mode
+  (setopt text-mode-ispell-word-completion nil)
+  (defun my-dabbrev-in-text()
+    (add-to-list 'completion-at-point-functions #'cape-dabbrev))
+  (add-hook 'text-mode-hook #'my-dabbrev-in-text)
 
-(use-package cape
-  :init
-  (add-hook 'completion-at-point-functions #'cape-keyword)
-  (add-hook 'completion-at-point-functions #'cape-dabbrev)
-  (add-hook 'completion-at-point-functions #'cape-file)
-  (add-hook 'completion-at-point-functions #'cape-elisp-block))
+  (use-package cape
+    :init
+    (add-hook 'completion-at-point-functions #'cape-keyword)
+    (add-hook 'completion-at-point-functions #'cape-dabbrev)
+    (add-hook 'completion-at-point-functions #'cape-file)
+    (add-hook 'completion-at-point-functions #'cape-elisp-block))
 
-;; Annotations in completion UI
-(use-package marginalia
-  :init (marginalia-mode))
+  ;; Annotations in completion UI
+  (use-package marginalia
+    :init (marginalia-mode))
 
 (use-package yasnippet
   :config (yas-global-mode 1))
@@ -234,6 +261,7 @@
 (use-package lsp-pyright
   :custom (lsp-pyright-langserver-command "basedpyright")) ;; or basedpyright
 
+(use-package transient)
 ;; Cool git front-end
 (use-package magit
   :general
@@ -257,13 +285,13 @@
 (use-package frames-only-mode
   :init (frames-only-mode))
 
-(use-package color-theme-sanityinc-tomorrow)
-(use-package doom-themes)
-(use-package kanagawa-themes)
+   (use-package color-theme-sanityinc-tomorrow)
+   (use-package doom-themes)
+   (use-package kanagawa-themes
+     :config (load-theme 'kanagawa-dragon t))
 
-(load-theme 'kanagawa-dragon t)
-
-(use-package telephone-line)
+  (use-package telephone-line
+    :ensure (:wait t))
 
 (defvar telephone-line-circle-right
   (make-instance 'telephone-line-unicode-separator
@@ -304,6 +332,7 @@
 (telephone-line-mode 1)
 
 (use-package org
+  :ensure (:wait t)
   :custom
   (org-startup-indented t) ; Indent heading  levels
   (org-startup-folded 'show2levels)
@@ -366,24 +395,22 @@
                     (org-do-demote)
                     (evil-append 1)))
 
-(use-package org
-  :custom (org-startup-with-latex-preview t)
-  :config
-  ;; Resize Org headings
-  (dolist (face '((org-level-1 . 1.5)
-                  (org-level-2 . 1.35)
-                  (org-level-3 . 1.25)
-                  (org-level-4 . 1.2)
-                  (org-level-5 . 1.2)
-                  (org-level-6 . 1.2)
-                  (org-level-7 . 1.2)
-                  (org-level-8 . 1.2)))
-    (set-face-attribute (car face) nil :font monospace-font :weight 'bold :height (cdr face)))
-  ;; Make the document title a bit bigger
-  (set-face-attribute 'org-document-title nil :font monospace-font :weight
-                      'bold :height 1.5)
-  (plist-put org-format-latex-options :scale 0.45) ; Make latex preview bigger
-  (setf (cdr (assoc 'file org-link-frame-setup)) 'find-file)) ; Open files in same window
+(setq org-startup-with-latex-preview t)
+;; Resize Org headings
+(dolist (face '((org-level-1 . 1.5)
+                (org-level-2 . 1.35)
+                (org-level-3 . 1.25)
+                (org-level-4 . 1.2)
+                (org-level-5 . 1.2)
+                (org-level-6 . 1.2)
+                (org-level-7 . 1.2)
+                (org-level-8 . 1.2)))
+  (set-face-attribute (car face) nil :font monospace-font :weight 'bold :height (cdr face)))
+;; Make the document title a bit bigger
+(set-face-attribute 'org-document-title nil :font monospace-font :weight
+                    'bold :height 1.5)
+(plist-put org-format-latex-options :scale 0.45) ; Make latex preview bigger
+(setf (cdr (assoc 'file org-link-frame-setup)) 'find-file) ; Open files in same window
 
 ;; Replace text with cool symbols
 (use-package org-modern
@@ -410,8 +437,9 @@
   :hook org-mode
   :after org)
 
-(use-package org-roam
-  :after org)
+  (use-package org-roam
+    :ensure (:wait t)
+    :after org)
 
 (setq org-roam-directory (file-truename "~/notes"))
 (org-roam-db-autosync-mode)
