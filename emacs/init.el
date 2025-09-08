@@ -285,10 +285,9 @@
 ;; (use-package frames-only-mode
 ;;   :init (frames-only-mode))
 
-   (use-package color-theme-sanityinc-tomorrow)
-   (use-package doom-themes)
+   (use-package color-theme-sanityinc-tomorrow
+     :config (load-theme 'sanityinc-tomorrow-night t))
    (use-package kanagawa-themes
-     :config (load-theme 'kanagawa-dragon t)
      :custom
      (kanagawa-themes-keyword-italic nil)
      (kanagawa-themes-org-height nil)
