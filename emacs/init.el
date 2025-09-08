@@ -153,49 +153,49 @@
   "rr" '(reload-config :wk "Reload configuration")
   "re" '(restart-emacs :wk "Restart Emacs"))
 
-  ;; A completion-style for space separated completion
-  (use-package orderless
-    :custom
-    (completion-styles '(orderless partial-completion basic))
-    (completion-category-defaults nil)
-    (completion-category-overrides '((file (styles partial-completion)))))
+;; A completion-style for space separated completion
+(use-package orderless
+  :custom
+  (completion-styles '(orderless partial-completion basic))
+  (completion-category-defaults nil)
+  (completion-category-overrides '((file (styles partial-completion)))))
 
-  ;; Completion UI
-  (use-package vertico
-    :init (vertico-mode))
+;; Completion UI
+(use-package vertico
+  :init (vertico-mode))
 
-  (use-package consult
-    :hook
-    (minibuffer-setup . (lambda ()
-                          (setq completion-in-region-function
-                                #'consult-completion-in-region))))
+(use-package consult
+  :hook
+  (minibuffer-setup . (lambda ()
+                        (setq completion-in-region-function
+                              #'consult-completion-in-region))))
 
-  ;; Buffer completion
-  (use-package corfu
-    :custom
-    (corfu-auto t)
-    (corfu-cycle t)
-    (global-corfu-minibuffer nil)
-    (corfu-on-exact-match nil)
-    :init
-    (global-corfu-mode))
+;; Buffer completion
+(use-package corfu
+  :custom
+  (corfu-auto t)
+  (corfu-cycle t)
+  (global-corfu-minibuffer nil)
+  (corfu-on-exact-match nil)
+  :init
+  (global-corfu-mode))
 
-  ;; Hopefully fixes error when trying to autocomplete in text-mode
-  (setopt text-mode-ispell-word-completion nil)
-  (defun my-dabbrev-in-text()
-    (add-to-list 'completion-at-point-functions #'cape-dabbrev))
-  (add-hook 'text-mode-hook #'my-dabbrev-in-text)
+;; Hopefully fixes error when trying to autocomplete in text-mode
+(setopt text-mode-ispell-word-completion nil)
+(defun my-dabbrev-in-text()
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev))
+(add-hook 'text-mode-hook #'my-dabbrev-in-text)
 
-  (use-package cape
-    :init
-    (add-hook 'completion-at-point-functions #'cape-keyword)
-    (add-hook 'completion-at-point-functions #'cape-dabbrev)
-    (add-hook 'completion-at-point-functions #'cape-file)
-    (add-hook 'completion-at-point-functions #'cape-elisp-block))
+(use-package cape
+  :init
+  (add-hook 'completion-at-point-functions #'cape-keyword)
+  (add-hook 'completion-at-point-functions #'cape-dabbrev)
+  (add-hook 'completion-at-point-functions #'cape-file)
+  (add-hook 'completion-at-point-functions #'cape-elisp-block))
 
-  ;; Annotations in completion UI
-  (use-package marginalia
-    :init (marginalia-mode))
+;; Annotations in completion UI
+(use-package marginalia
+  :init (marginalia-mode))
 
 (use-package yasnippet
   :config (yas-global-mode 1))
@@ -285,17 +285,17 @@
 ;; (use-package frames-only-mode
 ;;   :init (frames-only-mode))
 
-   (use-package color-theme-sanityinc-tomorrow
-     :config (load-theme 'sanityinc-tomorrow-night t))
-   (use-package kanagawa-themes
-     :custom
-     (kanagawa-themes-keyword-italic nil)
-     (kanagawa-themes-org-height nil)
-     (kanagawa-themes-org-highlight t)
-     (kanagawa-themes-org-bold t))
+(use-package color-theme-sanityinc-tomorrow
+  :config (load-theme 'sanityinc-tomorrow-night t))
+(use-package kanagawa-themes
+  :custom
+  (kanagawa-themes-keyword-italic nil)
+  (kanagawa-themes-org-height nil)
+  (kanagawa-themes-org-highlight t)
+  (kanagawa-themes-org-bold t))
 
-  (use-package telephone-line
-    :ensure (:wait t))
+(use-package telephone-line
+  :ensure (:wait t))
 
 (defvar telephone-line-circle-right
   (make-instance 'telephone-line-unicode-separator
@@ -336,7 +336,11 @@
 (telephone-line-mode 1)
 
 (use-package org
-  :ensure (:wait t)
+  :defer
+  :ensure
+  '(org :repo "https://code.tecosaur.net/tec/org-mode.git"
+        :branch "dev"
+        :wait t)
   :custom
   (org-startup-indented t) ; Indent heading  levels
   (org-startup-folded 'show2levels)
@@ -441,9 +445,9 @@
   :hook org-mode
   :after org)
 
-  (use-package org-roam
-    :ensure (:wait t)
-    :after org)
+(use-package org-roam
+  :ensure (:wait t)
+  :after org)
 
 (setq org-roam-directory (file-truename "~/notes"))
 (org-roam-db-autosync-mode)

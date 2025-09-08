@@ -412,24 +412,28 @@ A nice mode-line
 *** org
 **** Options
 #+begin_src emacs-lisp
-(use-package org
-  :ensure (:wait t)
-  :custom
-  (org-startup-indented t) ; Indent heading  levels
-  (org-startup-folded 'show2levels)
-  (org-ellipsis "")
-  (org-src-tab-acts-natively t) ; Make tab work in code blocks
-  (org-src-preserve-indentation t) ; Stop annoying indentation when making a new line in code blocks
-  (org-cycle-separator-lines -1) ; Don't fold empty lines between headings
-  (org-log-into-drawer "LOGBOOK") ; Put logging into drawer instead of plain text
-  :hook
-  (org-mode . (lambda () (display-line-numbers-mode -1)))) ;; Remove line numbers
+    (use-package org
+      :defer
+      :ensure
+      '(org :repo "https://code.tecosaur.net/tec/org-mode.git"
+            :branch "dev"
+            :wait t)
+      :custom
+      (org-startup-indented t) ; Indent heading  levels
+      (org-startup-folded 'show2levels)
+      (org-ellipsis "")
+      (org-src-tab-acts-natively t) ; Make tab work in code blocks
+      (org-src-preserve-indentation t) ; Stop annoying indentation when making a new line in code blocks
+      (org-cycle-separator-lines -1) ; Don't fold empty lines between headings
+      (org-log-into-drawer "LOGBOOK") ; Put logging into drawer instead of plain text
+      :hook
+      (org-mode . (lambda () (display-line-numbers-mode -1)))) ;; Remove line numbers
 
-;; Stop org heading tab-folding from opening all subtrees
-(add-hook 'org-cycle-hook
-          (lambda (state)
-            (when (eq state 'children)
-              (setq org-cycle-subtree-status 'subtree))))
+    ;; Stop org heading tab-folding from opening all subtrees
+    (add-hook 'org-cycle-hook
+              (lambda (state)
+                (when (eq state 'children)
+                  (setq org-cycle-subtree-status 'subtree))))
 #+end_src
 **** org-latex
 #+begin_src emacs-lisp
