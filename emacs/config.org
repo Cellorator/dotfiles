@@ -339,8 +339,8 @@ Some small quality of life stuff
 
 (use-package restart-emacs)
 
-(use-package frames-only-mode
-  :init (frames-only-mode))
+;; (use-package frames-only-mode
+;;   :init (frames-only-mode))
 #+end_src
 
 ** UI

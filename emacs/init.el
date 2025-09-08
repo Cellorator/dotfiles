@@ -282,13 +282,18 @@
 
 (use-package restart-emacs)
 
-(use-package frames-only-mode
-  :init (frames-only-mode))
+;; (use-package frames-only-mode
+;;   :init (frames-only-mode))
 
    (use-package color-theme-sanityinc-tomorrow)
    (use-package doom-themes)
    (use-package kanagawa-themes
-     :config (load-theme 'kanagawa-dragon t))
+     :config (load-theme 'kanagawa-dragon t)
+     :custom
+     (kanagawa-themes-keyword-italic nil)
+     (kanagawa-themes-org-height nil)
+     (kanagawa-themes-org-highlight t)
+     (kanagawa-themes-org-bold t))
 
   (use-package telephone-line
     :ensure (:wait t))
