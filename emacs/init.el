@@ -76,42 +76,42 @@
 
 (setq-default show-trailing-whitespace t) ;; Highligh trailing spaces
 
-  ;; More convenient keybind setting
-  (use-package general
-    :ensure (:wait t)
-    :config (general-evil-setup t))
+;; More convenient keybind setting
+(use-package general
+  :ensure (:wait t)
+  :config (general-evil-setup t))
 
-  ;; Show custom keybind hints
-  (use-package which-key
-    :custom
-    (which-key-add-column-padding 3)
-    :config (which-key-mode))
+;; Show custom keybind hints
+(use-package which-key
+  :custom
+  (which-key-add-column-padding 3)
+  :config (which-key-mode))
 
-  ;; Emulate vim keybindings
-  (use-package evil
-    :init
-    (setq evil-want-keybinding nil) ; So evil-collection doesn't yell at me
-    (setq evil-want-C-i-jump nil) ; Make TAB work normally (auto-indent)
-    (setq evil-respect-visual-line-mode t)  ; Make j and k move between wrapped lines
-    (setq evil-undo-system 'undo-fu)
-    (setq evil-want-fine-undo t)
-    :config (evil-mode 1))
+;; Emulate vim keybindings
+(use-package evil
+  :init
+  (setq evil-want-keybinding nil) ; So evil-collection doesn't yell at me
+  (setq evil-want-C-i-jump nil) ; Make TAB work normally (auto-indent)
+  (setq evil-respect-visual-line-mode t)  ; Make j and k move between wrapped lines
+  (setq evil-undo-system 'undo-fu)
+  (setq evil-want-fine-undo t)
+  :config (evil-mode 1))
 
-  (use-package evil-collection
-    :config (evil-collection-init)
-    :after evil)
+(use-package evil-collection
+  :config (evil-collection-init)
+  :after evil)
 
-  (use-package evil-org
-    :after org
-    :hook org-mode
-    :config
-    (require 'evil-org-agenda)
-    (evil-org-agenda-set-keys))
+(use-package evil-org
+  :after org
+  :hook org-mode
+  :config
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys))
 
-  ;; Undo and redo
-  (use-package undo-fu)
-  (use-package undo-fu-session
-    :config (undo-fu-session-global-mode))
+;; Undo and redo
+(use-package undo-fu)
+(use-package undo-fu-session
+  :config (undo-fu-session-global-mode))
 
 ;; Set leader key
 (general-create-definer <leader>
@@ -458,20 +458,6 @@
                   "main/%<%Y%m%dT%H%M%S>--${slug}.org"
                   "#+title: ${title}\n#+date: [%<%Y-%m-%d %a %H:%M>]\n#+filetags:")
          :immediate-finish t
-         :unnarrowed t)
-
-        ("l" "literature note" plain "%?"
-         :target (file+head
-                  "references/${citar-citekey}.org"
-                  "#+title: ${title}\n#+date: [%<%Y-%m-%d %a %H:%M>]\n")
-         :immediate-finish t
-         :unnarrowed t)
-
-        ("a" "article" plain "%?"
-         :target (file+head
-                  "articles/${title}.org"
-                  "#+title: ${title}\n#+date: [%<%Y-%m-%d %a %H:%M>]\n")
-         :immediate-finish t
          :unnarrowed t)))
 
 (require 'ucs-normalize)
@@ -527,7 +513,7 @@
   :config
   ;; At least one of these two is needed
   (setq org-mem-do-sync-with-org-id t)
-  (setq org-mem-watch-dirs (list "~/notes/")) ;; Configure me
+  (setq org-mem-watch-dirs '("~/notes/")) ;; Configure me
   (org-mem-updater-mode))
 
 (use-package org-node
