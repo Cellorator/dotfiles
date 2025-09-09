@@ -153,6 +153,58 @@
   "rr" '(reload-config :wk "Reload configuration")
   "re" '(restart-emacs :wk "Restart Emacs"))
 
+(use-package color-theme-sanityinc-tomorrow)
+(use-package kanagawa-themes
+  :custom
+  (kanagawa-themes-keyword-italic nil)
+  (kanagawa-themes-org-height nil)
+  (kanagawa-themes-org-highlight t)
+  (kanagawa-themes-org-bold t))
+(use-package doom-themes)
+(elpaca-wait)
+(load-theme 'sanityinc-tomorrow-night t)
+
+  (use-package telephone-line
+    :ensure (:wait t))
+
+(defvar telephone-line-circle-right
+  (make-instance 'telephone-line-unicode-separator
+                 :char #xe0b6
+                 :inverse-video nil))
+(defvar telephone-line-circle-left
+  (make-instance 'telephone-line-unicode-separator
+                 :char #xe0b4))
+(defvar telephone-line-slash-right
+    (make-instance 'telephone-line-unicode-separator
+                   :char #xe0bd
+                   :inverse-video nil))
+(defvar telephone-line-slash-left
+  (make-instance 'telephone-line-unicode-separator
+                 :char #xe0b9))
+
+(setq telephone-line-primary-right-separator 'telephone-line-circle-right)
+(setq telephone-line-primary-left-separator 'telephone-line-circle-left)
+(setq telephone-line-secondary-right-separator 'telephone-line-slash-right)
+(setq telephone-line-secondary-left-separator 'telephone-line-slash-left)
+
+(setq telephone-line-subseparator-faces
+      '((evil . evil)
+        (accent . accent)
+        (nil . nil)))
+
+(setq telephone-line-lhs
+      '((evil   . (telephone-line-evil-tag-segment))
+        (accent . (telephone-line-buffer-name-segment
+                   telephone-line-vc-segment
+                   telephone-line-process-segment))
+        (nil    . ())))
+(setq telephone-line-rhs
+      '((nil    . (telephone-line-misc-info-segment))
+        (accent . (telephone-line-major-mode-segment))
+        (evil   . (telephone-line-airline-position-segment))))
+
+(telephone-line-mode 1)
+
   ;; A completion-style for space separated completion
   (use-package orderless
     :custom
@@ -298,21 +350,15 @@
         ("" "tikz")
         ("" "tikz-cd")))
 
-;; Increase preview width
-(plist-put org-latex-preview-appearance-options :foreground "White")
-(plist-put org-latex-preview-appearance-options :zoom 1.5)
+;; Imagemagick has better colour matching to theme than dvisvgm
+(setq org-latex-preview-process-default 'imagemagick)
 
 ;; Turn on `org-latex-preview-mode', it's built into Org and much faster/more
 ;; featured than org-fragtog. (Remember to turn off/uninstall org-fragtog.)
 (add-hook 'org-mode-hook 'org-latex-preview-mode)
 
-;; ;; Block C-n, C-p etc from opening up previews when using `org-latex-preview-mode'
-;; (setq org-latex-preview-mode-ignored-commands
-;;       '(next-line previous-line mwheel-scroll
-;;         scroll-up-command scroll-down-command))
-
 ;; ;; Enable consistent equation numbering
-;; (setq org-latex-preview-numbered t)
+(setq org-latex-preview-numbered t)
 
 ;; Bonus: Turn on live previews.  This shows you a live preview of a LaTeX
 ;; fragment and updates the preview in real-time as you edit it.
@@ -526,53 +572,3 @@
 
 ;; (use-package frames-only-mode
 ;;   :init (frames-only-mode))
-
-   (use-package color-theme-sanityinc-tomorrow
-     :config (load-theme 'sanityinc-tomorrow-night t))
-   (use-package kanagawa-themes
-     :custom
-     (kanagawa-themes-keyword-italic nil)
-     (kanagawa-themes-org-height nil)
-     (kanagawa-themes-org-highlight t)
-     (kanagawa-themes-org-bold t))
-
-  (use-package telephone-line
-    :ensure (:wait t))
-
-(defvar telephone-line-circle-right
-  (make-instance 'telephone-line-unicode-separator
-                 :char #xe0b6
-                 :inverse-video nil))
-(defvar telephone-line-circle-left
-  (make-instance 'telephone-line-unicode-separator
-                 :char #xe0b4))
-(defvar telephone-line-slash-right
-    (make-instance 'telephone-line-unicode-separator
-                   :char #xe0bd
-                   :inverse-video nil))
-(defvar telephone-line-slash-left
-  (make-instance 'telephone-line-unicode-separator
-                 :char #xe0b9))
-
-(setq telephone-line-primary-right-separator 'telephone-line-circle-right)
-(setq telephone-line-primary-left-separator 'telephone-line-circle-left)
-(setq telephone-line-secondary-right-separator 'telephone-line-slash-right)
-(setq telephone-line-secondary-left-separator 'telephone-line-slash-left)
-
-(setq telephone-line-subseparator-faces
-      '((evil . evil)
-        (accent . accent)
-        (nil . nil)))
-
-(setq telephone-line-lhs
-      '((evil   . (telephone-line-evil-tag-segment))
-        (accent . (telephone-line-buffer-name-segment
-                   telephone-line-vc-segment
-                   telephone-line-process-segment))
-        (nil    . ())))
-(setq telephone-line-rhs
-      '((nil    . (telephone-line-misc-info-segment))
-        (accent . (telephone-line-major-mode-segment))
-        (evil   . (telephone-line-airline-position-segment))))
-
-(telephone-line-mode 1)
