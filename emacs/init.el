@@ -153,49 +153,49 @@
   "rr" '(reload-config :wk "Reload configuration")
   "re" '(restart-emacs :wk "Restart Emacs"))
 
-;; A completion-style for space separated completion
-(use-package orderless
-  :custom
-  (completion-styles '(orderless partial-completion basic))
-  (completion-category-defaults nil)
-  (completion-category-overrides '((file (styles partial-completion)))))
+  ;; A completion-style for space separated completion
+  (use-package orderless
+    :custom
+    (completion-styles '(orderless partial-completion basic))
+    (completion-category-defaults nil)
+    (completion-category-overrides '((file (styles partial-completion)))))
 
-;; Completion UI
-(use-package vertico
-  :init (vertico-mode))
+  ;; Completion UI
+  (use-package vertico
+    :init (vertico-mode))
 
-(use-package consult
-  :hook
-  (minibuffer-setup . (lambda ()
-                        (setq completion-in-region-function
-                              #'consult-completion-in-region))))
+  (use-package consult
+    :hook
+    (minibuffer-setup . (lambda ()
+                          (setq completion-in-region-function
+                                #'consult-completion-in-region))))
 
-;; Buffer completion
-(use-package corfu
-  :custom
-  (corfu-auto t)
-  (corfu-cycle t)
-  (global-corfu-minibuffer nil)
-  (corfu-on-exact-match nil)
-  :init
-  (global-corfu-mode))
+  ;; Buffer completion
+  (use-package corfu
+    :custom
+    (corfu-auto t)
+    (corfu-cycle t)
+    (global-corfu-minibuffer nil)
+    (corfu-on-exact-match nil)
+    :init
+    (global-corfu-mode))
 
-;; Hopefully fixes error when trying to autocomplete in text-mode
-(setopt text-mode-ispell-word-completion nil)
-(defun my-dabbrev-in-text()
-  (add-to-list 'completion-at-point-functions #'cape-dabbrev))
-(add-hook 'text-mode-hook #'my-dabbrev-in-text)
+  ;; Hopefully fixes error when trying to autocomplete in text-mode
+  (setopt text-mode-ispell-word-completion nil)
+  (defun my-dabbrev-in-text()
+    (add-to-list 'completion-at-point-functions #'cape-dabbrev))
+  (add-hook 'text-mode-hook #'my-dabbrev-in-text)
 
-(use-package cape
-  :init
-  (add-hook 'completion-at-point-functions #'cape-keyword)
-  (add-hook 'completion-at-point-functions #'cape-dabbrev)
-  (add-hook 'completion-at-point-functions #'cape-file)
-  (add-hook 'completion-at-point-functions #'cape-elisp-block))
+  (use-package cape
+    :init
+    (add-hook 'completion-at-point-functions #'cape-keyword)
+    (add-hook 'completion-at-point-functions #'cape-dabbrev)
+    (add-hook 'completion-at-point-functions #'cape-file)
+    (add-hook 'completion-at-point-functions #'cape-elisp-block))
 
-;; Annotations in completion UI
-(use-package marginalia
-  :init (marginalia-mode))
+  ;; Annotations in completion UI
+  (use-package marginalia
+    :init (marginalia-mode))
 
 (use-package yasnippet
   :config (yas-global-mode 1))
@@ -268,103 +268,59 @@
   (<leader>
     "g" '(magit :wk "Open Magit")))
 
-;; Automatically set indentation per filetype
-(use-package dtrt-indent
-  :config (dtrt-indent-global-mode))
+    (use-package org
+      :defer
+      :ensure
+      '(org :repo "https://code.tecosaur.net/tec/org-mode.git"
+            :branch "dev"
+            :wait t)
+      :custom
+      (org-startup-indented t) ; Indent heading  levels
+      (org-startup-folded 'show2levels)
+      (org-ellipsis "")
+      (org-src-tab-acts-natively t) ; Make tab work in code blocks
+      (org-src-preserve-indentation t) ; Stop annoying indentation when making a new line in code blocks
+      (org-cycle-separator-lines -1) ; Don't fold empty lines between headings
+      (org-log-into-drawer "LOGBOOK") ; Put logging into drawer instead of plain text
+      :hook
+      (org-mode . (lambda () (display-line-numbers-mode -1)))) ;; Remove line numbers
 
-(use-package smartparens
-  :config
-  (smartparens-global-mode)
-  (require 'smartparens-config))
+    ;; Stop org heading tab-folding from opening all subtrees
+    (add-hook 'org-cycle-hook
+              (lambda (state)
+                (when (eq state 'children)
+                  (setq org-cycle-subtree-status 'subtree))))
 
-(use-package evil-commentary
-  :config (evil-commentary-mode))
-
-(use-package restart-emacs)
-
-;; (use-package frames-only-mode
-;;   :init (frames-only-mode))
-
-(use-package color-theme-sanityinc-tomorrow
-  :config (load-theme 'sanityinc-tomorrow-night t))
-(use-package kanagawa-themes
-  :custom
-  (kanagawa-themes-keyword-italic nil)
-  (kanagawa-themes-org-height nil)
-  (kanagawa-themes-org-highlight t)
-  (kanagawa-themes-org-bold t))
-
-(use-package telephone-line
-  :ensure (:wait t))
-
-(defvar telephone-line-circle-right
-  (make-instance 'telephone-line-unicode-separator
-                 :char #xe0b6
-                 :inverse-video nil))
-(defvar telephone-line-circle-left
-  (make-instance 'telephone-line-unicode-separator
-                 :char #xe0b4))
-(defvar telephone-line-slash-right
-    (make-instance 'telephone-line-unicode-separator
-                   :char #xe0bd
-                   :inverse-video nil))
-(defvar telephone-line-slash-left
-  (make-instance 'telephone-line-unicode-separator
-                 :char #xe0b9))
-
-(setq telephone-line-primary-right-separator 'telephone-line-circle-right)
-(setq telephone-line-primary-left-separator 'telephone-line-circle-left)
-(setq telephone-line-secondary-right-separator 'telephone-line-slash-right)
-(setq telephone-line-secondary-left-separator 'telephone-line-slash-left)
-
-(setq telephone-line-subseparator-faces
-      '((evil . evil)
-        (accent . accent)
-        (nil . nil)))
-
-(setq telephone-line-lhs
-      '((evil   . (telephone-line-evil-tag-segment))
-        (accent . (telephone-line-buffer-name-segment
-                   telephone-line-vc-segment
-                   telephone-line-process-segment))
-        (nil    . ())))
-(setq telephone-line-rhs
-      '((nil    . (telephone-line-misc-info-segment))
-        (accent . (telephone-line-major-mode-segment))
-        (evil   . (telephone-line-airline-position-segment))))
-
-(telephone-line-mode 1)
-
-(use-package org
-  :defer
-  :ensure
-  '(org :repo "https://code.tecosaur.net/tec/org-mode.git"
-        :branch "dev"
-        :wait t)
-  :custom
-  (org-startup-indented t) ; Indent heading  levels
-  (org-startup-folded 'show2levels)
-  (org-ellipsis "")
-  (org-src-tab-acts-natively t) ; Make tab work in code blocks
-  (org-src-preserve-indentation t) ; Stop annoying indentation when making a new line in code blocks
-  (org-cycle-separator-lines -1) ; Don't fold empty lines between headings
-  (org-log-into-drawer "LOGBOOK") ; Put logging into drawer instead of plain text
-  :hook
-  (org-mode . (lambda () (display-line-numbers-mode -1)))) ;; Remove line numbers
-
-;; Stop org heading tab-folding from opening all subtrees
-(add-hook 'org-cycle-hook
-          (lambda (state)
-            (when (eq state 'children)
-              (setq org-cycle-subtree-status 'subtree))))
-
+(setq org-startup-with-latex-preview t)
 (setq org-latex-packages-alist
       '(("" "esdiff")
         ("" "esvect")
         ("" "tikz")
         ("" "tikz-cd")))
-(setq org-latex-create-formula-image-program 'dvisvgm) ; Makes tikz preview work
-(setq org-preview-latex-image-directory (concat user-emacs-directory "cache/org-latex/"))
+
+;; Increase preview width
+(plist-put org-latex-preview-appearance-options :foreground "White")
+(plist-put org-latex-preview-appearance-options :zoom 1.5)
+
+;; Turn on `org-latex-preview-mode', it's built into Org and much faster/more
+;; featured than org-fragtog. (Remember to turn off/uninstall org-fragtog.)
+(add-hook 'org-mode-hook 'org-latex-preview-mode)
+
+;; ;; Block C-n, C-p etc from opening up previews when using `org-latex-preview-mode'
+;; (setq org-latex-preview-mode-ignored-commands
+;;       '(next-line previous-line mwheel-scroll
+;;         scroll-up-command scroll-down-command))
+
+;; ;; Enable consistent equation numbering
+;; (setq org-latex-preview-numbered t)
+
+;; Bonus: Turn on live previews.  This shows you a live preview of a LaTeX
+;; fragment and updates the preview in real-time as you edit it.
+;; To preview only environments, set it to '(block edit-special) instead
+(setq org-latex-preview-mode-display-live t)
+
+;; More immediate live-previews -- the default delay is 1 second
+(setq org-latex-preview-mode-update-delay 0.25)
 
 (setq org-agenda-files '("~/notes/inbox/"))
 (setq org-agenda-todo-ignore-scheduled 'future)
@@ -403,7 +359,6 @@
                     (org-do-demote)
                     (evil-append 1)))
 
-(setq org-startup-with-latex-preview t)
 ;; Resize Org headings
 ;; (dolist (face '((org-level-1 . 1.5)
 ;;                 (org-level-2 . 1.35)
@@ -417,7 +372,6 @@
 ;; Make the document title a bit bigger
 (set-face-attribute 'org-document-title nil :font monospace-font :weight
                     'bold :height 1.5)
-(plist-put org-format-latex-options :scale 0.45) ; Make latex preview bigger
 (setf (cdr (assoc 'file org-link-frame-setup)) 'find-file) ; Open files in same window
 
 ;; Replace text with cool symbols
@@ -434,20 +388,15 @@
   :hook org-mode
   :after org)
 
-;; Preview latex in editor
-(use-package org-fragtog
-  :hook (org-mode org-roam-mode)
-  :after org)
-
 ;; For tangling configuration file on save
 (use-package org-auto-tangle
   :defer t
   :hook org-mode
   :after org)
 
-(use-package org-roam
-  :ensure (:wait t)
-  :after org)
+  (use-package org-roam
+    :ensure (:wait t)
+    :after org)
 
 (setq org-roam-directory (file-truename "~/notes"))
 (org-roam-db-autosync-mode)
@@ -560,3 +509,70 @@
   "nmi" '(org-id-get-create :wk "Create ID for file/headline")
   "nmm" '(denote-rename-file-using-front-matter :wk "Update filename from frontmatter")
   "nmn" '(denote-add-front-matter :wk "Regenerate fronmatter from filename"))
+
+;; Automatically set indentation per filetype
+(use-package dtrt-indent
+  :config (dtrt-indent-global-mode))
+
+(use-package smartparens
+  :config
+  (smartparens-global-mode)
+  (require 'smartparens-config))
+
+(use-package evil-commentary
+  :config (evil-commentary-mode))
+
+(use-package restart-emacs)
+
+;; (use-package frames-only-mode
+;;   :init (frames-only-mode))
+
+   (use-package color-theme-sanityinc-tomorrow
+     :config (load-theme 'sanityinc-tomorrow-night t))
+   (use-package kanagawa-themes
+     :custom
+     (kanagawa-themes-keyword-italic nil)
+     (kanagawa-themes-org-height nil)
+     (kanagawa-themes-org-highlight t)
+     (kanagawa-themes-org-bold t))
+
+  (use-package telephone-line
+    :ensure (:wait t))
+
+(defvar telephone-line-circle-right
+  (make-instance 'telephone-line-unicode-separator
+                 :char #xe0b6
+                 :inverse-video nil))
+(defvar telephone-line-circle-left
+  (make-instance 'telephone-line-unicode-separator
+                 :char #xe0b4))
+(defvar telephone-line-slash-right
+    (make-instance 'telephone-line-unicode-separator
+                   :char #xe0bd
+                   :inverse-video nil))
+(defvar telephone-line-slash-left
+  (make-instance 'telephone-line-unicode-separator
+                 :char #xe0b9))
+
+(setq telephone-line-primary-right-separator 'telephone-line-circle-right)
+(setq telephone-line-primary-left-separator 'telephone-line-circle-left)
+(setq telephone-line-secondary-right-separator 'telephone-line-slash-right)
+(setq telephone-line-secondary-left-separator 'telephone-line-slash-left)
+
+(setq telephone-line-subseparator-faces
+      '((evil . evil)
+        (accent . accent)
+        (nil . nil)))
+
+(setq telephone-line-lhs
+      '((evil   . (telephone-line-evil-tag-segment))
+        (accent . (telephone-line-buffer-name-segment
+                   telephone-line-vc-segment
+                   telephone-line-process-segment))
+        (nil    . ())))
+(setq telephone-line-rhs
+      '((nil    . (telephone-line-misc-info-segment))
+        (accent . (telephone-line-major-mode-segment))
+        (evil   . (telephone-line-airline-position-segment))))
+
+(telephone-line-mode 1)

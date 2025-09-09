@@ -96,6 +96,7 @@
 (setq-default show-trailing-whitespace t) ;; Highligh trailing spaces
 #+end_src
 
+
 * Keybinds
 ** Setup
 #+begin_src emacs-lisp
@@ -136,7 +137,6 @@
 (use-package undo-fu-session
   :config (undo-fu-session-global-mode))
 #+end_src
-
 ** Basics
 Setting the leader key and some basic commands for navigating emacs and the filesystem
 
@@ -320,94 +320,6 @@ Useful thingies
   (<leader>
     "g" '(magit :wk "Open Magit")))
 #+end_src
-
-** QOL
-Some small quality of life stuff
-
-#+begin_src emacs-lisp
-;; Automatically set indentation per filetype
-(use-package dtrt-indent
-  :config (dtrt-indent-global-mode))
-
-(use-package smartparens
-  :config
-  (smartparens-global-mode)
-  (require 'smartparens-config))
-
-(use-package evil-commentary
-  :config (evil-commentary-mode))
-
-(use-package restart-emacs)
-
-;; (use-package frames-only-mode
-;;   :init (frames-only-mode))
-#+end_src
-
-** UI
-*** Theme
- #+begin_src emacs-lisp
-   (use-package color-theme-sanityinc-tomorrow
-     :config (load-theme 'sanityinc-tomorrow-night t))
-   (use-package kanagawa-themes
-     :custom
-     (kanagawa-themes-keyword-italic nil)
-     (kanagawa-themes-org-height nil)
-     (kanagawa-themes-org-highlight t)
-     (kanagawa-themes-org-bold t))
-#+end_src
-
-*** telephone-line
-A nice mode-line
-**** Install
-#+begin_src emacs-lisp
-  (use-package telephone-line
-    :ensure (:wait t))
-#+end_src
-
-**** Custom Symbols
-#+begin_src emacs-lisp
-(defvar telephone-line-circle-right
-  (make-instance 'telephone-line-unicode-separator
-                 :char #xe0b6
-                 :inverse-video nil))
-(defvar telephone-line-circle-left
-  (make-instance 'telephone-line-unicode-separator
-                 :char #xe0b4))
-(defvar telephone-line-slash-right
-    (make-instance 'telephone-line-unicode-separator
-                   :char #xe0bd
-                   :inverse-video nil))
-(defvar telephone-line-slash-left
-  (make-instance 'telephone-line-unicode-separator
-                 :char #xe0b9))
-#+end_src
-
-**** Configuration
-#+begin_src emacs-lisp
-(setq telephone-line-primary-right-separator 'telephone-line-circle-right)
-(setq telephone-line-primary-left-separator 'telephone-line-circle-left)
-(setq telephone-line-secondary-right-separator 'telephone-line-slash-right)
-(setq telephone-line-secondary-left-separator 'telephone-line-slash-left)
-
-(setq telephone-line-subseparator-faces
-      '((evil . evil)
-        (accent . accent)
-        (nil . nil)))
-
-(setq telephone-line-lhs
-      '((evil   . (telephone-line-evil-tag-segment))
-        (accent . (telephone-line-buffer-name-segment
-                   telephone-line-vc-segment
-                   telephone-line-process-segment))
-        (nil    . ())))
-(setq telephone-line-rhs
-      '((nil    . (telephone-line-misc-info-segment))
-        (accent . (telephone-line-major-mode-segment))
-        (evil   . (telephone-line-airline-position-segment))))
-
-(telephone-line-mode 1)
-#+end_src
-
 ** Note-Taking
 *** org
 **** Options
@@ -437,13 +349,36 @@ A nice mode-line
 #+end_src
 **** org-latex
 #+begin_src emacs-lisp
+(setq org-startup-with-latex-preview t)
 (setq org-latex-packages-alist
       '(("" "esdiff")
         ("" "esvect")
         ("" "tikz")
         ("" "tikz-cd")))
-(setq org-latex-create-formula-image-program 'dvisvgm) ; Makes tikz preview work
-(setq org-preview-latex-image-directory (concat user-emacs-directory "cache/org-latex/"))
+
+;; Increase preview width
+(plist-put org-latex-preview-appearance-options :foreground "White")
+(plist-put org-latex-preview-appearance-options :zoom 1.5)
+
+;; Turn on `org-latex-preview-mode', it's built into Org and much faster/more
+;; featured than org-fragtog. (Remember to turn off/uninstall org-fragtog.)
+(add-hook 'org-mode-hook 'org-latex-preview-mode)
+
+;; ;; Block C-n, C-p etc from opening up previews when using `org-latex-preview-mode'
+;; (setq org-latex-preview-mode-ignored-commands
+;;       '(next-line previous-line mwheel-scroll
+;;         scroll-up-command scroll-down-command))
+
+;; ;; Enable consistent equation numbering
+;; (setq org-latex-preview-numbered t)
+
+;; Bonus: Turn on live previews.  This shows you a live preview of a LaTeX
+;; fragment and updates the preview in real-time as you edit it.
+;; To preview only environments, set it to '(block edit-special) instead
+(setq org-latex-preview-mode-display-live t)
+
+;; More immediate live-previews -- the default delay is 1 second
+(setq org-latex-preview-mode-update-delay 0.25)
 #+end_src
 **** org-agenda
 #+begin_src emacs-lisp
@@ -492,7 +427,6 @@ A nice mode-line
 #+end_src
 **** Theming
 #+begin_src emacs-lisp
-(setq org-startup-with-latex-preview t)
 ;; Resize Org headings
 ;; (dolist (face '((org-level-1 . 1.5)
 ;;                 (org-level-2 . 1.35)
@@ -506,7 +440,6 @@ A nice mode-line
 ;; Make the document title a bit bigger
 (set-face-attribute 'org-document-title nil :font monospace-font :weight
                     'bold :height 1.5)
-(plist-put org-format-latex-options :scale 0.45) ; Make latex preview bigger
 (setf (cdr (assoc 'file org-link-frame-setup)) 'find-file) ; Open files in same window
 #+end_src
 **** Visuals
@@ -524,12 +457,11 @@ A nice mode-line
   (org-hide-emphasis-markers t) ; Hide bold and italic markup
   :hook org-mode
   :after org)
-
-;; Preview latex in editor
-(use-package org-fragtog
-  :hook (org-mode org-roam-mode)
-  :after org)
 #+end_src
+
+#+RESULTS:
+: [nil 26815 9879 581891 nil elpaca-process-queues nil nil 34000 nil]
+
 **** Extra Packages
 #+begin_src emacs-lisp
 ;; For tangling configuration file on save
@@ -538,6 +470,9 @@ A nice mode-line
   :hook org-mode
   :after org)
 #+end_src
+
+#+RESULTS:
+: [nil 26815 9890 210376 nil elpaca-process-queues nil nil 86000 nil]
 
 *** org-roam
 Knowledge management system for taking notes
@@ -681,3 +616,89 @@ Another knowledge management system, mostly used for its renaming functions
   "nmm" '(denote-rename-file-using-front-matter :wk "Update filename from frontmatter")
   "nmn" '(denote-add-front-matter :wk "Regenerate fronmatter from filename"))
 #+end_src
+** QOL
+Some small quality of life stuff
+
+#+begin_src emacs-lisp
+;; Automatically set indentation per filetype
+(use-package dtrt-indent
+  :config (dtrt-indent-global-mode))
+
+(use-package smartparens
+  :config
+  (smartparens-global-mode)
+  (require 'smartparens-config))
+
+(use-package evil-commentary
+  :config (evil-commentary-mode))
+
+(use-package restart-emacs)
+
+;; (use-package frames-only-mode
+;;   :init (frames-only-mode))
+#+end_src
+** UI
+*** Theme
+ #+begin_src emacs-lisp
+   (use-package color-theme-sanityinc-tomorrow
+     :config (load-theme 'sanityinc-tomorrow-night t))
+   (use-package kanagawa-themes
+     :custom
+     (kanagawa-themes-keyword-italic nil)
+     (kanagawa-themes-org-height nil)
+     (kanagawa-themes-org-highlight t)
+     (kanagawa-themes-org-bold t))
+#+end_src
+
+*** telephone-line
+A nice mode-line
+**** Install
+#+begin_src emacs-lisp
+  (use-package telephone-line
+    :ensure (:wait t))
+#+end_src
+
+**** Custom Symbols
+#+begin_src emacs-lisp
+(defvar telephone-line-circle-right
+  (make-instance 'telephone-line-unicode-separator
+                 :char #xe0b6
+                 :inverse-video nil))
+(defvar telephone-line-circle-left
+  (make-instance 'telephone-line-unicode-separator
+                 :char #xe0b4))
+(defvar telephone-line-slash-right
+    (make-instance 'telephone-line-unicode-separator
+                   :char #xe0bd
+                   :inverse-video nil))
+(defvar telephone-line-slash-left
+  (make-instance 'telephone-line-unicode-separator
+                 :char #xe0b9))
+#+end_src
+
+**** Configuration
+#+begin_src emacs-lisp
+(setq telephone-line-primary-right-separator 'telephone-line-circle-right)
+(setq telephone-line-primary-left-separator 'telephone-line-circle-left)
+(setq telephone-line-secondary-right-separator 'telephone-line-slash-right)
+(setq telephone-line-secondary-left-separator 'telephone-line-slash-left)
+
+(setq telephone-line-subseparator-faces
+      '((evil . evil)
+        (accent . accent)
+        (nil . nil)))
+
+(setq telephone-line-lhs
+      '((evil   . (telephone-line-evil-tag-segment))
+        (accent . (telephone-line-buffer-name-segment
+                   telephone-line-vc-segment
+                   telephone-line-process-segment))
+        (nil    . ())))
+(setq telephone-line-rhs
+      '((nil    . (telephone-line-misc-info-segment))
+        (accent . (telephone-line-major-mode-segment))
+        (evil   . (telephone-line-airline-position-segment))))
+
+(telephone-line-mode 1)
+#+end_src
+
