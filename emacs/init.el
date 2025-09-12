@@ -350,8 +350,7 @@
         ("" "tikz")
         ("" "tikz-cd")))
 
-;; Imagemagick has better colour matching to theme than dvisvgm
-(setq org-latex-preview-process-default 'imagemagick)
+(plist-put org-latex-preview-appearance-options :zoom 1.3)
 
 ;; Turn on `org-latex-preview-mode', it's built into Org and much faster/more
 ;; featured than org-fragtog. (Remember to turn off/uninstall org-fragtog.)
