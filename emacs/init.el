@@ -432,6 +432,16 @@
 (use-package org-appear
   :custom
   (org-hide-emphasis-markers t) ; Hide bold and italic markup
+  (org-appear-autoemphasis t)
+  
+  (org-hidden-keywords '(title date author filetags)) ; Hide bold and italic markup
+  (org-appear-autokeywords t)
+  
+  (org-pretty-entities t)
+  (org-appear-autoentities t)
+  (org-appear-autosubmarkers t)
+  ;; (org-appear-inside-latex t)
+  
   :hook org-mode
   :after org)
 
