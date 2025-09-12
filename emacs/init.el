@@ -424,7 +424,9 @@
   :custom
   (org-modern-star 'replace)
   (org-modern-keyword nil)
-  :hook (org-mode))
+  :hook
+  (org-mode)
+  (org-agenda-finalize . org-modern-agenda))
 
 ;; Make stuff dissapear and stuff
 (use-package org-appear
