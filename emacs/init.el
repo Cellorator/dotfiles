@@ -45,23 +45,15 @@
 
 (setq inhibit-startup-message t) ; Don't show splash screen
 
-(setq frame-resize-pixelwise t) ; Remove weird gaps at bottom and right edges
-
 (menu-bar-mode -1) ; Disable menu bar
 (tool-bar-mode -1) ; Disable tool bar
 (scroll-bar-mode -1) ; Disable scroll bar
 
-(column-number-mode) ; Display column number on mode bar
-(global-display-line-numbers-mode 1) ; Display line numbers
+(setq tab-width 4)
+(setq-default indent-tabs-mode nil) ;; Use spaces instead of tabs
 
-(setq default-font "Hurmit Nerd Font")
-(setq monospace-font default-font)
-;; (setq variable-width-font "Metropolis")
-(set-face-attribute 'default nil :family default-font :height 105)
-(set-face-attribute 'fixed-pitch nil :family monospace-font :height 105)
-
-;; (set-face-attribute 'variable-pitch nil :family variable-width-font :height 1.2)
-
+(setq-default show-trailing-whitespace t)
+(global-display-line-numbers-mode 1)
 (global-visual-line-mode) ; Enable line wrap
 
 (savehist-mode) ; Save minibuffer history
@@ -71,10 +63,13 @@
 (setq make-backup-files nil)
 (setq auto-save-default nil)
 
-(setq tab-width 4)
-(setq-default indent-tabs-mode nil) ;; Use spaces instead of tabs
+(setq default-font "Hurmit Nerd Font")
+(setq monospace-font default-font)
+;; (setq variable-width-font "Metropolis")
+(set-face-attribute 'default nil :family default-font :height 105)
+(set-face-attribute 'fixed-pitch nil :family monospace-font :height 105)
 
-(setq-default show-trailing-whitespace t) ;; Highligh trailing spaces
+;; (set-face-attribute 'variable-pitch nil :family variable-width-font :height 1.2)
 
 ;; More convenient keybind setting
 (use-package general

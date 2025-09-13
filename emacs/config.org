@@ -60,19 +60,34 @@
 #+end_src
 
 * Options
-** Main
+** UI
 #+begin_src emacs-lisp
 (setq inhibit-startup-message t) ; Don't show splash screen
-
-(setq frame-resize-pixelwise t) ; Remove weird gaps at bottom and right edges
 
 (menu-bar-mode -1) ; Disable menu bar
 (tool-bar-mode -1) ; Disable tool bar
 (scroll-bar-mode -1) ; Disable scroll bar
+#+end_src
+** Editor
+#+begin_src emacs-lisp
+(setq tab-width 4)
+(setq-default indent-tabs-mode nil) ;; Use spaces instead of tabs
 
-(column-number-mode) ; Display column number on mode bar
-(global-display-line-numbers-mode 1) ; Display line numbers
+(setq-default show-trailing-whitespace t)
+(global-display-line-numbers-mode 1)
+(global-visual-line-mode) ; Enable line wrap
+#+end_src
+** Behaviour
+#+begin_src emacs-lisp
+(savehist-mode) ; Save minibuffer history
+(global-auto-revert-mode) ; Automatically update chaged buffers
 
+;; Disable backups and autosaves
+(setq make-backup-files nil)
+(setq auto-save-default nil)
+#+end_src
+** Font
+#+begin_src emacs-lisp
 (setq default-font "Hurmit Nerd Font")
 (setq monospace-font default-font)
 ;; (setq variable-width-font "Metropolis")
@@ -80,22 +95,7 @@
 (set-face-attribute 'fixed-pitch nil :family monospace-font :height 105)
 
 ;; (set-face-attribute 'variable-pitch nil :family variable-width-font :height 1.2)
-
-(global-visual-line-mode) ; Enable line wrap
-
-(savehist-mode) ; Save minibuffer history
-(global-auto-revert-mode) ; Automatically update chaged buffers
-
-;; Disable backups and autosaves
-(setq make-backup-files nil)
-(setq auto-save-default nil)
-
-(setq tab-width 4)
-(setq-default indent-tabs-mode nil) ;; Use spaces instead of tabs
-
-(setq-default show-trailing-whitespace t) ;; Highligh trailing spaces
 #+end_src
-
 * Keybinds
 ** Setup
 #+begin_src emacs-lisp
