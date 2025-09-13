@@ -73,6 +73,9 @@
 (setq tab-width 4)
 (setq-default indent-tabs-mode nil) ;; Use spaces instead of tabs
 
+(setq scroll-margin 10)
+(setq scroll-conservatively 101) ;; Always scroll 1 by 1 instead of jumping
+
 (setq-default show-trailing-whitespace t)
 (global-display-line-numbers-mode 1)
 (global-visual-line-mode) ; Enable line wrap
