@@ -118,6 +118,20 @@
   :prefix "SPC"
   :global-prefix "C-SPC")
 
+;; Windows
+(defun my-turn-current-window-into-frame ()
+  (interactive)
+  (let ((buffer (current-buffer)))
+    (unless (one-window-p)
+      (delete-window))
+    (display-buffer-pop-up-frame buffer nil)))
+
+(<leader>
+  "e" '(my-turn-current-window-into-frame :wk "Turn current window into separate frame")
+  "j" '(evil-window-next :wk "Switch to next window")
+  "k" '(evil-window-prev :wk "Switch to previous window"))
+
+
 ;; Copy  paste
 (<leader>
   "y" '(clipboard-kill-ring-save :wk "Copy to clipboard")
@@ -162,8 +176,8 @@
 (elpaca-wait)
 (load-theme 'sanityinc-tomorrow-night t)
 
-  (use-package telephone-line
-    :ensure (:wait t))
+(use-package telephone-line
+  :ensure (:wait t))
 
 (defvar telephone-line-circle-right
   (make-instance 'telephone-line-unicode-separator
@@ -203,49 +217,49 @@
 
 (telephone-line-mode 1)
 
-  ;; A completion-style for space separated completion
-  (use-package orderless
-    :custom
-    (completion-styles '(orderless partial-completion basic))
-    (completion-category-defaults nil)
-    (completion-category-overrides '((file (styles partial-completion)))))
+;; A completion-style for space separated completion
+(use-package orderless
+  :custom
+  (completion-styles '(orderless partial-completion basic))
+  (completion-category-defaults nil)
+  (completion-category-overrides '((file (styles partial-completion)))))
 
-  ;; Completion UI
-  (use-package vertico
-    :init (vertico-mode))
+;; Completion UI
+(use-package vertico
+  :init (vertico-mode))
 
-  (use-package consult
-    :hook
-    (minibuffer-setup . (lambda ()
-                          (setq completion-in-region-function
-                                #'consult-completion-in-region))))
+(use-package consult
+  :hook
+  (minibuffer-setup . (lambda ()
+                        (setq completion-in-region-function
+                              #'consult-completion-in-region))))
 
-  ;; Buffer completion
-  (use-package corfu
-    :custom
-    (corfu-auto t)
-    (corfu-cycle t)
-    (global-corfu-minibuffer nil)
-    (corfu-on-exact-match nil)
-    :init
-    (global-corfu-mode))
+;; Buffer completion
+(use-package corfu
+  :custom
+  (corfu-auto t)
+  (corfu-cycle t)
+  (global-corfu-minibuffer nil)
+  (corfu-on-exact-match nil)
+  :init
+  (global-corfu-mode))
 
-  ;; Hopefully fixes error when trying to autocomplete in text-mode
-  (setopt text-mode-ispell-word-completion nil)
-  (defun my-dabbrev-in-text()
-    (add-to-list 'completion-at-point-functions #'cape-dabbrev))
-  (add-hook 'text-mode-hook #'my-dabbrev-in-text)
+;; Hopefully fixes error when trying to autocomplete in text-mode
+(setopt text-mode-ispell-word-completion nil)
+(defun my-dabbrev-in-text()
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev))
+(add-hook 'text-mode-hook #'my-dabbrev-in-text)
 
-  (use-package cape
-    :init
-    (add-hook 'completion-at-point-functions #'cape-keyword)
-    (add-hook 'completion-at-point-functions #'cape-dabbrev)
-    (add-hook 'completion-at-point-functions #'cape-file)
-    (add-hook 'completion-at-point-functions #'cape-elisp-block))
+(use-package cape
+  :init
+  (add-hook 'completion-at-point-functions #'cape-keyword)
+  (add-hook 'completion-at-point-functions #'cape-dabbrev)
+  (add-hook 'completion-at-point-functions #'cape-file)
+  (add-hook 'completion-at-point-functions #'cape-elisp-block))
 
-  ;; Annotations in completion UI
-  (use-package marginalia
-    :init (marginalia-mode))
+;; Annotations in completion UI
+(use-package marginalia
+  :init (marginalia-mode))
 
 (use-package yasnippet
   :config (yas-global-mode 1))
@@ -318,28 +332,28 @@
   (<leader>
     "g" '(magit :wk "Open Magit")))
 
-    (use-package org
-      :defer
-      :ensure
-      '(org :repo "https://code.tecosaur.net/tec/org-mode.git"
-            :branch "dev"
-            :wait t)
-      :custom
-      (org-startup-indented t) ; Indent heading  levels
-      (org-startup-folded 'show2levels)
-      (org-ellipsis "")
-      (org-src-tab-acts-natively t) ; Make tab work in code blocks
-      (org-src-preserve-indentation t) ; Stop annoying indentation when making a new line in code blocks
-      (org-cycle-separator-lines -1) ; Don't fold empty lines between headings
-      (org-log-into-drawer "LOGBOOK") ; Put logging into drawer instead of plain text
-      :hook
-      (org-mode . (lambda () (display-line-numbers-mode -1)))) ;; Remove line numbers
+(use-package org
+  :defer
+  :ensure
+  '(org :repo "https://code.tecosaur.net/tec/org-mode.git"
+        :branch "dev"
+        :wait t)
+  :custom
+  (org-startup-indented t) ; Indent heading  levels
+  (org-startup-folded 'show2levels)
+  (org-ellipsis "")
+  (org-src-tab-acts-natively t) ; Make tab work in code blocks
+  (org-src-preserve-indentation t) ; Stop annoying indentation when making a new line in code blocks
+  (org-cycle-separator-lines -1) ; Don't fold empty lines between headings
+  (org-log-into-drawer "LOGBOOK") ; Put logging into drawer instead of plain text
+  :hook
+  (org-mode . (lambda () (display-line-numbers-mode -1)))) ;; Remove line numbers
 
-    ;; Stop org heading tab-folding from opening all subtrees
-    (add-hook 'org-cycle-hook
-              (lambda (state)
-                (when (eq state 'children)
-                  (setq org-cycle-subtree-status 'subtree))))
+;; Stop org heading tab-folding from opening all subtrees
+(add-hook 'org-cycle-hook
+          (lambda (state)
+            (when (eq state 'children)
+              (setq org-cycle-subtree-status 'subtree))))
 
 (setq org-startup-with-latex-preview t)
 (setq org-latex-packages-alist
@@ -449,9 +463,9 @@
   :hook org-mode
   :after org)
 
-  (use-package org-roam
-    :ensure (:wait t)
-    :after org)
+(use-package org-roam
+  :ensure (:wait t)
+  :after org)
 
 (setq org-roam-directory (file-truename "~/notes"))
 (org-roam-db-autosync-mode)

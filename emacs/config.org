@@ -150,6 +150,20 @@ Setting the leader key and some basic commands for navigating emacs and the file
   :prefix "SPC"
   :global-prefix "C-SPC")
 
+;; Windows
+(defun my-turn-current-window-into-frame ()
+  (interactive)
+  (let ((buffer (current-buffer)))
+    (unless (one-window-p)
+      (delete-window))
+    (display-buffer-pop-up-frame buffer nil)))
+
+(<leader>
+  "e" '(my-turn-current-window-into-frame :wk "Turn current window into separate frame")
+  "j" '(evil-window-next :wk "Switch to next window")
+  "k" '(evil-window-prev :wk "Switch to previous window"))
+
+
 ;; Copy  paste
 (<leader>
   "y" '(clipboard-kill-ring-save :wk "Copy to clipboard")
