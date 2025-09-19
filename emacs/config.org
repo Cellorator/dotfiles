@@ -406,28 +406,30 @@ Useful thingies
 *** org
 **** Options
 #+begin_src emacs-lisp
-    (use-package org
-      :defer
-      :ensure
-      '(org :repo "https://code.tecosaur.net/tec/org-mode.git"
-            :branch "dev"
-            :wait t)
-      :custom
-      (org-startup-indented t) ; Indent heading  levels
-      (org-startup-folded 'show2levels)
-      (org-ellipsis "")
-      (org-src-tab-acts-natively t) ; Make tab work in code blocks
-      (org-src-preserve-indentation t) ; Stop annoying indentation when making a new line in code blocks
-      (org-cycle-separator-lines -1) ; Don't fold empty lines between headings
-      (org-log-into-drawer "LOGBOOK") ; Put logging into drawer instead of plain text
-      :hook
-      (org-mode . (lambda () (display-line-numbers-mode -1)))) ;; Remove line numbers
+(use-package org
+  :defer
+  :ensure
+  '(org :repo "https://code.tecosaur.net/tec/org-mode.git"
+        :branch "dev"
+        :wait t)
+  :custom
+  (org-startup-indented t) ; Indent heading  levels
+  ;; (org-startup-folded 'show2levels)
+  (org-ellipsis "")
+  (org-src-tab-acts-natively t) ; Make tab work in code blocks
+  (org-src-preserve-indentation t) ; Stop annoying indentation when making a new line in code blocks
+  (org-cycle-separator-lines -1) ; Don't fold empty lines between headings
+  (org-log-into-drawer "LOGBOOK") ; Put logging into drawer instead of plain text
+  (org-list-allow-alphabetical t) ; Allow single letters to start lists
+  :hook
+  (org-mode . (lambda () (display-line-numbers-mode -1)))) ;; Remove line numbers
+  ;; (before-save-hook . org-table-recalculate-buffer-tables)) ;; Recalculate org tables when saving
 
-    ;; Stop org heading tab-folding from opening all subtrees
-    (add-hook 'org-cycle-hook
-              (lambda (state)
-                (when (eq state 'children)
-                  (setq org-cycle-subtree-status 'subtree))))
+;; Stop org heading tab-folding from opening all subtrees
+(add-hook 'org-cycle-hook
+          (lambda (state)
+            (when (eq state 'children)
+              (setq org-cycle-subtree-status 'subtree))))
 #+end_src
 **** org-latex
 #+begin_src emacs-lisp
@@ -524,6 +526,7 @@ Useful thingies
   :custom
   (org-modern-star 'replace)
   (org-modern-keyword nil)
+  (org-modern-table nil) ;; Let valign handle this
   :hook
   (org-mode)
   (org-agenda-finalize . org-modern-agenda))
@@ -544,6 +547,13 @@ Useful thingies
   
   :hook org-mode
   :after org)
+
+(elpaca valign
+  :host github
+  :repo "casouri/valign"
+  :after org)
+(add-hook 'org-mode-hook #'valign-mode)
+;; (setq valign-fancy-bar t)
 #+end_src
 
 **** Extra Packages
@@ -714,7 +724,4 @@ Some small quality of life stuff
   :config (evil-commentary-mode))
 
 (use-package restart-emacs)
-
-;; (use-package frames-only-mode
-;;   :init (frames-only-mode))
 #+end_src
