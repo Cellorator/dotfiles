@@ -338,7 +338,7 @@
 
 (elpaca cdlatex
   :general
-  (:states '(normal insert visual)
+  (:states '(normal visual)
            "`" 'cdlatex-math-symbol
            "'" 'cdlatex-math-modify))
 
@@ -369,7 +369,7 @@
 
 ;; org-cdlatex--mode
 (add-hook 'org-mode-hook 'org-cdlatex-mode)
-(general-def :states '(normal insert visual)
+(general-def :states '(normal visual)
   "'" 'org-cdlatex-math-modify)
 
 (setq org-startup-with-latex-preview t)
