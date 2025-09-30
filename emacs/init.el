@@ -75,19 +75,18 @@
 ;; (set-face-attribute 'variable-pitch nil :family variable-width-font :height 1.2)
 
 ;; More convenient keybind setting
-;; Dont know why, but elpaca does
 (use-package general
   :ensure (:wait t)
   :config (general-evil-setup t))
 
 ;; Show custom keybind hints
-(elpaca which-key
+(use-package which-key
   :custom
   (which-key-add-column-padding 3)
   :config (which-key-mode))
 
 ;; Emulate vim keybindings
-(elpaca evil
+(use-package evil
   :init
   (setq evil-want-keybinding nil) ; So evil-collection doesn't yell at me
   (setq evil-want-C-i-jump nil) ; Make TAB work normally (auto-indent)
@@ -96,11 +95,11 @@
   (setq evil-want-fine-undo t)
   :config (evil-mode 1))
 
-(elpaca evil-collection
+(use-package evil-collection
   :config (evil-collection-init)
   :after evil)
 
-(elpaca evil-org
+(use-package evil-org
   :after org
   :hook org-mode
   :config
@@ -108,8 +107,8 @@
   (evil-org-agenda-set-keys))
 
 ;; Undo and redo
-(elpaca undo-fu)
-(elpaca undo-fu-session
+(use-package undo-fu)
+(use-package undo-fu-session
   :config (undo-fu-session-global-mode))
 
 ;; Set leader key
@@ -336,7 +335,8 @@
 (use-package latex
   :elpaca auctex)
 
-(elpaca cdlatex
+(use-package
+  cdlatex
   :general
   (:states '(normal visual)
            "`" 'cdlatex-math-symbol
@@ -369,7 +369,7 @@
 
 ;; org-cdlatex--mode
 (add-hook 'org-mode-hook 'org-cdlatex-mode)
-(general-def :states '(normal visual)
+(general-def :states '(normal insert visual)
   "'" 'org-cdlatex-math-modify)
 
 (setq org-startup-with-latex-preview t)
@@ -475,7 +475,7 @@
   :hook org-mode
   :after org)
 
-(elpaca valign
+(use-package valign
   :host github
   :repo "casouri/valign"
   :after org)
