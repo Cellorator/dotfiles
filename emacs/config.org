@@ -402,6 +402,18 @@ Useful thingies
   (<leader>
     "g" '(magit :wk "Open Magit")))
 #+end_src
+** LaTeX
+#+begin_src emacs-lisp
+(use-package latex
+  :elpaca auctex)
+
+(elpaca cdlatex
+  :general
+  (:states '(normal insert visual)
+           "`" 'cdlatex-math-symbol
+           "'" 'cdlatex-math-modify))
+#+end_src
+
 ** Note-Taking
 *** org
 **** Options
@@ -433,6 +445,11 @@ Useful thingies
 #+end_src
 **** org-latex
 #+begin_src emacs-lisp
+;; org-cdlatex--mode
+(add-hook 'org-mode-hook 'org-cdlatex-mode)
+(general-def :states '(normal insert visual)
+  "'" 'org-cdlatex-math-modify)
+
 (setq org-startup-with-latex-preview t)
 (setq org-latex-packages-alist
       '(("" "esdiff")
@@ -543,7 +560,7 @@ Useful thingies
   (org-pretty-entities t)
   (org-appear-autoentities t)
   (org-appear-autosubmarkers t)
-  ;; (org-appear-inside-latex t)
+  (org-appear-inside-latex t)
   
   :hook org-mode
   :after org)

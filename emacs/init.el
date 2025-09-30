@@ -332,6 +332,15 @@
   (<leader>
     "g" '(magit :wk "Open Magit")))
 
+(use-package latex
+  :elpaca auctex)
+
+(elpaca cdlatex
+  :general
+  (:states '(normal insert visual)
+           "`" 'cdlatex-math-symbol
+           "'" 'cdlatex-math-modify))
+
 (use-package org
   :defer
   :ensure
@@ -356,6 +365,11 @@
           (lambda (state)
             (when (eq state 'children)
               (setq org-cycle-subtree-status 'subtree))))
+
+;; org-cdlatex--mode
+(add-hook 'org-mode-hook 'org-cdlatex-mode)
+(general-def :states '(normal insert visual)
+  "'" 'org-cdlatex-math-modify)
 
 (setq org-startup-with-latex-preview t)
 (setq org-latex-packages-alist
@@ -455,7 +469,7 @@
   (org-pretty-entities t)
   (org-appear-autoentities t)
   (org-appear-autosubmarkers t)
-  ;; (org-appear-inside-latex t)
+  (org-appear-inside-latex t)
   
   :hook org-mode
   :after org)
