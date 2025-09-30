@@ -75,18 +75,19 @@
 ;; (set-face-attribute 'variable-pitch nil :family variable-width-font :height 1.2)
 
 ;; More convenient keybind setting
+;; Dont know why, but elpaca does
 (use-package general
   :ensure (:wait t)
   :config (general-evil-setup t))
 
 ;; Show custom keybind hints
-(use-package which-key
+(elpaca which-key
   :custom
   (which-key-add-column-padding 3)
   :config (which-key-mode))
 
 ;; Emulate vim keybindings
-(use-package evil
+(elpaca evil
   :init
   (setq evil-want-keybinding nil) ; So evil-collection doesn't yell at me
   (setq evil-want-C-i-jump nil) ; Make TAB work normally (auto-indent)
@@ -95,11 +96,11 @@
   (setq evil-want-fine-undo t)
   :config (evil-mode 1))
 
-(use-package evil-collection
+(elpaca evil-collection
   :config (evil-collection-init)
   :after evil)
 
-(use-package evil-org
+(elpaca evil-org
   :after org
   :hook org-mode
   :config
@@ -107,8 +108,8 @@
   (evil-org-agenda-set-keys))
 
 ;; Undo and redo
-(use-package undo-fu)
-(use-package undo-fu-session
+(elpaca undo-fu)
+(elpaca undo-fu-session
   :config (undo-fu-session-global-mode))
 
 ;; Set leader key
