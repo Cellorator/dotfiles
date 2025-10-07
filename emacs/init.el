@@ -333,7 +333,7 @@
     "g" '(magit :wk "Open Magit")))
 
 (use-package latex
-  :elpaca auctex)
+  :ensure auctex)
 
 (use-package
   cdlatex
@@ -369,7 +369,7 @@
 
 ;; org-cdlatex--mode
 (add-hook 'org-mode-hook 'org-cdlatex-mode)
-(general-def :states '(normal insert visual)
+(general-def :states '(normal visual)
   "'" 'org-cdlatex-math-modify)
 
 (setq org-startup-with-latex-preview t)
@@ -476,9 +476,9 @@
   :after org)
 
 (use-package valign
-  :host github
-  :repo "casouri/valign"
-  :after org)
+  :ensure (:host github
+                 :repo "casouri/valign"
+                 :after org))
 (add-hook 'org-mode-hook #'valign-mode)
 ;; (setq valign-fancy-bar t)
 

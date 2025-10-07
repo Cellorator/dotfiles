@@ -405,7 +405,7 @@ Useful thingies
 ** LaTeX
 #+begin_src emacs-lisp
 (use-package latex
-  :elpaca auctex)
+  :ensure auctex)
 
 (use-package
   cdlatex
@@ -448,7 +448,7 @@ Useful thingies
 #+begin_src emacs-lisp
 ;; org-cdlatex--mode
 (add-hook 'org-mode-hook 'org-cdlatex-mode)
-(general-def :states '(normal insert visual)
+(general-def :states '(normal visual)
   "'" 'org-cdlatex-math-modify)
 
 (setq org-startup-with-latex-preview t)
@@ -567,9 +567,9 @@ Useful thingies
   :after org)
 
 (use-package valign
-  :host github
-  :repo "casouri/valign"
-  :after org)
+  :ensure (:host github
+                 :repo "casouri/valign"
+                 :after org))
 (add-hook 'org-mode-hook #'valign-mode)
 ;; (setq valign-fancy-bar t)
 #+end_src
