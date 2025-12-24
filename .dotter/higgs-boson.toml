@@ -2,5 +2,5 @@ packages = ["default", "gaming"]
 
 [variables]
 monitor_name = "eDP-1"
-monitor_scale = "1.2"
+monitor_scale = "1.0"
 sensitivity = "0.2"
