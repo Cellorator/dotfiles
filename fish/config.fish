@@ -31,6 +31,8 @@ status is-interactive; and begin
 
     abbr -a py python
 
+    abbr -a emr 'systemctl restart --user emacs'
+
     # Aliases
     alias bat 'bat -n'
     alias cat 'bat -n'

@@ -1,41 +1,62 @@
-;; Initialize package sources
-(require 'package)
+(defvar elpaca-installer-version 0.11)
+(defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
+(defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
+(defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
+(defvar elpaca-order '(elpaca :repo "https://github.com/progfolio/elpaca.git"
+                              :ref nil :depth 1 :inherit ignore
+                              :files (:defaults "elpaca-test.el" (:exclude "extensions"))
+                              :build (:not elpaca--activate-package)))
+(let* ((repo  (expand-file-name "elpaca/" elpaca-repos-directory))
+       (build (expand-file-name "elpaca/" elpaca-builds-directory))
+       (order (cdr elpaca-order))
+       (default-directory repo))
+  (add-to-list 'load-path (if (file-exists-p build) build repo))
+  (unless (file-exists-p repo)
+    (make-directory repo t)
+    (when (<= emacs-major-version 28) (require 'subr-x))
+    (condition-case-unless-debug err
+        (if-let* ((buffer (pop-to-buffer-same-window "*elpaca-bootstrap*"))
+                  ((zerop (apply #'call-process `("git" nil ,buffer t "clone"
+                                                  ,@(when-let* ((depth (plist-get order :depth)))
+                                                      (list (format "--depth=%d" depth) "--no-single-branch"))
+                                                  ,(plist-get order :repo) ,repo))))
+                  ((zerop (call-process "git" nil buffer t "checkout"
+                                        (or (plist-get order :ref) "--"))))
+                  (emacs (concat invocation-directory invocation-name))
+                  ((zerop (call-process emacs nil buffer nil "-Q" "-L" "." "--batch"
+                                        "--eval" "(byte-recompile-directory \".\" 0 'force)")))
+                  ((require 'elpaca))
+                  ((elpaca-generate-autoloads "elpaca" repo)))
+            (progn (message "%s" (buffer-string)) (kill-buffer buffer))
+          (error "%s" (with-current-buffer buffer (buffer-string))))
+      ((error) (warn "%s" err) (delete-directory repo 'recursive))))
+  (unless (require 'elpaca-autoloads nil t)
+    (require 'elpaca)
+    (elpaca-generate-autoloads "elpaca" repo)
+    (let ((load-source-file-function nil)) (load "./elpaca-autoloads"))))
+(add-hook 'after-init-hook #'elpaca-process-queues)
+(elpaca `(,@elpaca-order))
 
-(setq package-archives '(("melpa" . "https://melpa.org/packages/")
-                         ("org" . "https://orgmode.org/elpa/")
-                         ("elpa" . "https://elpa.gnu.org/packages/")
-                         ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
-
-(package-initialize)
-(unless package-archive-contents
-  (package-refresh-contents))
-
-;; Initialize use-package on non-Linux platforms
-(unless (package-installed-p 'use-package)
-  (package-install 'use-package))
-
-(require 'use-package)
-(setq use-package-always-ensure t)
+;; Enable integration with use-package function, remove once all converted to elpaca
+(elpaca elpaca-use-package
+  (elpaca-use-package-mode))
+(setq elpaca-use-package-by-default t
+      use-package-always-ensure t)
 
 (setq inhibit-startup-message t) ; Don't show splash screen
-
-(setq frame-resize-pixelwise t) ; Remove weird gaps at bottom and right edges
 
 (menu-bar-mode -1) ; Disable menu bar
 (tool-bar-mode -1) ; Disable tool bar
 (scroll-bar-mode -1) ; Disable scroll bar
 
-(column-number-mode) ; Display column number on mode bar
-(global-display-line-numbers-mode 1) ; Display line numbers
+(setq tab-width 4)
+(setq-default indent-tabs-mode nil) ;; Use spaces instead of tabs
 
-(setq default-font "Hurmit Nerd Font")
-(setq monospace-font default-font)
-;; (setq variable-width-font "Metropolis")
-(set-face-attribute 'default nil :family default-font :height 105)
-(set-face-attribute 'fixed-pitch nil :family monospace-font :height 105)
+(setq scroll-margin 10)
+(setq scroll-conservatively 101) ;; Always scroll 1 by 1 instead of jumping
 
-;; (set-face-attribute 'variable-pitch nil :family variable-width-font :height 1.2)
-
+(setq-default show-trailing-whitespace t)
+(global-display-line-numbers-mode 1)
 (global-visual-line-mode) ; Enable line wrap
 
 (savehist-mode) ; Save minibuffer history
@@ -45,15 +66,24 @@
 (setq make-backup-files nil)
 (setq auto-save-default nil)
 
-(setq tab-width 4)
-(setq-default indent-tabs-mode nil) ;; Use spaces instead of tabs
+(setq default-font "Hurmit Nerd Font")
+(setq monospace-font default-font)
+;; (setq variable-width-font "Metropolis")
+(set-face-attribute 'default nil :family default-font :height 105)
+(set-face-attribute 'fixed-pitch nil :family monospace-font :height 105)
 
-(setq-default show-trailing-whitespace t) ;; Highligh trailing spaces
+;; (set-face-attribute 'variable-pitch nil :family variable-width-font :height 1.2)
 
 ;; More convenient keybind setting
 (use-package general
-  :config (general-evil-setup t)
-  :ensure t)
+  :ensure (:wait t)
+  :config (general-evil-setup t))
+
+;; Show custom keybind hints
+(use-package which-key
+  :custom
+  (which-key-add-column-padding 3)
+  :config (which-key-mode))
 
 ;; Emulate vim keybindings
 (use-package evil
@@ -62,32 +92,24 @@
   (setq evil-want-C-i-jump nil) ; Make TAB work normally (auto-indent)
   (setq evil-respect-visual-line-mode t)  ; Make j and k move between wrapped lines
   (setq evil-undo-system 'undo-fu)
-  :config (evil-mode 1)
-  :ensure t)
+  (setq evil-want-fine-undo t)
+  :config (evil-mode 1))
+
 (use-package evil-collection
   :config (evil-collection-init)
-  :after evil
-  :ensure t)
-;; Nice org keybindings for evil
+  :after evil)
+
 (use-package evil-org
+  :after org
   :hook org-mode
   :config
   (require 'evil-org-agenda)
-  (evil-org-agenda-set-keys)
-  :after org
-  :ensure t)
-
+  (evil-org-agenda-set-keys))
 
 ;; Undo and redo
-(use-package undo-fu :ensure t)
+(use-package undo-fu)
 (use-package undo-fu-session
-  :ensure t
   :config (undo-fu-session-global-mode))
-
-(use-package which-key
-  :custom
-  (which-key-add-column-padding 3)
-  :config (which-key-mode))
 
 ;; Set leader key
 (general-create-definer <leader>
@@ -96,7 +118,21 @@
   :prefix "SPC"
   :global-prefix "C-SPC")
 
-;; Copy paste
+;; Windows
+(defun my-turn-current-window-into-frame ()
+  (interactive)
+  (let ((buffer (current-buffer)))
+    (unless (one-window-p)
+      (delete-window))
+    (display-buffer-pop-up-frame buffer nil)))
+
+(<leader>
+  "e" '(my-turn-current-window-into-frame :wk "Turn current window into separate frame")
+  "j" '(evil-window-next :wk "Switch to next window")
+  "k" '(evil-window-prev :wk "Switch to previous window"))
+
+
+;; Copy  paste
 (<leader>
   "y" '(clipboard-kill-ring-save :wk "Copy to clipboard")
   "p" '(clipboard-yank :wk "Paste from clipboard"))
@@ -116,14 +152,10 @@
   "br" '(revert-buffer :wk "Reload changes to buffer")
   "bw" '(kill-this-buffer :wk "Kill current buffer"))
 
-;; Windows
-(<leader> "j" '(next-multiframe-window :wk "Next window"))
-(<leader> "k" '(next-multiframe-window :wk "Previous window"))
-
 ;; LSP
 (<leader>
-  "l" '(:ignore t :wk "LSP")
-  "lr" '(lsp-rename :wk "Rename symbol"))
+ "l" '(:ignore t :wk "LSP")
+ "lr" '(lsp-rename :wk "Rename symbol"))
 
 ;; Reload
 (defun reload-config()
@@ -133,54 +165,104 @@
   "rr" '(reload-config :wk "Reload configuration")
   "re" '(restart-emacs :wk "Restart Emacs"))
 
-;; A completion-style for space separated completion
-(use-package orderless
-  :ensure t
+(use-package color-theme-sanityinc-tomorrow)
+(use-package kanagawa-themes
   :custom
-  (completion-styles '(orderless partial-completion basic))
-  (completion-category-defaults nil)
-  (completion-category-overrides '((file (styles partial-completion)))))
+  (kanagawa-themes-keyword-italic nil)
+  (kanagawa-themes-org-height nil)
+  (kanagawa-themes-org-highlight t)
+  (kanagawa-themes-org-bold t))
+(use-package doom-themes)
+(elpaca-wait)
+(load-theme 'sanityinc-tomorrow-night t)
 
-;; Completion UI
-(use-package vertico
-  :init (vertico-mode)
-  :ensure t)
+  (use-package telephone-line
+    :ensure (:wait t))
 
-(use-package consult
-  :hook
-  (minibuffer-setup . (lambda ()
-                        (setq completion-in-region-function
-                              #'consult-completion-in-region)))
-  :ensure t)
+(defvar telephone-line-circle-right
+  (make-instance 'telephone-line-unicode-separator
+                 :char #xe0b6
+                 :inverse-video nil))
+(defvar telephone-line-circle-left
+  (make-instance 'telephone-line-unicode-separator
+                 :char #xe0b4))
+(defvar telephone-line-slash-right
+    (make-instance 'telephone-line-unicode-separator
+                   :char #xe0bd
+                   :inverse-video nil))
+(defvar telephone-line-slash-left
+  (make-instance 'telephone-line-unicode-separator
+                 :char #xe0b9))
 
-;; Buffer completion
-(use-package corfu
-  :custom
-  (corfu-auto t)
-  (corfu-cycle t)
-  (global-corfu-minibuffer nil)
-  (corfu-on-exact-match nil)
-  :init
-  (global-corfu-mode)
-  :ensure t)
+(setq telephone-line-primary-right-separator 'telephone-line-circle-right)
+(setq telephone-line-primary-left-separator 'telephone-line-circle-left)
+(setq telephone-line-secondary-right-separator 'telephone-line-slash-right)
+(setq telephone-line-secondary-left-separator 'telephone-line-slash-left)
 
-;; Hopefully fixes error when trying to autocomplete in text-mode
-(setopt text-mode-ispell-word-completion nil)
-(defun my-dabbrev-in-text()
-      (add-to-list 'completion-at-point-functions #'cape-dabbrev))
-(add-hook 'text-mode-hook #'my-dabbrev-in-text)
+(setq telephone-line-subseparator-faces
+      '((evil . evil)
+        (accent . accent)
+        (nil . nil)))
 
-(use-package cape
-  :init
-  (add-hook 'completion-at-point-functions #'cape-keyword)
-  (add-hook 'completion-at-point-functions #'cape-dabbrev)
-  (add-hook 'completion-at-point-functions #'cape-file)
-  (add-hook 'completion-at-point-functions #'cape-elisp-block)
-  :ensure t)
+(setq telephone-line-lhs
+      '((evil   . (telephone-line-evil-tag-segment))
+        (accent . (telephone-line-buffer-name-segment
+                   telephone-line-vc-segment
+                   telephone-line-process-segment))
+        (nil    . ())))
+(setq telephone-line-rhs
+      '((nil    . (telephone-line-misc-info-segment))
+        (accent . (telephone-line-major-mode-segment))
+        (evil   . (telephone-line-airline-position-segment))))
+
+(telephone-line-mode 1)
+
+  ;; A completion-style for space separated completion
+  (use-package orderless
+    :custom
+    (completion-styles '(orderless partial-completion basic))
+    (completion-category-defaults nil)
+    (completion-category-overrides '((file (styles partial-completion)))))
+
+  ;; Completion UI
+  (use-package vertico
+    :init (vertico-mode))
+
+  (use-package consult
+    :hook
+    (minibuffer-setup . (lambda ()
+                          (setq completion-in-region-function
+                                #'consult-completion-in-region))))
+
+  ;; Buffer completion
+  (use-package corfu
+    :custom
+    (corfu-auto t)
+    (corfu-cycle t)
+    (global-corfu-minibuffer nil)
+    (corfu-on-exact-match nil)
+    :init
+    (global-corfu-mode))
+
+  ;; Hopefully fixes error when trying to autocomplete in text-mode
+  (setopt text-mode-ispell-word-completion nil)
+  (defun my-dabbrev-in-text()
+    (add-to-list 'completion-at-point-functions #'cape-dabbrev))
+  (add-hook 'text-mode-hook #'my-dabbrev-in-text)
+
+  (use-package cape
+    :init
+    (add-hook 'completion-at-point-functions #'cape-keyword)
+    (add-hook 'completion-at-point-functions #'cape-dabbrev)
+    (add-hook 'completion-at-point-functions #'cape-file)
+    (add-hook 'completion-at-point-functions #'cape-elisp-block))
+
+  ;; Annotations in completion UI
+  (use-package marginalia
+    :init (marginalia-mode))
 
 (use-package yasnippet
-  :config (yas-global-mode 1)
-  :ensure t)
+  :config (yas-global-mode 1))
 
 (use-package lsp-mode
   :custom
@@ -198,8 +280,7 @@
    (csharp-ts-mode . lsp-deferred)
    (python-ts-mode . (lambda ()
                        (require 'lsp-pyright)
-                       (lsp-deferred)))) ; or lsp-deferred
-  :ensure t)
+                       (lsp-deferred))))) ; or lsp-deferred
 
 (defun lsp-booster--advice-json-parse (old-fn &rest args)
   "Try to parse bytecode instead of json."
@@ -238,221 +319,178 @@
   (treesit-font-lock-level 4)
   :config
   (treesit-auto-add-to-auto-mode-alist 'all)
-  (global-treesit-auto-mode)
-  :ensure t)
+  (global-treesit-auto-mode))
 
-(use-package lua-mode :ensure t)
+(use-package lua-mode)
 (use-package lsp-pyright
-  :ensure t
   :custom (lsp-pyright-langserver-command "basedpyright")) ;; or basedpyright
 
-;; Annotations in completion UI
-(use-package marginalia
-  :init (marginalia-mode)
-  :ensure t)
-
+(use-package transient)
 ;; Cool git front-end
 (use-package magit
   :general
   (<leader>
-    "g" '(magit :wk "Open Magit"))
-  :ensure t)
+    "g" '(magit :wk "Open Magit")))
 
-(use-package frames-only-mode
-  :init (frames-only-mode)
-  :ensure t)
+(use-package latex
+  :ensure auctex)
 
-;; Automatically set indentation per filetype
-(use-package dtrt-indent
-  :config (dtrt-indent-global-mode)
-  :ensure t)
-
-(use-package smartparens
-  :config
-  (smartparens-global-mode)
-  (require 'smartparens-config)
-  :ensure t)
-
-(use-package evil-commentary
-  :config (evil-commentary-mode)
-  :ensure t)
-
-(use-package restart-emacs :ensure t)
-
-(use-package color-theme-sanityinc-tomorrow
-  :config
-  (load-theme 'sanityinc-tomorrow-night t)
-  :ensure t)
-
-(use-package doom-themes
-  :ensure t)
-
-(use-package telephone-line
-  :init
-  (telephone-line-mode 1)
-  :config
-  (defvar telephone-line-circle-right
-    (make-instance 'telephone-line-unicode-separator
-                   :char #xe0b6
-                   :inverse-video nil))
-  (defvar telephone-line-circle-left
-    (make-instance 'telephone-line-unicode-separator
-                   :char #xe0b4))
-  (defvar telephone-line-slash-right
-    (make-instance 'telephone-line-unicode-separator
-                   :char #xe0bd
-                   :inverse-video nil))
-  (defvar telephone-line-slash-left
-    (make-instance 'telephone-line-unicode-separator
-                   :char #xe0b9))
-  :custom
-  (telephone-line-primary-right-separator 'telephone-line-circle-right)
-  (telephone-line-primary-left-separator 'telephone-line-circle-left)
-  (telephone-line-secondary-right-separator 'telephone-line-slash-right)
-  (telephone-line-secondary-left-separator 'telephone-line-slash-left)
-
-  (telephone-line-subseparator-faces
-   '((evil . evil)
-     (accent . accent)
-     (nil . nil)))
-
-   (telephone-line-lhs
-    '((evil   . (telephone-line-evil-tag-segment))
-      (accent . (telephone-line-buffer-name-segment
-                 telephone-line-vc-segment
-                 telephone-line-process-segment))
-      (nil    . ())))
-   (telephone-line-rhs
-    '((nil    . (telephone-line-misc-info-segment))
-      (accent . (telephone-line-major-mode-segment))
-      (evil   . (telephone-line-airline-position-segment))))
-   :ensure t)
+(use-package
+  cdlatex
+  :general
+  (:states '(normal visual)
+           "`" 'cdlatex-math-symbol
+           "'" 'cdlatex-math-modify))
 
 (use-package org
+  :defer
+  :ensure
+  '(org :repo "https://code.tecosaur.net/tec/org-mode.git"
+        :branch "dev"
+        :wait t)
   :custom
   (org-startup-indented t) ; Indent heading  levels
-  (org-startup-folded 'show2levels)
+  ;; (org-startup-folded 'show2levels)
   (org-ellipsis "")
   (org-src-tab-acts-natively t) ; Make tab work in code blocks
   (org-src-preserve-indentation t) ; Stop annoying indentation when making a new line in code blocks
   (org-cycle-separator-lines -1) ; Don't fold empty lines between headings
   (org-log-into-drawer "LOGBOOK") ; Put logging into drawer instead of plain text
-  ;; Latex stuff
-  (org-latex-packages-alist
-   '(("" "esdiff")
-     ("" "esvect")
-     ("" "tikz")
-     ("" "tikz-cd")))
-  (org-latex-create-formula-image-program 'dvisvgm) ; Makes tikz preview work
-  (org-preview-latex-image-directory (concat user-emacs-directory "cache/org-latex/"))
-  ;; Org agenda
-  (org-agenda-files '("~/notes/inbox/"))
-  (org-agenda-todo-ignore-scheduled 'future)
-  ;; Org captures
-  (org-capture-templates
-   '(("t" "TODO")
-     ("tt" "Unscheduled" entry
-      (file+headline "~/notes/inbox.org" "Unscheduled")
-      "* TODO %?")
-     ("ts" "Scheduled" entry
-      (file+headline "~/notes/inbox.org" "Scheduled")
-      "* TODO %?\nSCHEDULED: %^T")
-     ("n" "Note" entry
-      (file+headline "~/notes/inbox.org" "Notes")
-      "* %?")))
-  ;; Org babel stuff
-  (org-babel-no-eval-on-ctrl-c-ctrl-c nil)
-  (org-confirm-babel-evaluate nil)
-  :config
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((emacs-lisp . t)
-     (org . t)
-     (latex . t)
-     (python . t)))
+  (org-list-allow-alphabetical t) ; Allow single letters to start lists
   :hook
-  (org-mode . (lambda () (display-line-numbers-mode -1))) ;; Remove line numbers
-  :general
-  (<leader>
-    "o" '(:ignore t :wk "org-mode")
-    "ole" '(org-latex-export-to-pdf :wk "Export to latex pdf")
-    "or" '(org-babel-execute-src-block :wk "Execute code block"))
-  (:keymaps 'override
-            (general-nmap "RET" 'org-open-at-point)
-            (general-def :states '(normal insert)
-                     "C-M-<return>" '(lambda ()
-                                       (interactive)
-                                       (org-insert-heading-respect-content)
-                                       (org-do-demote)
-                                       (evil-append 1)))))
+  (org-mode . (lambda () (display-line-numbers-mode -1)))) ;; Remove line numbers
+  ;; (before-save-hook . org-table-recalculate-buffer-tables)) ;; Recalculate org tables when saving
 
-(use-package org
-  :custom (org-startup-with-latex-preview t)
-  :config
-  ;; Resize Org headings
-  ;; (dolist (face '((org-level-1 . 1.5)
-  ;;                 (org-level-2 . 1.35)
-  ;;                 (org-level-3 . 1.25)
-  ;;                 (org-level-4 . 1.2)
-  ;;                 (org-level-5 . 1.2)
-  ;;                 (org-level-6 . 1.2)
-  ;;                 (org-level-7 . 1.2)
-  ;;                 (org-level-8 . 1.2)))
-  ;;   (set-face-attribute (car face) nil :font monospace-font :weight 'bold :height (cdr face)))
-  ;; Make the document title a bit bigger
-  (set-face-attribute 'org-document-title nil :font monospace-font :weight
-                      'bold :height 1.5)
-  (plist-put org-format-latex-options :scale 0.45) ; Make latex preview bigger
-  (setf (cdr (assoc 'file org-link-frame-setup)) 'find-file)) ; Open files in same window
+;; Stop org heading tab-folding from opening all subtrees
+(add-hook 'org-cycle-hook
+          (lambda (state)
+            (when (eq state 'children)
+              (setq org-cycle-subtree-status 'subtree))))
+
+;; org-cdlatex--mode
+(add-hook 'org-mode-hook 'org-cdlatex-mode)
+(general-def :states '(normal visual)
+  "'" 'org-cdlatex-math-modify)
+
+(setq org-startup-with-latex-preview t)
+(setq org-latex-packages-alist
+      '(("" "physics")
+        ("" "tikz")))
+
+(plist-put org-latex-preview-appearance-options :zoom 1.3)
+
+;; Turn on `org-latex-preview-mode', it's built into Org and much faster/more
+;; featured than org-fragtog. (Remember to turn off/uninstall org-fragtog.)
+(add-hook 'org-mode-hook 'org-latex-preview-mode)
+
+;; ;; Enable consistent equation numbering
+(setq org-latex-preview-numbered t)
+
+;; Bonus: Turn on live previews.  This shows you a live preview of a LaTeX
+;; fragment and updates the preview in real-time as you edit it.
+;; To preview only environments, set it to '(block edit-special) instead
+(setq org-latex-preview-mode-display-live t)
+
+;; More immediate live-previews -- the default delay is 1 second
+(setq org-latex-preview-mode-update-delay 0.25)
+
+(setq org-agenda-files '("~/notes/inbox/"))
+(setq org-agenda-todo-ignore-scheduled 'future)
+
+(setq org-capture-templates
+      '(("t" "TODO")
+        ("tt" "Unscheduled" entry
+         (file+headline "~/notes/inbox/inbox.org" "Unscheduled")
+         "* TODO %?")
+        ("ts" "Scheduled" entry
+         (file+headline "~/notes/inbox/inbox.org" "Scheduled")
+         "* TODO %?\nSCHEDULED: %^T")
+        ("n" "Note" entry
+         (file+headline "~/notes/inbox/inbox.org" "Notes")
+         "* %?")))
+
+(setq org-babel-no-eval-on-ctrl-c-ctrl-c nil)
+(setq org-confirm-babel-evaluate nil)
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((emacs-lisp . t)
+   (org . t)
+   (latex . t)
+   (python . t)))
+
+(<leader>
+  "o" '(:ignore t :wk "org-mode")
+  "ole" '(org-latex-export-to-pdf :wk "Export to latex pdf")
+  "or" '(org-babel-execute-src-block :wk "Execute code block"))
+(general-nmap "RET" 'org-open-at-point)
+(general-def :states '(normal insert)
+  "C-M-<return>" '(lambda ()
+                    (interactive)
+                    (org-insert-heading-respect-content)
+                    (org-do-demote)
+                    (evil-append 1)))
+
+;; Resize Org headings
+;; (dolist (face '((org-level-1 . 1.5)
+;;                 (org-level-2 . 1.35)
+;;                 (org-level-3 . 1.25)
+;;                 (org-level-4 . 1.2)
+;;                 (org-level-5 . 1.2)
+;;                 (org-level-6 . 1.2)
+;;                 (org-level-7 . 1.2)
+;;                 (org-level-8 . 1.2)))
+;;   (set-face-attribute (car face) nil :font monospace-font :weight 'bold :height (cdr face)))
+;; Make the document title a bit bigger
+(set-face-attribute 'org-document-title nil :font monospace-font :weight
+                    'bold :height 1.5)
+(setf (cdr (assoc 'file org-link-frame-setup)) 'find-file) ; Open files in same window
 
 ;; Replace text with cool symbols
 (use-package org-modern
   :custom
   (org-modern-star 'replace)
   (org-modern-keyword nil)
-  :hook (org-mode)
-  :ensure t)
+  (org-modern-table nil) ;; Let valign handle this
+  :hook
+  (org-mode)
+  (org-agenda-finalize . org-modern-agenda))
 
 ;; Make stuff dissapear and stuff
 (use-package org-appear
   :custom
   (org-hide-emphasis-markers t) ; Hide bold and italic markup
+  (org-appear-autoemphasis t)
+  
+  (org-hidden-keywords '(title date author filetags)) ; Hide bold and italic markup
+  (org-appear-autokeywords t)
+  
+  (org-pretty-entities t)
+  (org-appear-autoentities t)
+  (org-appear-autosubmarkers t)
+  (org-appear-inside-latex t)
+  
   :hook org-mode
-  :after org
-  :ensure t)
+  :after org)
 
-;; Preview latex in editor
-(use-package org-fragtog
-  :hook (org-mode org-roam-mode)
-  :after org
-  :ensure t)
+(use-package valign
+  :ensure (:host github
+                 :repo "casouri/valign"
+                 :after org))
+(add-hook 'org-mode-hook #'valign-mode)
+;; (setq valign-fancy-bar t)
 
 ;; For tangling configuration file on save
 (use-package org-auto-tangle
   :defer t
   :hook org-mode
-  :after org
-  :ensure t)
+  :after org)
 
-(use-package org-roam
-  :after org
-  :ensure t)
-
-(use-package org-roam-ui
-  :custom
-  (org-roam-ui-sync-theme t)
-  (org-roam-ui-follow t)
-  (org-roam-ui-update-on-save t)
-  (org-roam-ui-open-on-start t)
-  :after org-roam
-  :ensure t)
-
-(use-package websocket
-  :after org-roam
-  :ensure t)
+  (use-package org-roam
+    :ensure (:wait t)
+    :after org)
 
 (setq org-roam-directory (file-truename "~/notes"))
-(setq org-roam-db-location (file-truename "~/notes/org-roam.db"))
 (org-roam-db-autosync-mode)
 (add-to-list 'display-buffer-alist
              '("\\*org-roam\\*"
@@ -468,20 +506,6 @@
          :target (file+head
                   "main/%<%Y%m%dT%H%M%S>--${slug}.org"
                   "#+title: ${title}\n#+date: [%<%Y-%m-%d %a %H:%M>]\n#+filetags:")
-         :immediate-finish t
-         :unnarrowed t)
-
-        ("l" "literature note" plain "%?"
-         :target (file+head
-                  "references/${citar-citekey}.org"
-                  "#+title: ${title}\n#+date: [%<%Y-%m-%d %a %H:%M>]\n")
-         :immediate-finish t
-         :unnarrowed t)
-
-        ("a" "article" plain "%?"
-         :target (file+head
-                  "articles/${title}.org"
-                  "#+title: ${title}\n#+date: [%<%Y-%m-%d %a %H:%M>]\n")
          :immediate-finish t
          :unnarrowed t)))
 
@@ -533,6 +557,19 @@
      (when (> level 1) (concat (string-join (org-roam-node-olp node) " > ") " > "))
      (org-roam-node-title node))))
 
+(use-package org-mem
+  :defer
+  :config
+  ;; At least one of these two is needed
+  (setq org-mem-do-sync-with-org-id t)
+  (setq org-mem-watch-dirs '("~/notes/")) ;; Configure me
+  (org-mem-updater-mode))
+
+(use-package org-node
+  :config
+  (org-node-backlink-mode)
+  (org-node-cache-mode))
+
 (use-package denote
   :custom
   (denote-directory (file-truename "~/notes/"))
@@ -544,52 +581,7 @@
   (setq denote-org-front-matter
         "#+title: %1$s
 #+date: %2$s
-#+filetags: %3$s\n")
-  :ensure t)
-
-;; Completion for annotations
-(use-package citar
-  :custom
-  (citar-bibliography '("~/notes/references/bibliography.bib"))
-  (citar-notes-paths '("~/notes/references"))
-  (citar-library-paths '("~/notes/references/documents"))
-  (org-cite-insert-processor 'citar)
-  (org-cite-follow-processor 'citar)
-  (org-cite-activate-processor 'citar)
-  :hook
-  (LaTeX-mode . citar-capf-setup)
-  (org-mode . citar-capf-setup)
-  :ensure t)
-;; Integration with org-roam
-(use-package citar-org-roam
-  :custom
-  (citar-org-roam-capture-template-key "l")
-  (citar-org-roam-note-title-template "${title} (${author} ${date})")
-  :config (citar-org-roam-mode)
-  :after (citar org-roam)
-  :ensure t)
-(use-package citar-embark
-  :no-require
-  :config (citar-embark-mode)
-  :after (citar embark)
-  :ensure t)
-
-(use-package org-noter
-  :custom
-  (org-noter-notes-search-path '("~/notes/references"))
-  (org-noter-default-heading-title "$p$")
-  (org-noter-disable-narrowing t) ; Disable only looking at one note when activating
-  (org-noter-always-create-frame nil) ; Use current frame instead of making new one
-  (org-noter-swap-window t) ; Move doc to rightside
-  (org-noter-doc-split-fraction '(0.33 . 0.33)) ; Set doc view size
-  (org-noter-use-indirect-buffer nil) ; Use actual buffers
-  :general
-  (general-nmap
-    :keymaps '(org-noter-mode-map pdf-view-mode-map)
-    "I" 'org-noter-insert-note
-    "i" 'org-noter-insert-precise-note)
-  :after org
-  :ensure t)
+#+filetags: %3$s\n"))
 
 (<leader>
   "nc" '(org-capture :wk "org-capture")
@@ -602,7 +594,7 @@
   "nb" '(org-roam-buffer-toggle :wk "Open backlinks buffer"))
 
 (<leader>
-  "nm" '(:ignore t :wk "Modify note frontmatter (title, keywords, aliases, id)")
+  "nm" '(:ignore t :wk "Modify note metadata (title, keywords, aliases, id)")
   "nmt" '(denote-rename-file-title :wk "Change title")
   "nmk" '(denote-rename-file-keywords :wk "Change keywords/filetags")
   "nma" '(org-roam-alias-add :wk "Add aliases")
@@ -610,27 +602,16 @@
   "nmm" '(denote-rename-file-using-front-matter :wk "Update filename from frontmatter")
   "nmn" '(denote-add-front-matter :wk "Regenerate fronmatter from filename"))
 
-(<leader>
-  "on" '(:ignore t :wk "org-noter")
-  "ono" '(org-noter :wk "Open document")
-  "onn" '(org-noter-sync-current-note :wk "Open page"))
+;; Automatically set indentation per filetype
+(use-package dtrt-indent
+  :config (dtrt-indent-global-mode))
 
-;; Get this to work sometime
-;; (defun org-noter-open()
-;;   (interactive)
-;;   (if (eq major-mode 'pdf-view-mode)
-;;       (org-noter-sync-current-note)
-;;     (org-noter)))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(org-preview-latex-default-process 'dvisvgm nil nil "Customized with use-package org")
- '(package-selected-packages nil))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+(use-package smartparens
+  :config
+  (smartparens-global-mode)
+  (require 'smartparens-config))
+
+(use-package evil-commentary
+  :config (evil-commentary-mode))
+
+(use-package restart-emacs)

@@ -1,0 +1,6 @@
+# key: \ba
+# name: latex-environment-align
+# --
+\begin{align}
+$0
+\end{align}
