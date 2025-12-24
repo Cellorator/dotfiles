@@ -99,7 +99,10 @@
 
 ;; (set-face-attribute 'variable-pitch nil :family variable-width-font :height 1.2)
 #+end_src
+<<<<<<< HEAD
 
+=======
+>>>>>>> migrating-to-elpaca
 * Keybinds
 ** Setup
 #+begin_src emacs-lisp
@@ -266,7 +269,6 @@ A nice mode-line
 
 (telephone-line-mode 1)
 #+end_src
-
 ** Tools
 Useful thingies
 
