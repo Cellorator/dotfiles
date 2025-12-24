@@ -10,30 +10,9 @@ return {
 			"williamboman/mason-lspconfig.nvim",
 		},
 		config = function()
-			local lsp = require("lspconfig")
 			local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-			-- Mason LSP Setups
-			local default_setup = function(server)
-				lsp[server].setup({
-					capabilities = lsp_capabilities,
-				})
-			end
-
-			require("mason-lspconfig").setup({
-				handlers = {
-					default_setup,
-				},
-			})
-
-			-- Manual LSP setups
-            -- Put the following flags to nvim exucutable in Godot
-            -- --server /tmp/godot.pipe --remote-send "<C-\><C-N>:e {file}<CR>:call cursor({line}+1,{col})<CR>"
-			lsp.gdscript.setup({
-				on_attach = function()
-					vim.api.nvim_command('echo serverstart("/tmp/godot.pipe")')
-				end
-			})
+			require("mason-lspconfig").setup()
 		end
 	},
 	{
