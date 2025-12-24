@@ -374,10 +374,8 @@
 
 (setq org-startup-with-latex-preview t)
 (setq org-latex-packages-alist
-      '(("" "esdiff")
-        ("" "esvect")
-        ("" "tikz")
-        ("" "tikz-cd")))
+      '(("" "physics")
+        ("" "tikz")))
 
 (plist-put org-latex-preview-appearance-options :zoom 1.3)
 
