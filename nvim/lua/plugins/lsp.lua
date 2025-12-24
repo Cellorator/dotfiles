@@ -27,9 +27,11 @@ return {
 			})
 
 			-- Manual LSP setups
+            -- Put the following flags to nvim exucutable in Godot
+            -- --server /tmp/godot.pipe --remote-send "<C-\><C-N>:e {file}<CR>:call cursor({line}+1,{col})<CR>"
 			lsp.gdscript.setup({
 				on_attach = function()
-					vim.api.nvim_command('echo serverstart("/tmp/godot.pipe")')  -- For opening files from godot into neovim
+					vim.api.nvim_command('echo serverstart("/tmp/godot.pipe")')
 				end
 			})
 		end
