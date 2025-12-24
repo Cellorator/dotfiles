@@ -79,7 +79,10 @@ nvim = {target = "~/.config/nvim", type = "symbolic", recurse = false}
 
 
 [emacs.files]
-emacs = "~/.config/emacs"
+"emacs/config.org" = "~/.config/emacs/config.org"
+"emacs/init.el" = "~/.config/emacs/init.el"
+"emacs/early-init.el" = "~/.config/emacs/early-init.el"
+"emacs/snippets" = {target = "~/.config/emacs/snippets", type = "symbolic", recurse = false}
 
 [gaming.files]
 mangohud = "~/.config/MangoHud/MangoHud.conf"
