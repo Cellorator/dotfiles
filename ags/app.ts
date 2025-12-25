@@ -1,12 +1,14 @@
-import { App } from "astal/gtk3"
+import { createBinding, For, This } from "ags"
+import app from "ags/gtk4/app"
 import Bar from "./modules/bar/main"
-import Notifications from "./modules/notifications/main"
+// import Notifications from "./modules/notifications/main"
 
-App.start({
+app.start({
   css: './style.css',
   main() {
-    const monitors = App.get_monitors()
+    const monitors = app.get_monitors()
     monitors.map(Bar)
-    monitors.map(Notifications)
+    // monitors.map(Notifications)
+    console.log(monitors)
   },
 })

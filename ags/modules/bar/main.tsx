@@ -1,11 +1,15 @@
-import { Astal, Gtk, Gdk } from "astal/gtk3"
-import Workspaces from "./workspaces"
-import Clock from "./clock"
-import SysTray from "./sysTray"
+// import { Astal, Gtk, Gdk } from "astal/gtk3"
+import Astal from "gi://Astal?version=4.0"
+import Gtk from "gi://Gtk?version=4.0"
+import Gdk from "gi://Gdk?version=4.0"
+// import Workspaces from "./workspaces"
+// import Clock from "./clock"
+// import SysTray from "./sysTray"
 
 export default function Bar(gdkmonitor: Gdk.Monitor) {
   return <window
-           className='bar-window'
+           visible
+           class='bar-window'
            gdkmonitor={gdkmonitor}
            anchor={Astal.WindowAnchor.TOP
              | Astal.WindowAnchor.LEFT
@@ -14,34 +18,34 @@ export default function Bar(gdkmonitor: Gdk.Monitor) {
            marginLeft={4}
            marginRight={4}
            exclusivity={Astal.Exclusivity.EXCLUSIVE}>
-           <centerbox className='bar-box'>
-             <box className='left' halign={Gtk.Align.START}>
-               <Workspaces />
-             </box>
-
-             <box className='middle'>
-             </box>
-
-             <box className='right' halign={Gtk.Align.END}>
-               <SysTray />
-                <BatteryLevel />
-               <Clock />
-             </box>
+           <centerbox class='bar-box'>
            </centerbox>
          </window>
 }
+             // <box class='left' halign={Gtk.Align.START}>
+             //   <Workspaces />
+             // </box>
 
-import { bind } from 'astal'
-import Battery from "gi://AstalBattery"
-function BatteryLevel() {
-    const bat = Battery.get_default()
+             // <box class='middle'>
+             // </box>
 
-    return <box className="Battery"
-        visible={bind(bat, "isPresent")}>
-        <icon icon={bind(bat, "batteryIconName")} />
-        <label label={bind(bat, "percentage").as(p =>
-            `${Math.floor(p * 100)} %`
-        )} />
-    </box>
-}
+             // <box class='right' halign={Gtk.Align.END}>
+             //   <SysTray />
+             //    <BatteryLevel />
+             //   <Clock />
+             // </box>
+
+// import { bind } from 'astal'
+// import Battery from "gi://AstalBattery"
+// function BatteryLevel() {
+//     const bat = Battery.get_default()
+
+//     return <box className="Battery"
+//         visible={bind(bat, "isPresent")}>
+//         <icon icon={bind(bat, "batteryIconName")} />
+//         <label label={bind(bat, "percentage").as(p =>
+//             `${Math.floor(p * 100)} %`
+//         )} />
+//     </box>
+// }
 
