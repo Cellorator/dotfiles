@@ -1,9 +1,11 @@
 import { createPoll } from "ags/time"
+import GLib from "gi://GLib"
 import { BackwardSlashSeparator } from "../widgets/separator.js"
 
-const day = createPoll("", 1000, 'date "+%A"')
-const date = createPoll("", 1000, 'date "+%b %d"')
-const time = createPoll("", 1000, 'date "+%H:%M"')
+const d = GLib.DateTime.new_now_local()
+const day = createPoll("", 1000, () => d.format("%A"))
+const date = createPoll("", 1000, () => d.format("%b %d"))
+const time = createPoll("", 1000, () => d.format("%H:%M"))
 
 export default function Clock() {
   return <box
