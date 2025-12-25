@@ -3,7 +3,7 @@ import Astal from "gi://Astal?version=4.0"
 import Gtk from "gi://Gtk?version=4.0"
 import Gdk from "gi://Gdk?version=4.0"
 import Workspaces from "./workspaces"
-// import Clock from "./clock"
+import Clock from "./clock"
 // import SysTray from "./sysTray"
 
 export default function Bar(gdkmonitor: Gdk.Monitor) {
@@ -18,21 +18,21 @@ export default function Bar(gdkmonitor: Gdk.Monitor) {
            marginLeft={4}
            marginRight={4}
            exclusivity={Astal.Exclusivity.EXCLUSIVE}>
-           <box class='bar-box'>
-             <box class='left' halign={Gtk.Align.START}>
+           <centerbox class='bar-box'>
+             <box $type='start' class='left' halign={Gtk.Align.START}>
                <Workspaces />
              </box>
-             <box class='middle'> </box>
-           </box>
+
+             <box $type='center' class='middle'></box>
+
+             <box $type='end' class='right' halign={Gtk.Align.END}>
+               <Clock />
+             </box>
+           </centerbox>
          </window>
 }
 
 
-             // <box class='right' halign={Gtk.Align.END}>
-             //   <SysTray />
-             //    <BatteryLevel />
-             //   <Clock />
-             // </box>
 
 // import { bind } from 'astal'
 // import Battery from "gi://AstalBattery"
