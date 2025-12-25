@@ -1,10 +1,9 @@
-// import { Astal, Gtk, Gdk } from "astal/gtk3"
 import Astal from "gi://Astal?version=4.0"
 import Gtk from "gi://Gtk?version=4.0"
 import Gdk from "gi://Gdk?version=4.0"
 import Workspaces from "./workspaces"
 import Clock from "./clock"
-// import SysTray from "./sysTray"
+import SysTray from "./sysTray"
 
 export default function Bar(gdkmonitor: Gdk.Monitor) {
   return <window
@@ -26,6 +25,7 @@ export default function Bar(gdkmonitor: Gdk.Monitor) {
              <box $type='center' class='middle'></box>
 
              <box $type='end' class='right' halign={Gtk.Align.END}>
+               <SysTray />
                <Clock />
              </box>
            </centerbox>
