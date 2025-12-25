@@ -4,6 +4,7 @@ import Gdk from "gi://Gdk?version=4.0"
 import Workspaces from "./workspaces"
 import Clock from "./clock"
 import SysTray from "./sysTray"
+import BatteryLevel from "./battery.tsx"
 
 export default function Bar(gdkmonitor: Gdk.Monitor) {
   return <window
@@ -25,26 +26,10 @@ export default function Bar(gdkmonitor: Gdk.Monitor) {
              <box $type='center' class='middle'></box>
 
              <box $type='end' class='right' halign={Gtk.Align.END}>
+               <BatteryLevel />
                <SysTray />
                <Clock />
              </box>
            </centerbox>
          </window>
 }
-
-
-
-// import { bind } from 'astal'
-// import Battery from "gi://AstalBattery"
-// function BatteryLevel() {
-//     const bat = Battery.get_default()
-
-//     return <box className="Battery"
-//         visible={bind(bat, "isPresent")}>
-//         <icon icon={bind(bat, "batteryIconName")} />
-//         <label label={bind(bat, "percentage").as(p =>
-//             `${Math.floor(p * 100)} %`
-//         )} />
-//     </box>
-// }
-
