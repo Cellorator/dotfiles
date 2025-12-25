@@ -8,7 +8,5 @@ app.start({
   main() {
     const monitors = app.get_monitors()
     monitors.map(Bar)
-    // monitors.map(Notifications)
-    console.log(monitors)
   },
 })

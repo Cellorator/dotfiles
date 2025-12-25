@@ -23,5 +23,5 @@ function RightHardCircleSeparator() {
 }
 
 function Separator(str) {
-    return <label className='separators' label={str} />
+    return <label class='separators' label={str} />
 }

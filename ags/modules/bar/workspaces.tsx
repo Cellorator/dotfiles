@@ -1,4 +1,4 @@
-import { Variable, bind } from 'astal'
+import { createBinding, createComputed, For } from 'ags'
 import {
     Separator,
     ForwardSlashSeparator,
@@ -8,7 +8,7 @@ import {
 import Hyprland from 'gi://AstalHyprland'
 
 export default function Workspaces() {
-  return <box className='workspaces'>
+  return <box class='workspaces'>
            {
              [...Array(9).keys()]
                .map(id => id + 1)
@@ -20,18 +20,18 @@ export default function Workspaces() {
 const hyprland = Hyprland.get_default()
 
 // Id of focused workspace
-const focusedId = bind(hyprland, 'focusedWorkspace').as(fws => fws.id)
+const focusedId = createBinding(hyprland, 'focusedWorkspace').as(fws => fws.id)
 
 // Ids of workspaces with clients
 // Done this way because other methods don't update right
-const idsWithClients = bind(hyprland, 'clients').as(c => c
+const idsWithClients = createBinding(hyprland, 'clients').as(c => c
   .map(c => c.workspace.id)
   .sort()
   .filter((id, index, ids) => ids.indexOf(id) == index))
 
 function Workspace(id: number) {
-  // Determine status to set as className
-  const status = Variable.derive(
+  // Determine status to set as class
+  const status = createComputed(
     [focusedId, idsWithClients],
     (focusedId, idsWithClients) => {
       let arr = []
@@ -49,10 +49,10 @@ function Workspace(id: number) {
       return arr
     })
 
-  // Determine separators for each workspace box
-  const content = status(s => {
+  // // Determine separators for each workspace box
+  const content = status((s) => {
     const arr = [
-      <label className='label' label={`${id}`} />
+      <label class='label' label={`${id}`} />
     ]
 
     // Skip putting separators on workspace before the focused one
@@ -86,10 +86,13 @@ function Workspace(id: number) {
   })
 
   return <button
-           className={`workspace ws${id}`}
+           class={`workspace ws${id}`}
            onClicked={() => hyprland.dispatch('workspace', `${id}`)}>
-           <box className={status(s => s.join(' '))}>
-             {content}
+           <box class={status(s => s.join(' '))}>
+             {/*For some reason, widgets only update when using For, instead of just putting content() directly*/}
+             <For each={content}> 
+               {(item) => (item)}
+             </For>
            </box>
          </button>
 }
