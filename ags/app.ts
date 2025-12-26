@@ -5,6 +5,7 @@ import Bar from "./modules/bar/main"
 
 app.start({
   css: './style.css',
+  gtkTheme: 'KanagawaDragon',
   main() {
     const monitors = app.get_monitors()
     monitors.map(Bar)
